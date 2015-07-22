@@ -89,6 +89,10 @@ var Modal = function(triggerClass, options) {
     content: null
   }, options);
   
+  if (typeof options.content === 'function') {
+    options.content = options.content.call(elem);
+  }
+  
   function isUrl(source) {
     return /^https?:\/\//.test(source);
   }
