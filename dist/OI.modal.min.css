@@ -16,6 +16,7 @@
 .animate-modal #modals { display: block; z-index: 2; }
 
 .modal { position: absolute; top: 25%; left: 50%; transform: translate(-50%, -50%); -moz-transform: translateY(-50%, -50%); -webkit-transform: translateY(-50%, -50%); margin: 0 auto; width: 400px; background: #fff; opacity: 0; transition: top .5s, opacity .3s; -moz-transition: top .5s, opacity .3s; -webkit-transition: top .5s, opacity .3s; }
+.modal.medium { width: 600px; }
 .modal.large { width: 700px; }
 .modal.x-large { width: 960px; }
 .modal.show { top: 50%; opacity: 1; }

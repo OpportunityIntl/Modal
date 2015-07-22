@@ -45,6 +45,10 @@
   -moz-transition: top .5s, opacity .3s;
   -webkit-transition: top .5s, opacity .3s;
   
+  &.medium {
+    width: 600px;
+  }
+  
   &.large {
     width: 700px;
   }
