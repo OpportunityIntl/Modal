@@ -5,7 +5,7 @@ OI.modal = {
     if ($('#modals').length === 0) {
       $('body').append($('<div>', {id: "modals"}));
     }
-    $('.modal-trigger').each(function() {
+    $('[data-modal]').each(function() {
       new Modal($(this));
     });
   },
