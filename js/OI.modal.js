@@ -3,6 +3,9 @@ var OI = OI || {};
 OI.modal = {
   overlay: $('.modal-overlay'),
   init: function() {
+    if ($('#modals').length === 0) {
+      $('body').append($('<div>', {id: "modals"}));
+    }
     $('.modal-trigger').each(function() {
       new Modal($(this));
     });
