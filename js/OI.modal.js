@@ -89,12 +89,11 @@ var Modal = function(triggerClass, options) {
     if (isUrl()) {
       var iframe;
       if (isVideo()) {
-        console.log('Video');
         iframe = $('<div>', {class: 'flex-video'});
         iframe.append($('<iframe>', {src: elem.data('modal'), frameborder: 0}));
       } else {
-        console.log('Normal url');
-        iframe = $('<iframe>', {src: elem.data('modal'), frameborder: 0});
+        iframe = $('<div>', {class: 'iframe'});
+        iframe.append($('<iframe>', {src: elem.data('modal'), frameborder: 0}));
       }
       modal = OI.modal.new(iframe, options.classes);
     } else {

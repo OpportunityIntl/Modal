@@ -74,8 +74,16 @@
 .modal .modal-content {
   position: relative;
 }
-.modal .modal-content iframe {
+.modal .modal-content .iframe {
+  height: 0;
+  width: 100%;
+  margin: 0;
+  padding-bottom: 75%;
+  position: relative;
+}
+.modal .modal-content .iframe iframe {
   display: block;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;

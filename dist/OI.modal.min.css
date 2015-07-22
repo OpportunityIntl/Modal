@@ -23,4 +23,5 @@
 .modal .close { position: absolute; top: 0; right: 0; width: 40px; height: 40px; font-size: 24px; text-align: center; line-height: 40px; color: #8f8e8c; z-index: 1; }
 .modal .close:hover { color: #333; }
 .modal .modal-content { position: relative; }
-.modal .modal-content iframe { display: block; top: 0; left: 0; width: 100%; height: 100%; }
+.modal .modal-content .iframe { height: 0; width: 100%; margin: 0; padding-bottom: 75%; position: relative; }
+.modal .modal-content .iframe iframe { display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
