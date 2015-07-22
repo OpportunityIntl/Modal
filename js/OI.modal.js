@@ -75,22 +75,22 @@ var Modal = function(triggerClass, options) {
     content: null
   }, options);
   
-  function isUrl() {
-    return /^https?:\/\//.test(elem.data('modal'));
+  function isUrl(source) {
+    return /^https?:\/\//.test(source);
   }
   
-  function isVideo() {
-    return /^https?:\/\/(www\.youtube|player\.vimeo)/.test(elem.data('modal'));
+  function isVideo(source) {
+    return /^https?:\/\/(www\.youtube|player\.vimeo)/.test(source);
   }
   
-  function alreadyExists() {
-    return ($(elem.data('modal')).length > 0);
+  function existsInDOM(source) {
+    return ($(source).length > 0);
   }
   
   elem.click(function() {
-    if (isUrl()) {
+    if (isUrl(elem.data('modal'))) {
       var iframe;
-      if (isVideo()) {
+      if (isVideo(elem.data('modal'))) {
         iframe = $('<div>', {class: 'flex-video'});
         iframe.append($('<iframe>', {src: elem.data('modal'), frameborder: 0}));
       } else {
@@ -99,7 +99,7 @@ var Modal = function(triggerClass, options) {
       }
       modal = OI.modal.new(iframe, options.classes);
     } else {
-      if (alreadyExists()) {
+      if (existsInDOM(elem.data('modal'))) {
         modal = $(elem.data('modal'));
       } else {
         modal = OI.modal.new(options.content, options.classes);
