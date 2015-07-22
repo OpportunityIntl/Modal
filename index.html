@@ -17,7 +17,8 @@
           <h1>OI Modal Test</h1>
           <div class="inline-buttons">
             <a class="modal-trigger btn brand-purple-bg" data-modal="#modal1">Existing modal</a>
-            <a class="modal-trigger btn brand-teal-bg" data-modal="http://opportunityintl.github.io/Weavr">iframe modal</a>
+            <a class="custom-trigger btn brand-pink-bg">Custom content</a>
+            <a class="modal-trigger btn brand-teal-bg" data-modal="http://opportunityintl.github.io/Weavr" data-modal-classes="large">iframe modal</a>
             <a class="modal-trigger btn brand-orange-bg" data-modal="https://player.vimeo.com/video/129820312?title=0&byline=0&portrait=0" data-modal-classes="x-large">Video modal</a>
           </div>
         </div>
@@ -79,5 +80,8 @@
     <script type="text/javascript" src="weavr/OI.weavr.min.js"></script>
     <script type="text/javascript" src="dist/OI.modal.min.js"></script>
 
+    <script>
+      new Modal('.custom-trigger', {content: '<h1>Hello World!</h1><p>This modal was generated dynamically</p>', classes: 'padding-2x medium'});
+    </script>
   </body>
 </html>
