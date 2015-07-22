@@ -87,16 +87,16 @@ OI.modal = {
 };
 
 var Modal = function(triggerClass, options) {
-  var elem = $(triggerClass);
+  var $trigger = $(triggerClass);
   var modal;
 
   options = $.extend({
-    classes: elem.data('modal-classes') || null,
+    classes: $trigger.data('modal-classes') || null,
     content: null
   }, options);
   
   if (typeof options.content === 'function') {
-    options.content = options.content.call(elem);
+    options.content = options.content.call($trigger);
   }
   
   function isUrl(source) {
@@ -111,20 +111,20 @@ var Modal = function(triggerClass, options) {
     return ($(source).length > 0);
   }
   
-  elem.click(function() {
-    if (isUrl(elem.data('modal'))) {
+  $trigger.click(function() {
+    if (isUrl($trigger.data('modal'))) {
       var iframe;
-      if (isVideo(elem.data('modal'))) {
+      if (isVideo($trigger.data('modal'))) {
         iframe = $('<div>', {class: 'flex-video'});
-        iframe.append($('<iframe>', {src: elem.data('modal'), frameborder: 0}));
+        iframe.append($('<iframe>', {src: $trigger.data('modal'), frameborder: 0}));
       } else {
         iframe = $('<div>', {class: 'iframe'});
-        iframe.append($('<iframe>', {src: elem.data('modal'), frameborder: 0}));
+        iframe.append($('<iframe>', {src: $trigger.data('modal'), frameborder: 0}));
       }
       modal = OI.modal.new(iframe, options.classes);
     } else {
-      if (existsInDOM(elem.data('modal'))) {
-        modal = $(elem.data('modal'));
+      if (existsInDOM($trigger.data('modal'))) {
+        modal = $($trigger.data('modal'));
       } else {
         modal = OI.modal.new(options.content, options.classes);
       }
