@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navigation</title>
+    <link rel="stylesheet" href="weavr/OI.weavr.min.css">
+    <link rel="stylesheet" href="dist/OI.modal.css">
+
+    <script src="//use.typekit.net/owg8owx.js"></script>
+    <script type="text/javascript">try {Typekit.load();} catch (e) {}</script>
+  </head>
+  <body>
+    <section class="viewport-height">
+      <div class="content-overlay middle">
+        <div class="contained-680 centered align-center">
+          <h1>OI Modal Test</h1>
+          <div class="inline-buttons">
+            <a class="modal-trigger btn brand-purple-bg" data-modal="#modal1">Modal 1</a>
+            <a class="modal-trigger btn brand-teal-bg" data-modal="#modal2">Modal 2</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div id="modals">
+      <div class="modal" id="modal1">
+        <button type="button" class="reset icon-cross close"></button>
+        <div class="modal-content padding-2x">
+          <h2 class="align-center brand-pink">Donate to Opportunity</h2>
+          <p class="small">
+            Make a difference by supporting the work of Opportunity International.
+          </p>
+          <div class="choose-amount-module margin-bottom-1x">
+            <div class="row small-gutter">
+              <div class="col col-6 t-col-6 m-col-6">
+                <input type="radio" id="donation-amt-1" name="donation-amt" value="25">
+                <label for="donation-amt-1" class="btn">$25</label>
+              </div>
+              <div class="col col-6 t-col-6 m-col-6">
+                <input type="radio" id="donation-amt-2" name="donation-amt" value="50" checked>
+                <label for="donation-amt-2" class="btn">$50</label>
+              </div>
+            </div>
+            <div class="row small-gutter">
+              <div class="col col-6 t-col-6 m-col-6">
+                <input type="radio" id="donation-amt-3" name="donation-amt" value="100">
+                <label for="donation-amt-3" class="btn">$100</label>
+              </div>
+              <div class="col col-6 t-col-6 m-col-6">
+                <input type="radio" id="donation-amt-4" name="donation-amt" value="150">
+                <label for="donation-amt-4" class="btn">$150</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-12 t-col-12 m-col-12">
+                <input type="text" name="donation-amt-custom" placeholder="Enter donation amount">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-12 t-col-12 m-col-12">
+              <input type="submit" name="name" value="Donate Now" class="btn brand-pink-bg block">
+            </div>
+          </div>
+          <p class="small brand-font-secondary brand-gray align-center">
+            You'll complete your donation on a separate page.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!--[if lte IE 9]>
+      <script type="text/javascript" src="weavr/OI.placeholder.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="weavr/OI.weavr.min.js"></script>
+    <script type="text/javascript" src="dist/OI.modal.min.js"></script>
+
+  </body>
+</html>
