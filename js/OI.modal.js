@@ -1,3 +1,11 @@
+(function($) {
+  $.fn.modal = function(options) {
+    return this.each(function() {
+      new Modal($(this), options);
+    });
+  };
+}(jQuery));
+
 var OI = OI || {};
 
 OI.modal = {
@@ -8,9 +16,7 @@ OI.modal = {
     }
     
     // automatically set up triggers for elements with data-modal attribute
-    $('[data-modal]').each(function() {
-      new Modal($(this));
-    });
+    $('[data-modal]').modal();
   },
   
   show: function(elem) {

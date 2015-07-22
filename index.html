@@ -19,6 +19,7 @@
             <a class="modal-trigger btn brand-purple-bg" data-modal="#modal1">Existing modal</a>
             <a class="custom-trigger btn brand-pink-bg" data-pizza="cool beans">Dynamic content</a>
             <a class="custom-trigger-2 btn brand-green-bg">Dynamic content 2</a>
+            <a class="custom-trigger-2 btn brand-green-bg">Dynamic content 2 (again)</a>
             <a class="modal-trigger btn brand-teal-bg" data-modal="http://opportunityintl.github.io/Weavr" data-modal-classes="large">iframe modal</a>
             <a class="modal-trigger btn brand-orange-bg" data-modal="https://player.vimeo.com/video/129820312?title=0&byline=0&portrait=0" data-modal-classes="x-large">Video modal</a>
           </div>
@@ -82,15 +83,18 @@
     <script type="text/javascript" src="dist/OI.modal.min.js"></script>
 
     <script>
-      new Modal('.custom-trigger', {content: function() {
-        var word = "generated";
-        return '<h3>Hello world</h3><p>This content was ' + word + ' dynamically.</p><button type="button" class="btn brand-orange-bg">' + $(this).data('pizza') + '</button>'
-      }, classes: 'padding-2x medium'});
+      $('.custom-trigger').modal({
+        content: function() {
+          var word = "generated";
+          return '<h3>Hello world</h3><p>This content was ' + word + ' dynamically.</p><button type="button" class="btn brand-orange-bg">' + $(this).data('pizza') + '</button>'
+        },
+        classes: 'padding-2x medium'
+      })
       
-      new Modal('.custom-trigger-2', {
+      $('.custom-trigger-2').modal({
         content: 'Yo Yo Yo Yo!',
         classes: 'padding-2x'
-      })
+      });
     </script>
   </body>
 </html>
