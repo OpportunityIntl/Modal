@@ -5,67 +5,107 @@
     });
   };
   
+  // define Modal class
   var Modal = function(triggerClass, options) {
     // cache this
     var _this = this;
     
+    // declare some variables we're going to need
     var $trigger = $(triggerClass);
     var $element;
     var modal;
 
+    // set some options
     options = $.extend({
       classes: $trigger.data('modal-classes') || null,
       source: $trigger.data('modal') || null,
       content: null
     }, options);
     
+    // if content is declared as a function, execute it to get a string
     if (typeof options.content === 'function') {
       options.content = options.content.call($trigger);
     }
     
+    // determines if modal source is a url
     this.isUrl = function() {
       return /^https?:\/\//.test(options.source);
     };
      
+    // determines if modal source is a video
     this.isVideo = function() {
       return /^https?:\/\/(www\.youtube|player\.vimeo)/.test(options.source);
     };
     
+    // determines if modal source is an element and already in the DOM
     this.existsInDOM = function() {
       return ($(options.source).length > 0) ? true : false;
     };
     
+    // gets the DOM object for the modal and stores it in the $element variable
     this.setElement = function() {
       if (_this.isUrl()) {
+        // if the modal source is a url, we'll create an iframe
         var iframe;
+        
         if (_this.isVideo()) {
+          // if the url is a video embed (YouTube or Vimeo), wrap the iframe in
+          // Weavr's .flex-video class to make it responsive and force a 16:9 ratio
           iframe = $('<div>', {class: 'flex-video'});
           iframe.append($('<iframe>', {src: $trigger.data('modal'), frameborder: 0}));
+          
           options.content = iframe;
         } else {
+          // if the url is not a video, wrap the iframe in generic .iframe class
+          // to make it responsive and force a 4:3 ratio
           iframe = $('<div>', {class: 'iframe'});
           iframe.append($('<iframe>', {src: $trigger.data('modal'), frameborder: 0}));
+          
           options.content = iframe;
         }
+        
+        // create the modal element
         $element = _this.createElement();
       } else {
         if (_this.existsInDOM()) {
+          // if the modal source is a DOM object that already exists, use that
           $element = $($trigger.data('modal'));
         } else {
+          // otherwise, create a new element
           $element = _this.createElement();
         }
       }
     };
     
+    // create the modal element and add it to the DOM
     this.createElement = function() {
-      var modal = $('<div>', {class: 'modal'});
-      modal.append($('<button>', {type: 'button', class: 'reset icon-cross close'}));
-      modal.append($('<div>', {class: 'modal-content'}));
-      if (options.classes) modal.addClass(options.classes);
-      modal.find('.modal-content').append(options.content);
-      $('#modals').append(modal);
-      modal.data('destroyOnClose', true);
-      return modal;
+      // If #modals div doesn't already exist, create it
+      if ($('#modals').length === 0) {
+        $('body').append($('<div>', {id: "modals"}));
+      }
+      
+      // create new div with .modal class
+      var $modal = $('<div>', {class: 'modal'});
+      
+      // add the close button
+      $modal.append($('<button>', {type: 'button', class: 'reset icon-cross close'}));
+      
+      // add the .modal-content div
+      $modal.append($('<div>', {class: 'modal-content'}));
+      
+      // add classes, if they exist, to the .modal div
+      if (options.classes) $modal.addClass(options.classes);
+      
+      // add content inside .modal-content div
+      $modal.find('.modal-content').append(options.content);
+      
+      // add modal element to the #modals div
+      $('#modals').append($modal);
+      
+      // flag modal element to be destroyed when closed
+      $modal.data('destroyOnClose', true);
+      
+      return $modal;
     };
     
     this.show = function() {
@@ -123,16 +163,12 @@
       }, 500);
     };
     
+    // when trigger is clicked, set/create the modal and show it
     $trigger.click(function() {
       _this.setElement();
       _this.show();
     });
   };
-  
-  // If #modals div doesn't already exist, create it
-  if ($('#modals').length === 0) {
-    $('body').append($('<div>', {id: "modals"}));
-  }
   
   // automatically set up triggers for elements with data-modal attribute
   $('[data-modal]').modal();
