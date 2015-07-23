@@ -19,7 +19,8 @@
     options = $.extend({
       classes: $trigger.data('modal-classes') || null,
       source: $trigger.data('modal') || null,
-      content: null
+      content: null,
+      type: $trigger.data('modal-type') || null
     }, options);
     
     // if content is declared as a function, execute it to get a string
@@ -27,53 +28,78 @@
       options.content = options.content.call($trigger);
     }
     
+    function determineType() {
+      var type;
+      
+      if (isUrl()) {
+        if (isVideo()) {
+          type = 'video';
+        } else {
+          type = 'url';
+        }
+      } else {
+        if (existsInDOM()) {
+          type = 'content';
+        } else {
+          type = 'dynamic';
+        }
+      }
+      
+      return type;
+    }
+    
     // determines if modal source is a url
-    this.isUrl = function() {
+    function isUrl() {
       return /^https?:\/\//.test(options.source);
-    };
+    }
      
     // determines if modal source is a video
-    this.isVideo = function() {
+    function isVideo() {
       return /^https?:\/\/(www\.youtube|player\.vimeo)/.test(options.source);
-    };
+    }
     
     // determines if modal source is an element and already in the DOM
-    this.existsInDOM = function() {
+    function existsInDOM() {
       return ($(options.source).length > 0) ? true : false;
-    };
+    }
+    
+    this.type = options.type || determineType();
     
     // gets the DOM object for the modal and stores it in the $element variable
     this.setElement = function() {
-      if (_this.isUrl()) {
-        // if the modal source is a url, we'll create an iframe
-        var iframe;
-        
-        if (_this.isVideo()) {
+      var iframe;
+      
+      switch(_this.type) {
+        case 'video':
           // if the url is a video embed (YouTube or Vimeo), wrap the iframe in
           // Weavr's .flex-video class to make it responsive and force a 16:9 ratio
           iframe = $('<div>', {class: 'flex-video'});
           iframe.append($('<iframe>', {src: $trigger.data('modal'), frameborder: 0}));
           
           options.content = iframe;
-        } else {
+          
+          $element = _this.createElement();
+          break;
+        case 'url':
           // if the url is not a video, wrap the iframe in generic .iframe class
           // to make it responsive and force a 4:3 ratio
           iframe = $('<div>', {class: 'iframe'});
           iframe.append($('<iframe>', {src: $trigger.data('modal'), frameborder: 0}));
           
           options.content = iframe;
-        }
-        
-        // create the modal element
-        $element = _this.createElement();
-      } else {
-        if (_this.existsInDOM()) {
+          
+          $element = _this.createElement();
+          break;
+        case 'content':
           // if the modal source is a DOM object that already exists, use that
           $element = $($trigger.data('modal'));
-        } else {
+          
+          break;
+        case 'dynamic':
           // otherwise, create a new element
           $element = _this.createElement();
-        }
+          
+          break;
       }
     };
     
