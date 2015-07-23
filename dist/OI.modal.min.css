@@ -1,5 +1,5 @@
 /* OI-Modals v0.9.0 
- * Compiled 07-22-2015
+ * Compiled 07-23-2015
  * Copyright (c) 2015 Opportunity International 
  */
 
@@ -15,7 +15,8 @@
 
 .animate-modal #modals { display: block; z-index: 2; }
 
-.modal { position: absolute; top: 25%; left: 50%; transform: translate(-50%, -50%); -moz-transform: translateY(-50%, -50%); -webkit-transform: translateY(-50%, -50%); margin: 0 auto; width: 400px; background: #fff; opacity: 0; transition: top .5s, opacity .3s; -moz-transition: top .5s, opacity .3s; -webkit-transition: top .5s, opacity .3s; }
+.modal { display: none; position: relative; top: 25%; transform: translateY(-50%); -moz-transform: translateY(-50%); -webkit-transform: translateY(-50%); margin: 0 auto; width: 400px; background: #fff; opacity: 0; transition: top .5s, opacity .3s; -moz-transition: top .5s, opacity .3s; -webkit-transition: top .5s, opacity .3s; }
+.modal.animate { display: block; }
 .modal.medium { width: 600px; }
 .modal.large { width: 700px; }
 .modal.x-large { width: 960px; }

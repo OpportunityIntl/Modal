@@ -111,6 +111,7 @@
     this.show = function() {
       // add class to body to start modal overlay animation
       $('body').addClass('animate-modal');
+      $element.addClass('animate');
       
       // start modal animation shortly after overlay animation
       setTimeout(function() {
@@ -155,6 +156,7 @@
       // start close animation on modal overlay shortly afterward
       setTimeout(function() {
         $('body').removeClass('animate-modal');
+        $element.removeClass('animate');
         
         // if element was created dynamically, remove it on close
         if ($element.data('destroyOnClose')) {
