@@ -87,10 +87,23 @@
           create additional sizes by creating your own classes in your stylesheets.
         </p>
         <p class="align-center inline-buttons">
-          <a class="custom-trigger-2 btn brand-teal-bg" data-modal="#modal-small">Normal Modal</a>
-          <a class="custom-trigger-2 btn brand-green-bg" data-modal="#modal-medium">Medium Modal</a>
-          <a class="custom-trigger-2 btn brand-orange-bg" data-modal="#modal-large">Large Modal</a>
-          <a class="custom-trigger-2 btn brand-purple-bg" data-modal="#modal-x-large">X-large Modal</a>
+          <a class="btn brand-teal-bg" data-modal="#modal-small">Normal Modal</a>
+          <a class="btn brand-green-bg" data-modal="#modal-medium">Medium Modal</a>
+          <a class="btn brand-orange-bg" data-modal="#modal-large">Large Modal</a>
+          <a class="btn brand-purple-bg" data-modal="#modal-x-large">X-large Modal</a>
+        </p>
+        
+        <hr>
+        
+        <h2>Callback functions</h2>
+        <p>
+          You can declare callback functions to execute before and after a modal
+          closes or opens. You can prevent a modal from opening or closing by
+          returning <code>false</code> from the <code>beforeOpen()</code> and
+          <code>beforeClose()</code> callbacks, respectively.
+        </p>
+        <p class="align-center inline-buttons">
+          <a class="btn brand-purple-bg before-open-demo">Try me</a>
         </p>
       </div>
     </section>
@@ -245,7 +258,24 @@
             <p>You probably haven't heard of them normcore PBR Tumblr, pug sriracha 8-bit Odd Future Carles ethical lomo keffiyeh Blue Bottle PBR&B. Bitters chambray Vice street art, Pinterest chillwave PBR&B irony hella drinking vinegar Banksy fanny pack. Gentrify DIY kale chips, raw denim meditation distillery selvage scenester Kickstarter hoodie seitan heirloom flannel pickled. 3 wolf moon you probably haven't heard of them cray, Marfa literally narwhal DIY shabby chic. Ennui XOXO distillery occupy paleo, readymade bespoke keytar street art bitters. Farm-to-table try-hard meh craft beer XOXO polaroid Banksy. Pop-up mumblecore VHS, hashtag pour-over health goth food truck pickled Bushwick meh cliche beard lo-fi fashion axe semiotics.</p>
             <p>Mumblecore master cleanse put a bird on it, pop-up lumbersexual Kickstarter fanny pack heirloom Vice meditation chambray fashion axe meh church-key. Photo booth kogi literally cronut fixie. Vinyl deep v Tumblr drinking vinegar Neutra, keytar scenester raw denim vegan mustache try-hard sartorial. Mixtape tattooed Neutra, Shoreditch meh leggings normcore cray fixie skateboard sartorial. Single-origin coffee narwhal lo-fi ugh. Stumptown messenger bag heirloom, cornhole PBR&B mumblecore occupy umami four loko. Fingerstache cliche pop-up XOXO.</p>
             <p>Sriracha Helvetica Carles aesthetic cray. Crucifix pickled artisan cold-pressed. Sartorial cornhole selfies plaid Portland, synth biodiesel 90's normcore listicle you probably haven't heard of them. Deep v American Apparel four loko seitan meditation. 8-bit put a bird on it viral Godard blog. Bespoke pork belly kitsch Banksy put a bird on it, health goth Thundercats viral next level four dollar toast DIY. Butcher cardigan blog fixie.</p>
+            <p>
+              <a class="btn brand-pink-bg" data-modal="#modal1">Modal in a modal</a>
+            </p>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="before-open-demo">
+      <div class="modal-container">
+        <button type="button" class="reset icon-cross close"></button>
+        <div class="modal-content padding-2x">
+          <h2 class="brand-purple align-center">Modal Callback Demo</h2>
+          <p>
+            If you look at the browser console, you'll see the timing and result of the callbacks.
+          </p>
+          <p class="align-center">
+            <a class="btn brand-orange-bg close">Close</a>
+          </p>
         </div>
       </div>
     </div>
@@ -266,11 +296,22 @@
           return '<h3>Hello world</h3><p>This content was ' + word + ' dynamically.</p><button type="button" class="btn brand-orange-bg">' + $(this).data('pizza') + '</button>'
         },
         classes: 'padding-2x'
-      })
+      });
       
-      $('.custom-trigger-2').modal({
-        content: 'Yo Yo Yo Yo!',
-        classes: 'padding-2x'
+      $('.before-open-demo').modal({
+        source: '#before-open-demo',
+        beforeOpen: function() {
+          console.log('beforeOpen() called');
+        },
+        afterOpen: function() {
+          console.log('afterOpen() called');
+        },
+        beforeClose: function() {
+          console.log('beforeClose() called');
+        },
+        afterClose: function() {
+          console.log('afterClose() called');
+        }
       });
     </script>
   </body>

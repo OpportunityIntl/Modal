@@ -20,7 +20,11 @@
       classes: $trigger.data('modal-classes') || null,
       source: $trigger.data('modal') || null,
       content: null,
-      type: $trigger.data('modal-type') || null
+      type: $trigger.data('modal-type') || null,
+      beforeOpen: function() {},
+      afterOpen: function() {},
+      beforeClose: function() {},
+      afterClose: function() {}
     }, options);
     
     // if content is declared as a function, execute it to get a string
@@ -102,7 +106,7 @@
           break;
         case 'content':
           // if the modal source is a DOM object that already exists, use that
-          $element = $($trigger.data('modal'));
+          $element = $(options.source);
           
           break;
         case 'dynamic':
@@ -142,6 +146,10 @@
     };
     
     this.show = function() {
+      if (options.beforeOpen.call($trigger) === false) {
+        return false;
+      }
+      
       // add class to body to start modal overlay animation
       $element.addClass('animate');
       handleOverflow();
@@ -173,10 +181,18 @@
       
       $('body').addClass('no-scroll');
       
+      // execute afterOpen callback after animation has finished
+      setTimeout(function() {
+        options.afterOpen.call($trigger);
+      }, 600);
       return false;
     };
     
     this.hide = function() {
+      if (options.beforeClose.call($trigger) === false) {
+        return false;
+      }
+      
       // unbind event handlers that close the modal
       $element.find('.close').unbind('click.modal');
       $('#modals').unbind('click.modal');
@@ -196,6 +212,8 @@
         }
         
         handleOverflow();
+        
+        options.afterClose.call($trigger);
       }, 500);
       
       $('body').removeClass('no-scroll');
