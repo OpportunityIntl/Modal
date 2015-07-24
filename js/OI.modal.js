@@ -64,10 +64,12 @@
     }
     
     function handleOverflow() {
-      if ($element && $element.outerHeight(true) > $(window).height()) {
-        $('#modals').addClass('overflow');
-      } else {
-        $('#modals').removeClass('overflow');
+      if ($element) {
+        if ($element.find('.modal-container').outerHeight(true) > $(window).height()) {
+          $element.addClass('overflow');
+        } else {
+          $element.removeClass('overflow');
+        }
       }
     }
     
@@ -113,28 +115,25 @@
     
     // create the modal element and add it to the DOM
     this.createElement = function() {
-      // If #modals div doesn't already exist, create it
-      if ($('#modals').length === 0) {
-        $('body').append($('<div>', {id: "modals"}));
-      }
-      
       // create new div with .modal class
       var $modal = $('<div>', {class: 'modal'});
       
+      $modal.append($('<div>', {class: 'modal-container'}));
+      
       // add the close button
-      $modal.append($('<button>', {type: 'button', class: 'reset icon-cross close'}));
+      $modal.find('.modal-container').append($('<button>', {type: 'button', class: 'reset icon-cross close'}));
       
       // add the .modal-content div
-      $modal.append($('<div>', {class: 'modal-content'}));
+      $modal.find('.modal-container').append($('<div>', {class: 'modal-content'}));
       
       // add classes, if they exist, to the .modal div
-      if (options.classes) $modal.addClass(options.classes);
+      if (options.classes) $modal.find('.modal-container').addClass(options.classes);
       
       // add content inside .modal-content div
       $modal.find('.modal-content').append(options.content);
       
       // add modal element to the #modals div
-      $('#modals').append($modal);
+      $('body').append($modal);
       
       // flag modal element to be destroyed when closed
       $modal.data('destroyOnClose', true);
@@ -144,13 +143,11 @@
     
     this.show = function() {
       // add class to body to start modal overlay animation
-      $('#modals').addClass('animate');
       $element.addClass('animate');
       handleOverflow();
       
       // start modal animation shortly after overlay animation
       setTimeout(function() {
-        $('#modals').addClass('show');
         $element.addClass('show');
       }, 100);
       
@@ -160,10 +157,10 @@
       });
       
       // close modal when user clicks anywhere outside of modal
-      $('#modals').bind('click.modal', function() {
+      $element.bind('click.modal', function() {
         _this.hide();
       });
-      $element.bind('click.modal', function(e) {
+      $element.find('.modal-container').bind('click.modal', function(e) {
         e.stopPropagation(); // this prevents a click on the actual modal from triggering close
       });
       
