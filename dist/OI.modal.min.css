@@ -22,9 +22,9 @@
 .modal .modal-container .modal-content { position: relative; }
 .modal .modal-container .modal-content .iframe { height: 0; width: 100%; margin: 0; padding-bottom: 75%; position: relative; overflow: scroll; -webkit-overflow-scrolling: touch; }
 .modal .modal-container .modal-content .iframe iframe { display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.modal .modal-container.medium { width: 600px; }
+.modal .modal-container.medium { width: 500px; }
 @media (max-width: 640px) { .modal .modal-container.medium { width: 100%; } }
-.modal .modal-container.large { width: 700px; }
+.modal .modal-container.large { width: 680px; }
 @media (max-width: 740px) { .modal .modal-container.large { width: 100%; } }
 .modal .modal-container.x-large { width: 960px; }
 @media (max-width: 1000px) { .modal .modal-container.x-large { width: 100%; } }

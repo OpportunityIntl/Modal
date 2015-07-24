@@ -100,7 +100,7 @@
     }
     
     &.medium {
-      width: 600px;
+      width: 500px;
       
       @media (max-width: 640px) {
         width: 100%;
@@ -108,7 +108,7 @@
     }
     
     &.large {
-      width: 700px;
+      width: 680px;
       
       @media (max-width: 740px) {
         width: 100%;
