@@ -29,6 +29,17 @@
     display: block;
     z-index: 2;
   }
+  
+  &.overflow {
+    overflow: auto;
+    
+    .modal {
+      top: 0;
+      transform: translateY(0);
+      -moz-transform: translateY(0);
+      -webkit-transform: translateY(0);
+    }
+  }
 }
 
 .modal {
@@ -78,12 +89,28 @@
     }
   }
   
+  &.fullscreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    
+    
+    &.show {
+      top: 0;
+    }
+    
+    button.close {
+      position: fixed;
+    }
+  }
+  
   &.show {
     top: 50%;
     opacity: 1;
   }
   
-  .close {
+  button.close {
     position: absolute;
     top: 0;
     right: 0;

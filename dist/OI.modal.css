@@ -26,6 +26,15 @@
   display: block;
   z-index: 2;
 }
+#modals.overflow {
+  overflow: auto;
+}
+#modals.overflow .modal {
+  top: 0;
+  transform: translateY(0);
+  -moz-transform: translateY(0);
+  -webkit-transform: translateY(0);
+}
 
 .modal {
   display: none;
@@ -74,11 +83,23 @@
     width: 100%;
   }
 }
+.modal.fullscreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.modal.fullscreen.show {
+  top: 0;
+}
+.modal.fullscreen button.close {
+  position: fixed;
+}
 .modal.show {
   top: 50%;
   opacity: 1;
 }
-.modal .close {
+.modal button.close {
   position: absolute;
   top: 0;
   right: 0;
@@ -90,7 +111,7 @@
   color: #8f8e8c;
   z-index: 1;
 }
-.modal .close:hover {
+.modal button.close:hover {
   color: #333;
 }
 .modal .modal-content {

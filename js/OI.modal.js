@@ -63,6 +63,16 @@
       return ($(options.source).length > 0) ? true : false;
     }
     
+    function handleOverflow() {
+      if ($element) {
+        if ($element.outerHeight(true) > $(window).height()) {
+          $('#modals').addClass('overflow');
+        } else {
+          $('#modals').removeClass('overflow');
+        }
+      }
+    }
+    
     this.type = options.type || determineType();
     
     // gets the DOM object for the modal and stores it in the $element variable
@@ -143,6 +153,7 @@
       setTimeout(function() {
         $('#modals').addClass('show');
         $element.addClass('show');
+        handleOverflow();
       }, 100);
       
       // close modal when close button is clicked
@@ -196,6 +207,8 @@
       _this.setElement();
       _this.show();
     });
+    
+    $(window).resize(handleOverflow);
   };
   
   // automatically set up triggers for elements with data-modal attribute

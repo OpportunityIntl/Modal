@@ -21,6 +21,7 @@
             <a class="custom-trigger-2 btn brand-green-bg" data-modal="#modal2">Existing modal 2</a>
             <a class="modal-trigger btn brand-teal-bg" data-modal="http://opportunityintl.github.io/Weavr" data-modal-classes="large">iframe modal</a>
             <a class="modal-trigger btn brand-orange-bg" data-modal="https://player.vimeo.com/video/129820312?title=0&byline=0&portrait=0" data-modal-classes="x-large">Video modal</a>
+            <a class="modal-trigger btn brand-purple-bg" data-modal="#fullscreen">Fullscreen modal</a>
           </div>
         </div>
       </div>
@@ -87,6 +88,20 @@
           </div>
         </div>
       </div>
+      <div class="modal fullscreen" id="fullscreen">
+        <button type="button" class="reset icon-cross close"></button>
+        <div class="modal-content padding-2x">
+          <div class="contained-680 centered">
+            <h2>Heading heading heading!</h2>
+            <p>Raw denim PBR letterpress, 8-bit aesthetic narwhal Schlitz normcore iPhone Blue Bottle vinyl retro. Fanny pack jean shorts cardigan, organic VHS Etsy quinoa gluten-free pour-over swag craft beer Pinterest. Mlkshk tousled squid banjo, tilde sartorial selfies messenger bag cred Marfa skateboard fanny pack Kickstarter four dollar toast. Lo-fi skateboard stumptown Pinterest craft beer iPhone. Master cleanse street art pour-over, literally sustainable kogi Marfa try-hard cray cliche Intelligentsia organic. Narwhal Neutra High Life gentrify food truck, lomo semiotics. Stumptown asymmetrical distillery American Apparel narwhal authentic listicle mustache farm-to-table Portland trust fund Wes Anderson.</p>
+            <p>Mlkshk roof party gentrify kale chips meh pug. Keytar mlkshk gastropub, DIY lumbersexual readymade mixtape roof party sustainable fixie. Irony crucifix locavore Portland Intelligentsia. American Apparel Vice selvage, gentrify salvia Schlitz ethical pickled try-hard squid tattooed trust fund bespoke kitsch Godard. Portland cornhole blog trust fund photo booth. Artisan lomo direct trade pop-up, four loko taxidermy iPhone. Fashion axe aesthetic disrupt fanny pack bespoke, heirloom 3 wolf moon you probably haven't heard of them Intelligentsia listicle banjo.</p>
+            <p>Brooklyn sriracha stumptown pour-over authentic. Sriracha food truck Tumblr four dollar toast migas Schlitz crucifix, gentrify chia trust fund twee. Actually Echo Park cliche, beard cronut salvia twee swag. Pop-up aesthetic master cleanse meditation distillery, flannel Banksy. Quinoa Echo Park scenester Austin, pug selfies seitan gentrify PBR&B Brooklyn vegan Wes Anderson freegan single-origin coffee umami. Disrupt street art Godard, lumbersexual occupy pour-over vegan cardigan mixtape Carles Pitchfork migas aesthetic four dollar toast. Craft beer art party disrupt taxidermy tattooed.</p>
+            <p>You probably haven't heard of them normcore PBR Tumblr, pug sriracha 8-bit Odd Future Carles ethical lomo keffiyeh Blue Bottle PBR&B. Bitters chambray Vice street art, Pinterest chillwave PBR&B irony hella drinking vinegar Banksy fanny pack. Gentrify DIY kale chips, raw denim meditation distillery selvage scenester Kickstarter hoodie seitan heirloom flannel pickled. 3 wolf moon you probably haven't heard of them cray, Marfa literally narwhal DIY shabby chic. Ennui XOXO distillery occupy paleo, readymade bespoke keytar street art bitters. Farm-to-table try-hard meh craft beer XOXO polaroid Banksy. Pop-up mumblecore VHS, hashtag pour-over health goth food truck pickled Bushwick meh cliche beard lo-fi fashion axe semiotics.</p>
+            <p>Mumblecore master cleanse put a bird on it, pop-up lumbersexual Kickstarter fanny pack heirloom Vice meditation chambray fashion axe meh church-key. Photo booth kogi literally cronut fixie. Vinyl deep v Tumblr drinking vinegar Neutra, keytar scenester raw denim vegan mustache try-hard sartorial. Mixtape tattooed Neutra, Shoreditch meh leggings normcore cray fixie skateboard sartorial. Single-origin coffee narwhal lo-fi ugh. Stumptown messenger bag heirloom, cornhole PBR&B mumblecore occupy umami four loko. Fingerstache cliche pop-up XOXO.</p>
+            <p>Sriracha Helvetica Carles aesthetic cray. Crucifix pickled artisan cold-pressed. Sartorial cornhole selfies plaid Portland, synth biodiesel 90's normcore listicle you probably haven't heard of them. Deep v American Apparel four loko seitan meditation. 8-bit put a bird on it viral Godard blog. Bespoke pork belly kitsch Banksy put a bird on it, health goth Thundercats viral next level four dollar toast DIY. Butcher cardigan blog fixie.</p>
+          </div>
+        </div>
+      </div>
     </div>
     
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -104,7 +119,7 @@
           var word = "generated";
           return '<h3>Hello world</h3><p>This content was ' + word + ' dynamically.</p><button type="button" class="btn brand-orange-bg">' + $(this).data('pizza') + '</button>'
         },
-        classes: 'padding-2x medium'
+        classes: 'padding-2x'
       })
       
       $('.custom-trigger-2').modal({
