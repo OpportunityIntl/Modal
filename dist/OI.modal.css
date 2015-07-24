@@ -30,10 +30,13 @@
   overflow: auto;
 }
 #modals.overflow .modal {
-  top: 0;
+  top: -25%;
   transform: translateY(0);
   -moz-transform: translateY(0);
   -webkit-transform: translateY(0);
+}
+#modals.overflow .modal.show {
+  top: 0%;
 }
 
 .modal {

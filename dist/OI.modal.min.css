@@ -13,7 +13,8 @@
 #modals.show { background-color: rgba(0, 0, 0, 0.8); }
 #modals.animate { display: block; z-index: 2; }
 #modals.overflow { overflow: auto; }
-#modals.overflow .modal { top: 0; transform: translateY(0); -moz-transform: translateY(0); -webkit-transform: translateY(0); }
+#modals.overflow .modal { top: -25%; transform: translateY(0); -moz-transform: translateY(0); -webkit-transform: translateY(0); }
+#modals.overflow .modal.show { top: 0%; }
 
 .modal { display: none; position: relative; top: 25%; transform: translateY(-50%); -moz-transform: translateY(-50%); -webkit-transform: translateY(-50%); margin: 0 auto; width: 400px; background: #fff; opacity: 0; transition: top .5s, opacity .3s; -moz-transition: top .5s, opacity .3s; -webkit-transition: top .5s, opacity .3s; }
 @media (max-width: 440px) { .modal { width: 100%; } }

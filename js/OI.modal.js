@@ -64,12 +64,10 @@
     }
     
     function handleOverflow() {
-      if ($element) {
-        if ($element.outerHeight(true) > $(window).height()) {
-          $('#modals').addClass('overflow');
-        } else {
-          $('#modals').removeClass('overflow');
-        }
+      if ($element && $element.outerHeight(true) > $(window).height()) {
+        $('#modals').addClass('overflow');
+      } else {
+        $('#modals').removeClass('overflow');
       }
     }
     
@@ -148,12 +146,12 @@
       // add class to body to start modal overlay animation
       $('#modals').addClass('animate');
       $element.addClass('animate');
+      handleOverflow();
       
       // start modal animation shortly after overlay animation
       setTimeout(function() {
         $('#modals').addClass('show');
         $element.addClass('show');
-        handleOverflow();
       }, 100);
       
       // close modal when close button is clicked
@@ -199,6 +197,8 @@
         if ($element.data('destroyOnClose')) {
           $element.remove();
         }
+        
+        handleOverflow();
       }, 500);
     };
     
