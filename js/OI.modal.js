@@ -171,6 +171,8 @@
         }
       });
       
+      $('body').addClass('no-scroll');
+      
       return false;
     };
     
@@ -182,12 +184,10 @@
       $(document).unbind('keyup.modal');
       
       // start close animation on modal
-      $('#modals').removeClass('show');
       $element.removeClass('show');
       
       // start close animation on modal overlay shortly afterward
       setTimeout(function() {
-        $('#modals').removeClass('animate');
         $element.removeClass('animate');
         
         // if element was created dynamically, remove it on close
@@ -197,6 +197,8 @@
         
         handleOverflow();
       }, 500);
+      
+      $('body').removeClass('no-scroll');
     };
     
     // when trigger is clicked, set/create the modal and show it

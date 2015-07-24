@@ -6,6 +6,10 @@
   cursor: pointer;
 }
 
+body.no-scroll {
+  overflow: hidden;
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -75,7 +79,7 @@
   margin: 0;
   padding-bottom: 75%;
   position: relative;
-  overflow: scroll;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 .modal .modal-container .modal-content .iframe iframe {

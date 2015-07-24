@@ -11,89 +11,87 @@
     <script type="text/javascript">try {Typekit.load();} catch (e) {}</script>
   </head>
   <body>
-    <section class="viewport-height">
-      <div class="content-overlay middle padding-2x">
-        <div class="contained-680 centered">
-          <h1 class="large brand-purple align-center">OI Modals</h1>
-          <p class="large">
-            This is a demonstration and test of the many ways to trigger and
-            determine the content for modals within Opportunity International's
-            front-end framework. The library has jQuery and Weavr as dependencies.
-          </p>
-          
-          <hr>
-          
-          <h2 class="align-center">Modals from existing content</h2>
-          <p>
-            Modals can display content that already exists in the DOM. You don't
-            need to write any Javascript to make this happen, you'll just need to
-            have the markup for the modal already in the document and add a data
-            attribute on the trigger element.
-          </p>
-          <p class="align-center">
-            <a class="modal-trigger btn brand-purple-bg" data-modal="#modal1">Existing modal</a>
-          </p>
-          
-          <hr>
-          
-          <h2 class="align-center">Dynamic content</h2>
-          <p>
-            You can also create modals with dynamic content by declaring them
-            with a bit of Javascript.
-          </p>
-          <p class="align-center">
-            <a class="custom-trigger btn brand-pink-bg" data-pizza="cool beans">Dynamic content</a>
-          </p>
-          
-          <hr>
-          
-          <h2 class="align-center">iFrame Content</h2>
-          <p>
-            If the <code>data-modal</code> attribute is a URL, the URL will be
-            loaded in an <code>iframe</code> in the modal. If the URL is a Vimeo
-            or YouTube embed URL, it will be displayed in a 16:9 widescreen format.
-            Otherwise it defaults to a 4:3 format.
-          </p>
-          <p class="inline-buttons align-center">
-            <a class="modal-trigger btn brand-teal-bg" data-modal="http://opportunityintl.github.io/Weavr" data-modal-classes="large">iframe modal</a>
-            <a class="modal-trigger btn brand-orange-bg" data-modal="https://player.vimeo.com/video/129820312?title=0&byline=0&portrait=0" data-modal-classes="x-large">Video modal</a>
-          </p>
-          
-          <hr>
-          
-          <h2 class="align-center">Fullscreen Modals</h2>
-          <p>
-            Modals can be displayed "fullscreen" (i.e. full viewport), making them
-            more like an overlay.
-          </p>
-          <p class="inline-buttons align-center">
-            <a class="modal-trigger btn brand-purple-bg" data-modal="#fullscreen">Fullscreen modal</a>
-          </p>
-          
-          <hr>
-          
-          <h2 class="align-center">Modal Sizes</h2>
-          <p>
-            There are 4 pre-determined modal sizes (not including fullscreen).
-            By default, modals are "small" (400px wide). Other sizes can be set
-            by adding one of the following modifier classes:
-          </p>
-          <ul>
-            <li><code>.medium</code> : 480px</li>
-            <li><code>.large</code> : 680px</li>
-            <li><code>.x-large</code> : 960px</li>
-          </ul>
-          <p>
-            Because modals are sized with classes, you have the freedom to
-            create additional sizes by creating your own classes in your stylesheets.
-          </p>
-          <p class="align-center inline-buttons">
-            <a class="custom-trigger-2 btn brand-teal-bg" data-modal="#modal-small">Normal Modal</a>
-            <a class="custom-trigger-2 btn brand-green-bg" data-modal="#modal-medium">Medium Modal</a>
-            <a class="custom-trigger-2 btn brand-orange-bg" data-modal="#modal-large">Large Modal</a>
-            <a class="custom-trigger-2 btn brand-purple-bg" data-modal="#modal-x-large">X-large Modal</a>
-          </p>
-        </div>
+    <section class="padding-2x">
+      <div class="contained-680 centered">
+        <h1 class="large brand-purple align-center">OI Modals</h1>
+        <p class="large">
+          This is a demonstration and test of the many ways to trigger and
+          determine the content for modals within Opportunity International's
+          front-end framework. The library has jQuery and Weavr as dependencies.
+        </p>
+        
+        <hr>
+        
+        <h2 class="align-center">Modals from existing content</h2>
+        <p>
+          Modals can display content that already exists in the DOM. You don't
+          need to write any Javascript to make this happen, you'll just need to
+          have the markup for the modal already in the document and add a data
+          attribute on the trigger element.
+        </p>
+        <p class="align-center">
+          <a class="modal-trigger btn brand-purple-bg" data-modal="#modal1">Existing modal</a>
+        </p>
+        
+        <hr>
+        
+        <h2 class="align-center">Dynamic content</h2>
+        <p>
+          You can also create modals with dynamic content by declaring them
+          with a bit of Javascript.
+        </p>
+        <p class="align-center">
+          <a class="custom-trigger btn brand-pink-bg" data-pizza="cool beans">Dynamic content</a>
+        </p>
+        
+        <hr>
+        
+        <h2 class="align-center">iFrame Content</h2>
+        <p>
+          If the <code>data-modal</code> attribute is a URL, the URL will be
+          loaded in an <code>iframe</code> in the modal. If the URL is a Vimeo
+          or YouTube embed URL, it will be displayed in a 16:9 widescreen format.
+          Otherwise it defaults to a 4:3 format.
+        </p>
+        <p class="inline-buttons align-center">
+          <a class="modal-trigger btn brand-teal-bg" data-modal="http://opportunityintl.github.io/Weavr" data-modal-classes="large">iframe modal</a>
+          <a class="modal-trigger btn brand-orange-bg" data-modal="https://player.vimeo.com/video/129820312?title=0&byline=0&portrait=0" data-modal-classes="x-large">Video modal</a>
+        </p>
+        
+        <hr>
+        
+        <h2 class="align-center">Fullscreen Modals</h2>
+        <p>
+          Modals can be displayed "fullscreen" (i.e. full viewport), making them
+          more like an overlay.
+        </p>
+        <p class="inline-buttons align-center">
+          <a class="modal-trigger btn brand-purple-bg" data-modal="#fullscreen">Fullscreen modal</a>
+        </p>
+        
+        <hr>
+        
+        <h2 class="align-center">Modal Sizes</h2>
+        <p>
+          There are 4 pre-determined modal sizes (not including fullscreen).
+          By default, modals are "small" (400px wide). Other sizes can be set
+          by adding one of the following modifier classes:
+        </p>
+        <ul>
+          <li><code>.medium</code> : 480px</li>
+          <li><code>.large</code> : 680px</li>
+          <li><code>.x-large</code> : 960px</li>
+        </ul>
+        <p>
+          Because modals are sized with classes, you have the freedom to
+          create additional sizes by creating your own classes in your stylesheets.
+        </p>
+        <p class="align-center inline-buttons">
+          <a class="custom-trigger-2 btn brand-teal-bg" data-modal="#modal-small">Normal Modal</a>
+          <a class="custom-trigger-2 btn brand-green-bg" data-modal="#modal-medium">Medium Modal</a>
+          <a class="custom-trigger-2 btn brand-orange-bg" data-modal="#modal-large">Large Modal</a>
+          <a class="custom-trigger-2 btn brand-purple-bg" data-modal="#modal-x-large">X-large Modal</a>
+        </p>
       </div>
     </section>
     <footer class="padding-1x-2x brand-darkgray-bg">
