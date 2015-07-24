@@ -100,9 +100,9 @@
     }
     
     &.medium {
-      width: 500px;
+      width: 480px;
       
-      @media (max-width: 640px) {
+      @media (max-width: 520px) {
         width: 100%;
       }
     }
@@ -110,7 +110,7 @@
     &.large {
       width: 680px;
       
-      @media (max-width: 740px) {
+      @media (max-width: 720px) {
         width: 100%;
       }
     }

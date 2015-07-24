@@ -87,9 +87,9 @@
   height: 100%;
 }
 .modal .modal-container.medium {
-  width: 500px;
+  width: 480px;
 }
-@media (max-width: 640px) {
+@media (max-width: 520px) {
   .modal .modal-container.medium {
     width: 100%;
   }
@@ -97,7 +97,7 @@
 .modal .modal-container.large {
   width: 680px;
 }
-@media (max-width: 740px) {
+@media (max-width: 720px) {
   .modal .modal-container.large {
     width: 100%;
   }
