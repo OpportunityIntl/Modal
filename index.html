@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="weavr/OI.weavr.min.css">
     <link rel="stylesheet" href="dist/OI.modal.css">
 
+    <style>
+      pre, code {
+        padding: 3px 5px;
+        background-color: #efeeea;
+        color: #555;
+        margin: 0;
+        border-radius: 2px;
+        font-size: .875em;
+      }
+    </style>
+
     <script src="//use.typekit.net/owg8owx.js"></script>
     <script type="text/javascript">try {Typekit.load();} catch (e) {}</script>
   </head>
@@ -95,7 +106,7 @@
         
         <hr>
         
-        <h2>Callback functions</h2>
+        <h2 class="align-center">Callback functions</h2>
         <p>
           You can declare callback functions to execute before and after a modal
           closes or opens. You can prevent a modal from opening or closing by
@@ -301,16 +312,16 @@
       $('.before-open-demo').modal({
         source: '#before-open-demo',
         beforeOpen: function() {
-          console.log('beforeOpen() called');
+          console.log('beforeOpen() called on #' + $(this).attr('id'));
         },
         afterOpen: function() {
-          console.log('afterOpen() called');
+          console.log('afterOpen() called on #' + $(this).attr('id'));
         },
         beforeClose: function() {
-          console.log('beforeClose() called');
+          console.log('beforeClose() called on #' + $(this).attr('id'));
         },
         afterClose: function() {
-          console.log('afterClose() called');
+          console.log('afterClose() called on #' + $(this).attr('id'));
         }
       });
     </script>

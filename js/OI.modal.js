@@ -146,7 +146,7 @@
     };
     
     this.show = function() {
-      if (options.beforeOpen.call($trigger) === false) {
+      if (options.beforeOpen.call($element) === false) {
         return false;
       }
       
@@ -183,13 +183,13 @@
       
       // execute afterOpen callback after animation has finished
       setTimeout(function() {
-        options.afterOpen.call($trigger);
+        options.afterOpen.call($element);
       }, 600);
       return false;
     };
     
     this.hide = function() {
-      if (options.beforeClose.call($trigger) === false) {
+      if (options.beforeClose.call($element) === false) {
         return false;
       }
       
@@ -213,7 +213,7 @@
         
         handleOverflow();
         
-        options.afterClose.call($trigger);
+        options.afterClose.call($element);
       }, 500);
       
       $('body').removeClass('no-scroll');
