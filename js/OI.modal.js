@@ -227,8 +227,4 @@
     
     $(window).resize(handleOverflow);
   };
-  
-  // automatically set up triggers for elements with data-modal attribute
-  $('[data-modal]').modal();
-  
 }(jQuery));

@@ -301,6 +301,10 @@
     <script type="text/javascript" src="dist/OI.modal.min.js"></script>
 
     <script>
+      // automatically set up triggers for elements with data-modal attribute
+      $('[data-modal]').modal();
+    
+      // custom modal to demonstrate dynamic content
       $('.custom-trigger').modal({
         content: function() {
           var word = "generated";
@@ -309,6 +313,7 @@
         classes: 'padding-2x'
       });
       
+      // custom modal to demonstrate callback functions
       $('.before-open-demo').modal({
         source: '#before-open-demo',
         beforeOpen: function() {
