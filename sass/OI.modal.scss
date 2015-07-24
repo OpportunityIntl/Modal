@@ -20,15 +20,15 @@
   transition: background-color .3s;
   -webkit-transition: background-color .3s;
   -moz-transition: background-color .3s;
-}
-
-.show-modal #modals {
-  background-color: rgba(0,0,0,.8);
-}
-
-.animate-modal #modals {
-  display: block;
-  z-index: 2;
+  
+  &.show {
+    background-color: rgba(0,0,0,.8);
+  }
+  
+  &.animate {
+    display: block;
+    z-index: 2;
+  }
 }
 
 .modal {

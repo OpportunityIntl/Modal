@@ -19,12 +19,10 @@
   -webkit-transition: background-color .3s;
   -moz-transition: background-color .3s;
 }
-
-.show-modal #modals {
+#modals.show {
   background-color: rgba(0, 0, 0, 0.8);
 }
-
-.animate-modal #modals {
+#modals.animate {
   display: block;
   z-index: 2;
 }

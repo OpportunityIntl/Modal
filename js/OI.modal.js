@@ -136,12 +136,12 @@
     
     this.show = function() {
       // add class to body to start modal overlay animation
-      $('body').addClass('animate-modal');
+      $('#modals').addClass('animate');
       $element.addClass('animate');
       
       // start modal animation shortly after overlay animation
       setTimeout(function() {
-        $('body').addClass('show-modal');
+        $('#modals').addClass('show');
         $element.addClass('show');
       }, 100);
       
@@ -176,12 +176,12 @@
       $(document).unbind('keyup.modal');
       
       // start close animation on modal
-      $('body').removeClass('show-modal');
+      $('#modals').removeClass('show');
       $element.removeClass('show');
       
       // start close animation on modal overlay shortly afterward
       setTimeout(function() {
-        $('body').removeClass('animate-modal');
+        $('#modals').removeClass('animate');
         $element.removeClass('animate');
         
         // if element was created dynamically, remove it on close
