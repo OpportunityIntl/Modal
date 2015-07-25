@@ -145,7 +145,7 @@
       return $modal;
     };
     
-    this.show = function() {
+    this.open = function() {
       if (options.beforeOpen.call($element) === false) {
         return false;
       }
@@ -161,12 +161,12 @@
       
       // close modal when close button is clicked
       $element.find('.close').bind('click.modal', function() {
-        _this.hide();
+        _this.close();
       });
       
       // close modal when user clicks anywhere outside of modal
       $element.bind('click.modal', function() {
-        _this.hide();
+        _this.close();
       });
       $element.find('.modal-container').bind('click.modal', function(e) {
         e.stopPropagation(); // this prevents a click on the actual modal from triggering close
@@ -175,7 +175,7 @@
       // close modal with escape key
       $(document).bind('keyup.modal', function (e) {
         if (e.keyCode == '27') {
-          _this.hide();
+          _this.close();
         }
       });
       
@@ -188,7 +188,7 @@
       return false;
     };
     
-    this.hide = function() {
+    this.close = function() {
       if (options.beforeClose.call($element) === false) {
         return false;
       }
@@ -222,7 +222,7 @@
     // when trigger is clicked, set/create the modal and show it
     $trigger.click(function() {
       _this.setElement();
-      _this.show();
+      _this.open();
     });
     
     $(window).resize(handleOverflow);
