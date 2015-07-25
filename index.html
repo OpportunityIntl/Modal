@@ -6,15 +6,20 @@
     <title>OI Modals Test</title>
     <link rel="stylesheet" href="weavr/OI.weavr.min.css">
     <link rel="stylesheet" href="dist/OI.modal.css">
+    <link rel="stylesheet" href="demo/prism.css">
 
     <style>
-      pre, code {
+      code {
         padding: 3px 5px;
         background-color: #efeeea;
         color: #555;
         margin: 0;
         border-radius: 2px;
         font-size: .875em;
+      }
+      
+      pre code {
+        background-color: transparent;
       }
     </style>
 
@@ -41,9 +46,26 @@
           attribute on the trigger element.
         </p>
         <p class="align-center">
-          <a class="modal-trigger btn brand-purple-bg" data-modal="#modal1">Existing modal</a>
+          <a class="btn brand-purple-bg" data-modal="#modal1">Existing modal</a>
         </p>
         
+        <h3>Example:</h3>
+        
+        <pre><code class="language-markup">
+<a class="btn brand-purple-bg" data-modal="#modal1">
+  Existing modal
+</a>
+
+<div class="modal" id="modal1">
+  <div class="modal-container">
+    <button type="button" class="reset icon-cross close"></button>
+    <div class="modal-content padding-2x">
+      <!-- Modal content goes here -->
+    </div>
+  </div>
+</div>
+</code></pre>
+
         <hr>
         
         <h2 class="align-center">Dynamic content</h2>
@@ -54,6 +76,20 @@
         <p class="align-center">
           <a class="custom-trigger btn brand-pink-bg" data-pizza="cool beans">Dynamic content</a>
         </p>
+        <h3>Example:</h3>
+        <pre><code class="language-markup">
+<a class="custom-trigger btn brand-pink-bg" data-pizza="cool beans">Dynamic content</a>
+
+<script>
+  $('.custom-trigger').modal({
+    content: function() {
+      var word = "generated";
+      return '<h3>Hello world</h3><p>This content was ' + word + ' dynamically.</p><button type="button" class="btn brand-orange-bg">' + $(this).data('pizza') + '</button>'
+    },
+    classes: 'padding-2x'
+  });
+</script>
+</code></pre>
         
         <hr>
         
@@ -65,10 +101,16 @@
           Otherwise it defaults to a 4:3 format.
         </p>
         <p class="inline-buttons align-center">
-          <a class="modal-trigger btn brand-teal-bg" data-modal="http://opportunityintl.github.io/Weavr" data-modal-classes="large">iframe modal</a>
-          <a class="modal-trigger btn brand-orange-bg" data-modal="https://player.vimeo.com/video/129820312?title=0&byline=0&portrait=0" data-modal-classes="x-large">Video modal</a>
+          <a class="btn brand-teal-bg" data-modal="http://opportunityintl.github.io/Weavr" data-modal-classes="large">iframe modal</a>
+          <a class="btn brand-orange-bg" data-modal="https://player.vimeo.com/video/129820312?title=0&byline=0&portrait=0" data-modal-classes="x-large">Video modal</a>
         </p>
         
+        <h3>Example:</h3>
+        <pre><code class="language-markup">
+<a class="btn brand-teal-bg" data-modal="http://opportunityintl.github.io/Weavr" data-modal-classes="large">iframe modal</a>
+
+<a class="btn brand-orange-bg" data-modal="https://player.vimeo.com/video/129820312?title=0&byline=0&portrait=0" data-modal-classes="x-large">Video modal</a>
+</code></pre>
         <hr>
         
         <h2 class="align-center">Fullscreen Modals</h2>
@@ -299,6 +341,16 @@
 
     <script type="text/javascript" src="weavr/OI.weavr.min.js"></script>
     <script type="text/javascript" src="dist/OI.modal.min.js"></script>
+    
+    <script type="text/javascript">
+      // replaces < characters with &lt; to allow syntax highlighter to
+      // display HTML code instead of browser parsing and rendering it as HTML
+      $('code').each(function() {
+        $(this).html($(this).html().replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+      });
+    </script>
+    
+    <script type="text/javascript" src="demo/prism.js"></script>
 
     <script>
       // automatically set up triggers for elements with data-modal attribute
