@@ -5,6 +5,10 @@
     });
   };
   
+  $.modal = function(options) {
+    new Modal(null, options).open();
+  };
+  
   // define Modal class
   var Modal = function(triggerClass, options) {
     // cache this
@@ -146,6 +150,8 @@
     };
     
     this.open = function() {
+      _this.setElement();
+      
       if (options.beforeOpen.call($element) === false) {
         return false;
       }
@@ -221,7 +227,6 @@
     
     // when trigger is clicked, set/create the modal and show it
     $trigger.click(function() {
-      _this.setElement();
       _this.open();
     });
     
