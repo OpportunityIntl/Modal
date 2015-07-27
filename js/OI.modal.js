@@ -73,11 +73,22 @@
     
     function handleOverflow() {
       if ($element) {
-        if ($element.find('.modal-container').outerHeight(true) > $(window).height()) {
+        if ($element.find('.modal-container').outerHeight() > $(window).height()) {
           $element.addClass('overflow');
+          
+          if (!Modernizr.csstransforms) {
+            $element.find('.modal-container').css('margin-top', null);
+          }
         } else {
           $element.removeClass('overflow');
         }
+      }
+    }
+    
+    function verticalCenterAlign() {
+      if ($element) {
+        var $modalContainer = $element.find('.modal-container');
+        $modalContainer.css('margin-top', -$modalContainer.height() / 2);
       }
     }
     
@@ -163,6 +174,9 @@
       // start modal animation shortly after overlay animation
       setTimeout(function() {
         $element.addClass('show');
+        if (!Modernizr.csstransforms) {
+          verticalCenterAlign();
+        }
       }, 100);
       
       // close modal when close button is clicked
@@ -230,6 +244,12 @@
       _this.open();
     });
     
-    $(window).resize(handleOverflow);
+    $(window).resize(function() {
+      handleOverflow();
+      
+      if (!Modernizr.csstransforms) {
+        verticalCenterAlign();
+      }
+    });
   };
 }(jQuery));
