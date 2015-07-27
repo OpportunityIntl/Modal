@@ -27,6 +27,7 @@ body.no-scroll {
   
   &.show {
     background-color: rgba(0,0,0,.8);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC000000, endColorstr=#CC000000); /* IE8 fix */
     
     .modal-container {
       top: 50%;
