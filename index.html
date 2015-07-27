@@ -19,6 +19,7 @@
       }
       
       pre code {
+        padding: 0;
         background-color: transparent;
       }
     </style>
@@ -38,15 +39,18 @@
         
         <hr>
         
-        <h2 class="align-center">Modals from existing content</h2>
+        <h2 class="align-center">Basic Modal</h2>
         <p>
-          Modals can display content that already exists in the DOM. You don't
-          need to write any Javascript to make this happen, you'll just need to
-          have the markup for the modal already in the document and add a data
-          attribute on the trigger element.
+          To create a basic modal, you simply
         </p>
+        <ol>
+          <li>Add the markup to your document.</li>
+          <li>Add a <code>data-modal</code> attribute to the element that should trigger the modal.</li>
+          <li>Initialize the trigger with some Javascript.</li>
+        </ol>
+          
         <p class="align-center">
-          <a class="btn brand-purple-bg" data-modal="#modal1">Existing modal</a>
+          <a class="btn brand-purple-bg" data-modal="#modal1">Basic modal</a>
         </p>
         
         <h3>Example:</h3>
@@ -64,6 +68,10 @@
     </div>
   </div>
 </div>
+
+<script>
+  $('[data-modal]').modal();
+</script>
 </code></pre>
 
         <hr>
@@ -246,7 +254,7 @@
               Intelligentsia quinoa you probably haven't heard of them four dollar toast. You probably haven't heard of them aesthetic polaroid lumbersexual, fanny pack Truffaut next level lo-fi paleo post-ironic viral ennui pug.
             </p>
             <p class="align-center">
-              <a class="btn brand-teal-bg">Check out this button</a>
+              <a class="btn brand-green-bg">Check out this button</a>
             </p>
           </div>
         </div>
@@ -322,12 +330,34 @@
       <div class="modal-container">
         <button type="button" class="reset icon-cross close"></button>
         <div class="modal-content padding-2x">
-          <h2 class="brand-purple align-center">Modal Callback Demo</h2>
+          <h2 class="align-center">Modal Callback Demo</h2>
+          <p class="large">
+            You can't close this modal until you complete this math question:
+          </p>
           <p>
-            If you look at the browser console, you'll see the timing and result of the callbacks.
+            <strong>Q: What is 12 &times; 3?</strong>
+          </p>
+          <input type="number" name="sample-field" id="sample-field" placeholder="Enter answer here">
+          <p class="align-center">
+            <a class="btn brand-purple-bg close block">Close</a>
+          </p>
+          <hr>
+          <p class="small">
+            <strong>P.S.</strong> If you look at the browser console, you'll see the timing and result of the callbacks.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="javascript-triggered">
+      <div class="modal-container">
+        <button type="button" class="reset icon-cross close"></button>
+        <div class="modal-content padding-2x">
+          <h2 class="align-center">Javascript Trigger</h2>
+          <p>
+            This modal was triggered via Javascript.
           </p>
           <p class="align-center">
-            <a class="btn brand-orange-bg close">Close</a>
+            <a class="btn brand-green-bg close">Close</a>
           </p>
         </div>
       </div>
@@ -348,6 +378,12 @@
       $('code').each(function() {
         $(this).html($(this).html().replace(/</g, '&lt;').replace(/>/g, '&gt;'));
       });
+      
+      // suppress JS errors caused by console.log() on IE8 and 9
+      if (typeof console === 'undefined' || typeof console.log === 'undefined') {
+        window.console = {};
+        console.log = function() {};
+      }
     </script>
     
     <script type="text/javascript" src="demo/prism.js"></script>
@@ -360,7 +396,7 @@
       $('.custom-trigger').modal({
         content: function() {
           var word = "generated";
-          return '<h3>Hello world</h3><p>This content was ' + word + ' dynamically.</p><button type="button" class="btn brand-orange-bg">' + $(this).data('pizza') + '</button>'
+          return '<h3>Hello world</h3><p>This content was ' + word + ' dynamically.</p><button type="button" class="btn brand-pink-bg">' + $(this).data('pizza') + '</button>'
         },
         classes: 'padding-2x'
       });
@@ -375,6 +411,10 @@
           console.log('afterOpen() called on #' + $(this).attr('id'));
         },
         beforeClose: function() {
+          if ($(this).find('input#sample-field').val() !== '36') {
+            alert('Math is hard!');
+            return false;
+          }
           console.log('beforeClose() called on #' + $(this).attr('id'));
         },
         afterClose: function() {
