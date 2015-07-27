@@ -1,5 +1,5 @@
 # OI-Modals
-Lightweight modal library for Opportunity International. Built on top of jQuery and Weavr. Still in progress.
+Lightweight modal library for Opportunity International. Built on top of jQuery and Weavr. [View the demo here](http://opportunityintl.github.io/OI-Modals/). Still in progress. 
 
 ## Usage
 Load `OI.modal.min.js` and `OI.modal.min.css`.
