@@ -57,7 +57,7 @@
         
         <pre><code class="language-markup">
 <a class="btn brand-purple-bg" data-modal="#modal1">
-  Existing modal
+  Basic modal
 </a>
 
 <div class="modal" id="modal1">
@@ -165,6 +165,17 @@
         </p>
         <p class="align-center inline-buttons">
           <a class="btn brand-purple-bg before-open-demo">Try me</a>
+        </p>
+        
+        <hr>
+        
+        <h2 class="align-center">Open via Javascript</h2>
+        <p>
+          Modals can also be opened via Javascript instead of being attached
+          to click event handlers.
+        </p>
+        <p class="align-center">
+          <button id="triggered-modal" class="btn brand-green-bg" type="button">Click me</button>
         </p>
       </div>
     </section>
@@ -420,6 +431,12 @@
         afterClose: function() {
           console.log('afterClose() called on #' + $(this).attr('id'));
         }
+      });
+      
+      $('#triggered-modal').click(function() {
+        $.modal({
+          source: '#javascript-triggered'
+        });
       });
     </script>
   </body>
