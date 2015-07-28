@@ -148,6 +148,7 @@ body.no-scroll {
 }
 .modal button.close.fixed {
   position: fixed;
+  -webkit-transform: translateZ(0);
 }
 .modal button.close:hover {
   color: #333;

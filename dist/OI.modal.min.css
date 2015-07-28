@@ -34,5 +34,5 @@ body.no-scroll { overflow: hidden; }
 .modal .modal-container.fullscreen { position: absolute; top: 0; left: 0; width: 100%; }
 .modal .modal-container.fullscreen.show { top: 0; }
 .modal button.close { position: absolute; top: 0; right: 0; width: 40px; height: 40px; font-size: 24px; text-align: center; line-height: 40px; color: #8f8e8c; z-index: 1; }
-.modal button.close.fixed { position: fixed; }
+.modal button.close.fixed { position: fixed; -webkit-transform: translateZ(0); }
 .modal button.close:hover { color: #333; }
