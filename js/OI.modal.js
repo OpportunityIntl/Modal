@@ -75,9 +75,28 @@
       if ($element) {
         if ($element.find('.modal-container').outerHeight() > $(window).height()) {
           $element.addClass('overflow');
+          addScrollbarFix();
         } else {
           $element.removeClass('overflow');
+          removeScrollbarFix();
         }
+      }
+    }
+    
+    function addScrollbarFix() {
+      var scrollbarWidth = window.innerWidth - $('body').width();
+      var $fixedCloseIcon = $element.find('.close.fixed');
+      $('body').css('padding-right', scrollbarWidth).addClass('no-scroll');
+      if ($fixedCloseIcon.length > 0) {
+        $fixedCloseIcon.css('right', scrollbarWidth);
+      }
+    }
+    
+    function removeScrollbarFix() {
+      var $fixedCloseIcon = $element.find('.close.fixed');
+      $('body').removeClass('no-scroll').css('padding-right', '');
+      if ($fixedCloseIcon.length > 0) {
+        $fixedCloseIcon.css('right', '');
       }
     }
     
@@ -173,11 +192,13 @@
       
       // add class to body to start modal overlay animation
       $element.addClass('animate');
-      handleOverflow();
       
       // start modal animation shortly after overlay animation
       setTimeout(function() {
+        handleOverflow();
+        
         $element.addClass('show');
+        
         if (!Modernizr.csstransforms) {
           verticalCenterAlign();
         }
@@ -202,8 +223,6 @@
           _this.close();
         }
       });
-      
-      $('body').addClass('no-scroll');
       
       // execute afterOpen callback after animation has finished
       setTimeout(function() {
@@ -230,21 +249,20 @@
       setTimeout(function() {
         $element.removeClass('animate');
         
-        // if element was created dynamically, remove it on close
-        if ($element.data('destroyOnClose')) {
-          $element.remove();
-        }
+        handleOverflow();
         
         if (!Modernizr.rgba) {
           $element.find('.ie8-overlay').remove();
         }
         
-        handleOverflow();
-        
         options.afterClose.call($element);
+        
+        // if element was created dynamically, remove it on close
+        if ($element.data('destroyOnClose')) {
+          $element.remove();
+        }
       }, 500);
       
-      $('body').removeClass('no-scroll');
     };
     
     // when trigger is clicked, set/create the modal and show it
