@@ -128,7 +128,7 @@ body.no-scroll {
   top: 0;
 }
 .modal button.close {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   width: 40px;
@@ -138,6 +138,9 @@ body.no-scroll {
   line-height: 40px;
   color: #8f8e8c;
   z-index: 1;
+}
+.modal button.close.fixed {
+  position: fixed;
 }
 .modal button.close:hover {
   color: #333;

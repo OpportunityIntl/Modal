@@ -1,5 +1,5 @@
 /* OI-Modals v0.9.0 
- * Compiled 07-27-2015
+ * Compiled 07-28-2015
  * Copyright (c) 2015 Opportunity International 
  */
 
@@ -32,5 +32,6 @@ body.no-scroll { overflow: hidden; }
 @media (max-width: 1000px) { .modal .modal-container.x-large { width: 100%; } }
 .modal .modal-container.fullscreen { position: absolute; top: 0; left: 0; width: 100%; }
 .modal .modal-container.fullscreen.show { top: 0; }
-.modal button.close { position: fixed; top: 0; right: 0; width: 40px; height: 40px; font-size: 24px; text-align: center; line-height: 40px; color: #8f8e8c; z-index: 1; }
+.modal button.close { position: absolute; top: 0; right: 0; width: 40px; height: 40px; font-size: 24px; text-align: center; line-height: 40px; color: #8f8e8c; z-index: 1; }
+.modal button.close.fixed { position: fixed; }
 .modal button.close:hover { color: #333; }
