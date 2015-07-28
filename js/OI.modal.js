@@ -75,10 +75,6 @@
       if ($element) {
         if ($element.find('.modal-container').outerHeight() > $(window).height()) {
           $element.addClass('overflow');
-          
-          if (!Modernizr.csstransforms) {
-            $element.find('.modal-container').css('margin-top', null);
-          }
         } else {
           $element.removeClass('overflow');
         }
@@ -88,7 +84,11 @@
     function verticalCenterAlign() {
       if ($element) {
         var $modalContainer = $element.find('.modal-container');
-        $modalContainer.css('margin-top', -$modalContainer.height() / 2);
+        if ($element.hasClass('overflow')) {
+          $modalContainer.css('margin-top', '');
+        } else {
+          $modalContainer.css('margin-top', -$modalContainer.height() / 2);
+        }
       }
     }
     
