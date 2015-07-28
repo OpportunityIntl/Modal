@@ -27,7 +27,16 @@ body.no-scroll {
   
   &.show {
     background-color: rgba(0,0,0,.8);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC000000, endColorstr=#CC000000); /* IE8 fix */
+    
+    .ie8-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      filter: alpha(opacity=80);
+    }
     
     .modal-container {
       top: 50%;

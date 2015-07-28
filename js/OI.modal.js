@@ -167,6 +167,10 @@
         return false;
       }
       
+      if (!Modernizr.rgba) {
+        $element.prepend($('<div>', {class: 'ie8-overlay'}));
+      }
+      
       // add class to body to start modal overlay animation
       $element.addClass('animate');
       handleOverflow();
@@ -229,6 +233,10 @@
         // if element was created dynamically, remove it on close
         if ($element.data('destroyOnClose')) {
           $element.remove();
+        }
+        
+        if (!Modernizr.rgba) {
+          $element.find('.ie8-overlay').remove();
         }
         
         handleOverflow();
