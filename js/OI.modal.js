@@ -84,17 +84,34 @@
     }
     
     function addScrollbarFix() {
-      var scrollbarWidth = window.innerWidth - $('body').width();
-      var $fixedCloseIcon = $element.find('.close.fixed');
+      // get total window width, including scrollbar
+      var windowWidth = window.innerWidth;
+      
+      // IE8 workaround because window.innerWidth prop is missing
+      if (!windowWidth) {
+        var documentElementRect = document.documentElement.getBoundingClientRect();
+        windowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
+      }
+      
+      // calculate scrollbar width
+      var scrollbarWidth = windowWidth - $('body').width();
+      
+      // add padding-right to body to account for scrollbar
       $('body').css('padding-right', scrollbarWidth).addClass('no-scroll');
+      
+      // if close icon is fixed, adjust positioning to account for scrollbar
+      var $fixedCloseIcon = $element.find('.close.fixed');
       if ($fixedCloseIcon.length > 0) {
         $fixedCloseIcon.css('right', scrollbarWidth);
       }
     }
     
     function removeScrollbarFix() {
-      var $fixedCloseIcon = $element.find('.close.fixed');
+      // remove extra padding added to account for scrollbar
       $('body').removeClass('no-scroll').css('padding-right', '');
+      
+      // reset positioning of fixed close icon
+      var $fixedCloseIcon = $element.find('.close.fixed');
       if ($fixedCloseIcon.length > 0) {
         $fixedCloseIcon.css('right', '');
       }
