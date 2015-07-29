@@ -69,6 +69,18 @@ body.no-scroll {
     &.show {
       .modal-container {
         top: 0%;
+        
+        &:after {
+          content: '';
+          display: block;
+          position: absolute;
+          height: 20px;
+          width: 100%;
+        }
+        
+        &.fullscreen:after {
+          display: none;
+        }
       }
     }
   }

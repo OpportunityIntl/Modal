@@ -61,6 +61,16 @@ body.no-scroll {
 .modal.overflow.show .modal-container {
   top: 0%;
 }
+.modal.overflow.show .modal-container:after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 20px;
+  width: 100%;
+}
+.modal.overflow.show .modal-container.fullscreen:after {
+  display: none;
+}
 .modal .modal-container {
   display: none;
   position: relative;
