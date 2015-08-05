@@ -199,7 +199,7 @@
     this.open = function() {
       _this.setElement();
       
-      if (options.beforeOpen.call($element) === false) {
+      if (options.beforeOpen.call($element, _this) === false) {
         return false;
       }
       
@@ -243,13 +243,13 @@
       
       // execute afterOpen callback after animation has finished
       setTimeout(function() {
-        options.afterOpen.call($element);
+        options.afterOpen.call($element, _this);
       }, 600);
       return false;
     };
     
     this.close = function() {
-      if (options.beforeClose.call($element) === false) {
+      if (options.beforeClose.call($element, _this) === false) {
         return false;
       }
       
@@ -272,7 +272,7 @@
           $element.find('.ie8-overlay').remove();
         }
         
-        options.afterClose.call($element);
+        options.afterClose.call($element, _this);
         
         // if element was created dynamically, remove it on close
         if ($element.data('destroyOnClose')) {
