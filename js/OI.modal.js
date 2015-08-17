@@ -73,7 +73,7 @@
     
     function handleOverflow() {
       if ($element) {
-        if ($element.find('.modal-container').outerHeight() > $(window).height()) {
+        if ($element.find('.modal-container').outerHeight() >= $(window).height()) {
           $element.addClass('overflow');
           addScrollbarFix();
         } else {
