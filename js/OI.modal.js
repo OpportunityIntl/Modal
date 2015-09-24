@@ -285,6 +285,7 @@
     // when trigger is clicked, set/create the modal and show it
     $trigger.click(function() {
       _this.open();
+      return false;
     });
     
     $(window).resize(function() {
