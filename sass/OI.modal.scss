@@ -20,7 +20,7 @@ body.no-scroll {
   right: 0;
   height: 100%;
   padding: 20px;
-  z-index: -1;
+  z-index: 3;
   transition: background-color .3s;
   -webkit-transition: background-color .3s;
   -moz-transition: background-color .3s;
@@ -51,7 +51,6 @@ body.no-scroll {
   
   &.animate {
     display: block;
-    z-index: 2;
     
     .modal-container {
       display: block;

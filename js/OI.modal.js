@@ -25,6 +25,7 @@
       source: $trigger.data('modal') || null,
       content: null,
       type: $trigger.data('modal-type') || null,
+      zIndex: 3,
       beforeOpen: function() {},
       afterOpen: function() {},
       beforeClose: function() {},
@@ -128,6 +129,10 @@
       }
     }
     
+    function setZIndex() {
+      $element.css('z-index', options.zIndex);
+    }
+    
     this.type = options.type || determineType();
     
     // gets the DOM object for the modal and stores it in the $element variable
@@ -206,6 +211,8 @@
       if (!Modernizr.rgba) {
         $element.prepend($('<div>', {class: 'ie8-overlay'}));
       }
+      
+      setZIndex();
       
       // add class to body to start modal overlay animation
       $element.addClass('animate');
