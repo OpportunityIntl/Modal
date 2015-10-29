@@ -303,4 +303,6 @@
       }
     });
   };
+  
+  window.Modal = Modal;
 }(jQuery));
