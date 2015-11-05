@@ -27,7 +27,7 @@ body.no-scroll {
 
 .modal {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -182,6 +182,7 @@ body.no-scroll {
     &.fixed {
       position: fixed;
       -webkit-transform: translateZ(0); // fixes repaint issue with Chrome on retina screens
+      transform: translateZ(0);
     }
     
     &:hover {

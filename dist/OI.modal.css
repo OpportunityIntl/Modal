@@ -23,7 +23,7 @@ body.no-scroll #content {
 
 .modal {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -159,6 +159,7 @@ body.no-scroll #content {
 .modal button.close.fixed {
   position: fixed;
   -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .modal button.close:hover {
   color: #333;
