@@ -7,8 +7,10 @@
 /****************/
 [data-modal] { cursor: pointer; }
 
-body.no-scroll { position: fixed; height: 100%; width: 100%; top: 0; left: 0; overflow: hidden; }
-body.no-scroll #content { position: absolute; top: 0; left: 0; height: auto; width: 100%; }
+body.ios-no-scroll { position: fixed; height: 100%; width: 100%; top: 0; left: 0; overflow: hidden; }
+body.ios-no-scroll #content { position: absolute; top: 0; left: 0; height: auto; width: 100%; }
+
+body.no-scroll { overflow: hidden; }
 
 .modal { display: none; position: fixed; top: 0; left: 0; right: 0; height: 100%; padding: 20px; z-index: 3; transition: background-color .3s; -webkit-transition: background-color .3s; -moz-transition: background-color .3s; }
 .modal.show { background-color: rgba(0, 0, 0, 0.8); }

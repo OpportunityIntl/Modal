@@ -19,6 +19,7 @@
     var $element;
     var modal;
     var bodyScrollTop = 0;
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
     // set some options
     options = $.extend({
@@ -97,7 +98,11 @@
       var scrollbarWidth = windowWidth - $('body').width();
       
       // add padding-right to body to account for scrollbar
-      $('#content').css('padding-right', scrollbarWidth);
+      if (iOS) {
+        $('#content').css('padding-right', scrollbarWidth);
+      } else {
+        $('body').css('padding-right', scrollbarWidth);
+      }
       
       // if close icon is fixed, adjust positioning to account for scrollbar
       var $fixedCloseIcon = $element.find('.close.fixed');
@@ -108,7 +113,11 @@
     
     function removeScrollbarFix() {
       // remove extra padding added to account for scrollbar
-      $('#content').css('padding-right', '');
+      if (iOS) {
+        $('#content').css('padding-right', '');
+      } else {
+        $('body').css('padding-right', '');
+      }
       
       // reset positioning of fixed close icon
       var $fixedCloseIcon = $element.find('.close.fixed');
@@ -119,18 +128,25 @@
     
     function disableBackgroundScroll() {
       addScrollbarFix();
-      
-      bodyScrollTop = $(window).scrollTop();
-      $('body').addClass('no-scroll');
-      $('#content').css('top', -bodyScrollTop);
+      if (iOS) {
+        bodyScrollTop = $(window).scrollTop();
+        $('body').addClass('ios-no-scroll');
+        $('#content').css('top', -bodyScrollTop);
+      } else {
+        $('body').addClass('no-scroll');
+      }
     }
     
     function enableBackgroundScroll() {
       setTimeout(function() {
         removeScrollbarFix();
-        $('body').removeClass('no-scroll');
-        $(window).scrollTop(bodyScrollTop);
-        $('#content').css('top', 0);
+        if (iOS) {
+          $('body').removeClass('ios-no-scroll');
+          $(window).scrollTop(bodyScrollTop);
+          $('#content').css('top', 0);
+        } else {
+          $('body').removeClass('no-scroll');
+        }
       }, 500);
     }
     

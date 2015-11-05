@@ -8,7 +8,7 @@
   cursor: pointer;
 }
 
-body.no-scroll {
+body.ios-no-scroll {
   position: fixed;
   height: 100%;
   width: 100%;
@@ -23,6 +23,10 @@ body.no-scroll {
     height: auto;
     width: 100%;
   }
+}
+
+body.no-scroll {
+  overflow: hidden;
 }
 
 .modal {
