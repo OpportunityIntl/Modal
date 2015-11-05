@@ -31,8 +31,16 @@
       beforeOpen: function() {},
       afterOpen: function() {},
       beforeClose: function() {},
-      afterClose: function() {}
+      afterClose: function() {},
+      fixedElements: []
     }, options);
+    
+    var fixedElements = $.merge([
+      {
+        element: $('.modal button.close.fixed'),
+        property: 'right'
+      }
+    ], options.fixedElements);
     
     // if content is declared as a function, execute it to get a string
     if (typeof options.content === 'function') {
@@ -104,11 +112,9 @@
         $('body').css('padding-right', scrollbarWidth);
       }
       
-      // if close icon is fixed, adjust positioning to account for scrollbar
-      var $fixedCloseIcon = $element.find('.close.fixed');
-      if ($fixedCloseIcon.length > 0) {
-        $fixedCloseIcon.css('right', scrollbarWidth);
-      }
+      $.each(fixedElements, function(index, fixedElement) {
+        fixedElement.element.css(fixedElement.property, parseInt(fixedElement.element.css(fixedElement.property)) + scrollbarWidth);
+      });
     }
     
     function removeScrollbarFix() {
@@ -119,11 +125,9 @@
         $('body').css('padding-right', '');
       }
       
-      // reset positioning of fixed close icon
-      var $fixedCloseIcon = $element.find('.close.fixed');
-      if ($fixedCloseIcon.length > 0) {
-        $fixedCloseIcon.css('right', '');
-      }
+      $.each(fixedElements, function(index, fixedElement) {
+        fixedElement.element.css(fixedElement.property, '');
+      });
     }
     
     function disableBackgroundScroll() {
