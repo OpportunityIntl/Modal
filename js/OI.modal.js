@@ -187,6 +187,8 @@
           
           break;
       }
+      
+      $element.data('modal', _this);
     };
     
     // create the modal element and add it to the DOM
