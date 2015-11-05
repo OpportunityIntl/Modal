@@ -18,6 +18,7 @@
     var $trigger = $(triggerClass);
     var $element;
     var modal;
+    var bodyScrollTop = 0;
 
     // set some options
     options = $.extend({
@@ -76,10 +77,8 @@
       if ($element) {
         if ($element.find('.modal-container').outerHeight() >= $(window).height()) {
           $element.addClass('overflow');
-          addScrollbarFix();
         } else {
           $element.removeClass('overflow');
-          removeScrollbarFix();
         }
       }
     }
@@ -98,7 +97,7 @@
       var scrollbarWidth = windowWidth - $('body').width();
       
       // add padding-right to body to account for scrollbar
-      $('body').css('padding-right', scrollbarWidth).addClass('no-scroll');
+      $('#content').css('padding-right', scrollbarWidth);
       
       // if close icon is fixed, adjust positioning to account for scrollbar
       var $fixedCloseIcon = $element.find('.close.fixed');
@@ -109,13 +108,30 @@
     
     function removeScrollbarFix() {
       // remove extra padding added to account for scrollbar
-      $('body').removeClass('no-scroll').css('padding-right', '');
+      $('#content').css('padding-right', '');
       
       // reset positioning of fixed close icon
       var $fixedCloseIcon = $element.find('.close.fixed');
       if ($fixedCloseIcon.length > 0) {
         $fixedCloseIcon.css('right', '');
       }
+    }
+    
+    function disableBackgroundScroll() {
+      addScrollbarFix();
+      
+      bodyScrollTop = $(window).scrollTop();
+      $('body').addClass('no-scroll');
+      $('#content').css('top', -bodyScrollTop);
+    }
+    
+    function enableBackgroundScroll() {
+      setTimeout(function() {
+        removeScrollbarFix();
+        $('body').removeClass('no-scroll');
+        $(window).scrollTop(bodyScrollTop);
+        $('#content').css('top', 0);
+      }, 500);
     }
     
     function verticalCenterAlign() {
@@ -212,6 +228,8 @@
         $element.prepend($('<div>', {class: 'ie8-overlay'}));
       }
       
+      disableBackgroundScroll();
+      
       setZIndex();
       
       // add class to body to start modal overlay animation
@@ -259,6 +277,8 @@
       if (options.beforeClose.call($element, _this) === false) {
         return false;
       }
+      
+      enableBackgroundScroll();
       
       // unbind event handlers that close the modal
       $element.find('.close').unbind('click.modal');

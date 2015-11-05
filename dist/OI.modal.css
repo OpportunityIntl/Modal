@@ -6,12 +6,24 @@
 }
 
 body.no-scroll {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
   overflow: hidden;
+}
+body.no-scroll #content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: auto;
+  width: 100%;
 }
 
 .modal {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
