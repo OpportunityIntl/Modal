@@ -5,6 +5,16 @@
     });
   };
   
+  $.fn.modal.defaults = {
+    content: null,
+    zIndex: 3,
+    beforeOpen: function() {},
+    afterOpen: function() {},
+    beforeClose: function() {},
+    afterClose: function() {},
+    fixedElements: []
+  };
+  
   $.modal = function(options) {
     new Modal(null, options).open();
   };
@@ -20,20 +30,15 @@
     var modal;
     var bodyScrollTop = 0;
     var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-    // set some options
-    options = $.extend({
+  
+    var dataAttributeDefaults = {
       classes: $trigger.data('modal-classes') || null,
       source: $trigger.data('modal') || null,
-      content: null,
       type: $trigger.data('modal-type') || null,
-      zIndex: 3,
-      beforeOpen: function() {},
-      afterOpen: function() {},
-      beforeClose: function() {},
-      afterClose: function() {},
-      fixedElements: []
-    }, options);
+    };
+    
+    // extend default options with per-instance options
+    options = $.extend({}, dataAttributeDefaults, $.fn.modal.defaults, options);
     
     var fixedElements = $.merge([
       {

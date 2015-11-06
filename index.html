@@ -442,15 +442,15 @@ $('.custom-trigger').modal({
     <script type="text/javascript" src="demo/prism.js"></script>
 
     <script>
+      $.fn.modal.defaults.fixedElements = [
+        {
+          element: $('nav'),
+          property: 'margin-right'
+        }
+      ]
+    
       // automatically set up triggers for elements with data-modal attribute
-      $('[data-modal]').modal({
-        fixedElements: [
-          {
-            element: $('nav'),
-            property: 'margin-right'
-          }
-        ]
-      });
+      $('[data-modal]').modal();
     
       // custom modal to demonstrate dynamic content
       $('.custom-trigger').modal({
