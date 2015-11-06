@@ -10,6 +10,7 @@
   $.fn.modal.defaults = {
     content: null,
     zIndex: 3,
+    closeable: true,
     beforeOpen: function() {},
     afterOpen: function() {},
     beforeClose: function() {},
@@ -350,30 +351,44 @@
         }
       }, 100);
       
-      // close modal when close button is clicked
+      // close modal when any element inside the modal with a class
+      // of 'close' is clicked
       _this.element.find('.close').bind('click.modal', function() {
         _this.close();
       });
       
-      // close modal when user clicks anywhere outside of modal
-      _this.element.bind('click.modal', function() {
-        _this.close();
-      });
-      _this.element.find('.modal-container').bind('click.modal', function(e) {
-        e.stopPropagation(); // this prevents a click on the actual modal from triggering close
-      });
-      
-      // close modal with escape key
-      $(document).bind('keyup.modal', function (e) {
-        if (e.keyCode == '27') {
+      // If the modal is configured to be closable, attach event handlers so
+      // that modal can be closed by clicking outside of the modal or by
+      // pressing the escape key. If it's not closeable, hide the close button
+      // in the top righthand corner of the modal (if it already exists). Note
+      // that any other element with a class of 'close' in the modal content
+      // will still trigger the modal to close.
+      console.log(_this.options.closeable);
+      if (_this.options.closeable) {
+        // close modal when user clicks anywhere outside of modal
+        _this.element.bind('click.modal', function() {
           _this.close();
-        }
-      });
+        });
+        _this.element.find('.modal-container').bind('click.modal', function(e) {
+          e.stopPropagation(); // this prevents a click on the actual modal from triggering close
+        });
+        
+        // close modal with escape key
+        $(document).bind('keyup.modal', function (e) {
+          if (e.keyCode == '27') {
+            _this.close();
+          }
+        });
+      } else {
+        // hide close button if it exists in the markup
+        _this.element.find('button.close').hide();
+      }
       
       // execute afterOpen callback after animation has finished
       setTimeout(function() {
         _this.options.afterOpen.call(_this.element, _this);
       }, 600);
+      
       return false;
     };
     
