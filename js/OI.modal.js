@@ -27,31 +27,41 @@
     // Cache reference to class instance
     var _this = this;
     
-    /**********************************
-     * Private properties and methods *
-     **********************************/
+    /*********************
+     * Public properties *
+     *********************/
     
     // The element(s) that will trigger the modal on click
-    var $trigger = $(triggerClass);
+    this.trigger = $(triggerClass);
+     
+    // The modal element itself. Will be set/created later.
+    this.element = null;
     
-    // The modal element itself
-    var $element;
+    // Default options that are based on data-attributes of trigger
+    var dataAttributeDefaults = {
+      classes: _this.trigger.data('modal-classes') || null,
+      source: _this.trigger.data('modal') || null,
+      type: _this.trigger.data('modal-type') || null,
+    };
+    
+    // Extend default options with per-instance options
+    this.options = $.extend({}, dataAttributeDefaults, $.fn.modal.defaults, options);
+    
+    // If content is declared as a function, execute it to get a string.
+    this.content = typeof this.options.content === 'function'? this.options.content.call(this.trigger) : this.options.content;
+    
+    // The modal "type". Can be be 'url', 'video', 'content', or 'dynamic'. 
+    this.type = this.options.type || determineType();
+    
+    /**********************
+     * Private properties *
+     **********************/
     
     // Current scrollTop of the body/window (used for iOS no-scroll fix)
     var bodyScrollTop = 0;
     
     // Boolean to identify iOS devices for no-scroll fix
     var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  
-    // Default options that are based on data-attributes of trigger
-    var dataAttributeDefaults = {
-      classes: $trigger.data('modal-classes') || null,
-      source: $trigger.data('modal') || null,
-      type: $trigger.data('modal-type') || null,
-    };
-    
-    // Extend default options with per-instance options
-    options = $.extend({}, dataAttributeDefaults, $.fn.modal.defaults, options);
     
     // Extend array of fixed elements that will be offset as part of scrollbar fix
     var fixedElements = $.merge([
@@ -59,12 +69,11 @@
         element: $('.modal button.close.fixed'),
         property: 'right'
       }
-    ], options.fixedElements);
+    ], this.options.fixedElements);
     
-    // If content is declared as a function, execute it to get a string.
-    if (typeof options.content === 'function') {
-      options.content = options.content.call($trigger);
-    }
+    /*******************
+     * Private methods *
+     *******************/
     
     // Determines the modal type. For modal sources that are a
     // url, possible types are 'video' and 'url'. If modal source is not a url,
@@ -93,27 +102,27 @@
     
     // Determines if modal source is a url
     function isUrl() {
-      return /^https?:\/\//.test(options.source);
+      return /^https?:\/\//.test(_this.options.source);
     }
      
     // Determines if modal source is a video
     function isVideo() {
-      return /^https?:\/\/(www\.youtube|player\.vimeo)/.test(options.source);
+      return /^https?:\/\/(www\.youtube|player\.vimeo)/.test(_this.options.source);
     }
     
     // Determines if modal source is an element and already in the DOM
     function existsInDOM() {
-      return ($(options.source).length > 0) ? true : false;
+      return ($(_this.options.source).length > 0) ? true : false;
     }
     
     // Determines if modal is taller than the window and make
     // the modal scrollable
     function handleOverflow() {
-      if ($element) {
-        if ($element.find('.modal-container').outerHeight() >= $(window).height()) {
-          $element.addClass('overflow');
+      if (_this.element) {
+        if (_this.element.find('.modal-container').outerHeight() >= $(window).height()) {
+          _this.element.addClass('overflow');
         } else {
-          $element.removeClass('overflow');
+          _this.element.removeClass('overflow');
         }
       }
     }
@@ -194,9 +203,9 @@
     // Vertically center aligns the modal for browsers that don't support
     // CSS transformations
     function verticalCenterAlign() {
-      if ($element) {
-        var $modalContainer = $element.find('.modal-container');
-        if ($element.hasClass('overflow')) {
+      if (_this.element) {
+        var $modalContainer = _this.element.find('.modal-container');
+        if (_this.element.hasClass('overflow')) {
           $modalContainer.css('margin-top', '');
         } else {
           $modalContainer.css('margin-top', -$modalContainer.height() / 2);
@@ -206,7 +215,7 @@
     
     // Sets the z-index of the modal
     function setZIndex() {
-      $element.css('z-index', options.zIndex);
+      _this.element.css('z-index', _this.options.zIndex);
     }
     
     // Sets up the markup required to disable body scrolling in iOS Safari
@@ -216,13 +225,81 @@
       }
     }
     
+    // Gets the DOM object for the modal and stores it in the public element property
+    function setElement() {
+      var iframe;
+      
+      switch(_this.type) {
+        case 'video':
+          // if the url is a video embed (YouTube or Vimeo), wrap the iframe in
+          // Weavr's .flex-video class to make it responsive and force a 16:9 ratio
+          iframe = $('<div>', {class: 'flex-video'});
+          iframe.append($('<iframe>', {src: _this.trigger.data('modal'), frameborder: 0}));
+          
+          _this.options.content = iframe;
+          
+          _this.element = createElement();
+          break;
+        case 'url':
+          // if the url is not a video, wrap the iframe in generic .iframe class
+          // to make it responsive and force a 4:3 ratio
+          iframe = $('<div>', {class: 'iframe'});
+          iframe.append($('<iframe>', {src: _this.trigger.data('modal'), frameborder: 0}));
+          
+          _this.options.content = iframe;
+          
+          _this.element = createElement();
+          break;
+        case 'content':
+          // if the modal source is a DOM object that already exists, use that
+          _this.element = $(_this.options.source);
+          
+          break;
+        case 'dynamic':
+          // otherwise, create a new element
+          _this.element = createElement();
+          
+          break;
+      }
+      
+      _this.element.data('modal', _this);
+    }
+    
+    // Creates the modal element and adds it to the document
+    function createElement() {
+      // create new div with .modal class
+      var $modal = $('<div>', {class: 'modal'});
+      
+      $modal.append($('<div>', {class: 'modal-container'}));
+      
+      // add the close button
+      $modal.find('.modal-container').append($('<button>', {type: 'button', class: 'reset icon-cross close'}));
+      
+      // add the .modal-content div
+      $modal.find('.modal-container').append($('<div>', {class: 'modal-content'}));
+      
+      // add classes, if they exist, to the .modal div
+      if (_this.options.classes) $modal.find('.modal-container').addClass(_this.options.classes);
+      
+      // add content inside .modal-content div
+      $modal.find('.modal-content').append(_this.options.content);
+      
+      // add modal element to the #modals div
+      $('body').append($modal);
+      
+      // flag modal element to be destroyed when closed
+      $modal.data('destroyOnClose', true);
+      
+      return $modal;
+    }
+    
     // A few things that need to happen when the modal is initialized
     function initialize() {
       // Wrap the body content in a div for iOS Safari to disable body scroll
       setUpiOSfix();
       
       // When trigger is clicked, set/create the modal and open it
-      $trigger.click(function() {
+      _this.trigger.click(function() {
         _this.open();
         return false;
       });
@@ -239,91 +316,20 @@
       });
     }
     
-    /*********************************
-     * Public properties and methods *
-     *********************************/
-    
-    // The modal "type". Can be be 'url', 'video', 'content', or 'dynamic'. 
-    this.type = options.type || determineType();
-    
-    // Gets the DOM object for the modal and stores it in the $element variable
-    this.setElement = function() {
-      var iframe;
-      
-      switch(_this.type) {
-        case 'video':
-          // if the url is a video embed (YouTube or Vimeo), wrap the iframe in
-          // Weavr's .flex-video class to make it responsive and force a 16:9 ratio
-          iframe = $('<div>', {class: 'flex-video'});
-          iframe.append($('<iframe>', {src: $trigger.data('modal'), frameborder: 0}));
-          
-          options.content = iframe;
-          
-          $element = _this.createElement();
-          break;
-        case 'url':
-          // if the url is not a video, wrap the iframe in generic .iframe class
-          // to make it responsive and force a 4:3 ratio
-          iframe = $('<div>', {class: 'iframe'});
-          iframe.append($('<iframe>', {src: $trigger.data('modal'), frameborder: 0}));
-          
-          options.content = iframe;
-          
-          $element = _this.createElement();
-          break;
-        case 'content':
-          // if the modal source is a DOM object that already exists, use that
-          $element = $(options.source);
-          
-          break;
-        case 'dynamic':
-          // otherwise, create a new element
-          $element = _this.createElement();
-          
-          break;
-      }
-      
-      $element.data('modal', _this);
-    };
-    
-    // Creates the modal element and adds it to the document
-    this.createElement = function() {
-      // create new div with .modal class
-      var $modal = $('<div>', {class: 'modal'});
-      
-      $modal.append($('<div>', {class: 'modal-container'}));
-      
-      // add the close button
-      $modal.find('.modal-container').append($('<button>', {type: 'button', class: 'reset icon-cross close'}));
-      
-      // add the .modal-content div
-      $modal.find('.modal-container').append($('<div>', {class: 'modal-content'}));
-      
-      // add classes, if they exist, to the .modal div
-      if (options.classes) $modal.find('.modal-container').addClass(options.classes);
-      
-      // add content inside .modal-content div
-      $modal.find('.modal-content').append(options.content);
-      
-      // add modal element to the #modals div
-      $('body').append($modal);
-      
-      // flag modal element to be destroyed when closed
-      $modal.data('destroyOnClose', true);
-      
-      return $modal;
-    };
+    /******************
+     * Public methods *
+     ******************/
     
     // Opens the modal
     this.open = function() {
-      _this.setElement();
+      setElement();
       
-      if (options.beforeOpen.call($element, _this) === false) {
+      if (_this.options.beforeOpen.call(_this.element, _this) === false) {
         return false;
       }
       
       if (!Modernizr.rgba) {
-        $element.prepend($('<div>', {class: 'ie8-overlay'}));
+        _this.element.prepend($('<div>', {class: 'ie8-overlay'}));
       }
       
       disableBackgroundScroll();
@@ -331,13 +337,13 @@
       setZIndex();
       
       // add class to body to start modal overlay animation
-      $element.addClass('animate');
+      _this.element.addClass('animate');
       
       // start modal animation shortly after overlay animation
       setTimeout(function() {
         handleOverflow();
         
-        $element.addClass('show');
+        _this.element.addClass('show');
         
         if (!Modernizr.csstransforms) {
           verticalCenterAlign();
@@ -345,15 +351,15 @@
       }, 100);
       
       // close modal when close button is clicked
-      $element.find('.close').bind('click.modal', function() {
+      _this.element.find('.close').bind('click.modal', function() {
         _this.close();
       });
       
       // close modal when user clicks anywhere outside of modal
-      $element.bind('click.modal', function() {
+      _this.element.bind('click.modal', function() {
         _this.close();
       });
-      $element.find('.modal-container').bind('click.modal', function(e) {
+      _this.element.find('.modal-container').bind('click.modal', function(e) {
         e.stopPropagation(); // this prevents a click on the actual modal from triggering close
       });
       
@@ -366,43 +372,43 @@
       
       // execute afterOpen callback after animation has finished
       setTimeout(function() {
-        options.afterOpen.call($element, _this);
+        _this.options.afterOpen.call(_this.element, _this);
       }, 600);
       return false;
     };
     
     // Closes the modal
     this.close = function() {
-      if (options.beforeClose.call($element, _this) === false) {
+      if (_this.options.beforeClose.call(_this.element, _this) === false) {
         return false;
       }
       
       enableBackgroundScroll();
       
       // unbind event handlers that close the modal
-      $element.find('.close').unbind('click.modal');
+      _this.element.find('.close').unbind('click.modal');
       $('#modals').unbind('click.modal');
-      $element.unbind('click.modal');
+      _this.element.unbind('click.modal');
       $(document).unbind('keyup.modal');
       
       // start close animation on modal
-      $element.removeClass('show');
+      _this.element.removeClass('show');
       
       // start close animation on modal overlay shortly afterward
       setTimeout(function() {
-        $element.removeClass('animate');
+        _this.element.removeClass('animate');
         
         handleOverflow();
         
         if (!Modernizr.rgba) {
-          $element.find('.ie8-overlay').remove();
+          _this.element.find('.ie8-overlay').remove();
         }
         
-        options.afterClose.call($element, _this);
+        _this.options.afterClose.call(_this.element, _this);
         
         // if element was created dynamically, remove it on close
-        if ($element.data('destroyOnClose')) {
-          $element.remove();
+        if (_this.element.data('destroyOnClose')) {
+          _this.element.remove();
         }
       }, 500);
     };
@@ -410,7 +416,7 @@
     /*********************************
      * Let's get this party started! *
      *********************************/
-    this.init();
+    initialize();
   };
   
   window.Modal = Modal;
