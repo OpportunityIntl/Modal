@@ -5,6 +5,8 @@
     });
   };
   
+  // Plugin defaults. Can be overriden or extended in your project to set different
+  // defaults for all modals.
   $.fn.modal.defaults = {
     content: null,
     zIndex: 3,
@@ -15,31 +17,43 @@
     fixedElements: []
   };
   
+  // jQuery function to intitialize and open a modal programatically
   $.modal = function(options) {
     new Modal(null, options).open();
   };
   
-  // define Modal class
+  // Define the Modal class
   var Modal = function(triggerClass, options) {
-    // cache this
+    // Cache reference to class instance
     var _this = this;
     
-    // declare some variables we're going to need
+    /**********************************
+     * Private properties and methods *
+     **********************************/
+    
+    // The element(s) that will trigger the modal on click
     var $trigger = $(triggerClass);
+    
+    // The modal element itself
     var $element;
-    var modal;
+    
+    // Current scrollTop of the body/window (used for iOS no-scroll fix)
     var bodyScrollTop = 0;
+    
+    // Boolean to identify iOS devices for no-scroll fix
     var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   
+    // Default options that are based on data-attributes of trigger
     var dataAttributeDefaults = {
       classes: $trigger.data('modal-classes') || null,
       source: $trigger.data('modal') || null,
       type: $trigger.data('modal-type') || null,
     };
     
-    // extend default options with per-instance options
+    // Extend default options with per-instance options
     options = $.extend({}, dataAttributeDefaults, $.fn.modal.defaults, options);
     
+    // Extend array of fixed elements that will be offset as part of scrollbar fix
     var fixedElements = $.merge([
       {
         element: $('.modal button.close.fixed'),
@@ -47,11 +61,16 @@
       }
     ], options.fixedElements);
     
-    // if content is declared as a function, execute it to get a string
+    // If content is declared as a function, execute it to get a string.
     if (typeof options.content === 'function') {
       options.content = options.content.call($trigger);
     }
     
+    // Determines the modal type. For modal sources that are a
+    // url, possible types are 'video' and 'url'. If modal source is not a url,
+    // possible types are 'content' (meaning the modal markup already exists in 
+    // the document) or 'dynamic' (meaning the modal will be generated and inserted)
+    // into the document by this plugin).
     function determineType() {
       var type;
       
@@ -72,21 +91,23 @@
       return type;
     }
     
-    // determines if modal source is a url
+    // Determines if modal source is a url
     function isUrl() {
       return /^https?:\/\//.test(options.source);
     }
      
-    // determines if modal source is a video
+    // Determines if modal source is a video
     function isVideo() {
       return /^https?:\/\/(www\.youtube|player\.vimeo)/.test(options.source);
     }
     
-    // determines if modal source is an element and already in the DOM
+    // Determines if modal source is an element and already in the DOM
     function existsInDOM() {
       return ($(options.source).length > 0) ? true : false;
     }
     
+    // Determines if modal is taller than the window and make
+    // the modal scrollable
     function handleOverflow() {
       if ($element) {
         if ($element.find('.modal-container').outerHeight() >= $(window).height()) {
@@ -97,6 +118,9 @@
       }
     }
     
+    // Compensates for scrollbar width when modal is opened.
+    // Without this, the page changes width and content shifts in browsers and
+    // operating systems that display scrollbars.
     function addScrollbarFix() {
       // get total window width, including scrollbar
       var windowWidth = window.innerWidth;
@@ -110,18 +134,22 @@
       // calculate scrollbar width
       var scrollbarWidth = windowWidth - $('body').width();
       
-      // add padding-right to body to account for scrollbar
+      // add padding to account for space previously occupied by scrollbar
       if (iOS) {
         $('#content').css('padding-right', scrollbarWidth);
       } else {
         $('body').css('padding-right', scrollbarWidth);
       }
       
+      // adjust offset of fixed elements defined in options
       $.each(fixedElements, function(index, fixedElement) {
         fixedElement.element.css(fixedElement.property, parseInt(fixedElement.element.css(fixedElement.property)) + scrollbarWidth);
       });
     }
     
+    // Resets the scrollbar fix put in place to prevent content
+    // shifts when modal is opened in browser and operating systems that
+    // display scrollbars
     function removeScrollbarFix() {
       // remove extra padding added to account for scrollbar
       if (iOS) {
@@ -130,11 +158,14 @@
         $('body').css('padding-right', '');
       }
       
+      // reset offset of fixed elements defined in options
       $.each(fixedElements, function(index, fixedElement) {
         fixedElement.element.css(fixedElement.property, '');
       });
     }
     
+    // Disables background scrolling. iOS Safari is a huge pain and requires
+    // a messy workaround to disable background scrolling.
     function disableBackgroundScroll() {
       addScrollbarFix();
       if (iOS) {
@@ -146,6 +177,7 @@
       }
     }
     
+    // Reenables background scrolling.
     function enableBackgroundScroll() {
       setTimeout(function() {
         removeScrollbarFix();
@@ -159,6 +191,8 @@
       }, 500);
     }
     
+    // Vertically center aligns the modal for browsers that don't support
+    // CSS transformations
     function verticalCenterAlign() {
       if ($element) {
         var $modalContainer = $element.find('.modal-container');
@@ -170,19 +204,49 @@
       }
     }
     
+    // Sets the z-index of the modal
     function setZIndex() {
       $element.css('z-index', options.zIndex);
     }
     
+    // Sets up the markup required to disable body scrolling in iOS Safari
     function setUpiOSfix() {
       if (iOS && $('#content').length === 0) {
         $('body').wrapInner('<div id="content">');
       }
     }
     
+    // A few things that need to happen when the modal is initialized
+    function initialize() {
+      // Wrap the body content in a div for iOS Safari to disable body scroll
+      setUpiOSfix();
+      
+      // When trigger is clicked, set/create the modal and open it
+      $trigger.click(function() {
+        _this.open();
+        return false;
+      });
+      
+      // When window is resized...
+      $(window).resize(function() {
+        // check if modal is taller than window handle it if it is
+        handleOverflow();
+        
+        // vertically center align modal if browser doesn't support CSS transformations
+        if (!Modernizr.csstransforms) {
+          verticalCenterAlign();
+        }
+      });
+    }
+    
+    /*********************************
+     * Public properties and methods *
+     *********************************/
+    
+    // The modal "type". Can be be 'url', 'video', 'content', or 'dynamic'. 
     this.type = options.type || determineType();
     
-    // gets the DOM object for the modal and stores it in the $element variable
+    // Gets the DOM object for the modal and stores it in the $element variable
     this.setElement = function() {
       var iframe;
       
@@ -222,7 +286,7 @@
       $element.data('modal', _this);
     };
     
-    // create the modal element and add it to the DOM
+    // Creates the modal element and adds it to the document
     this.createElement = function() {
       // create new div with .modal class
       var $modal = $('<div>', {class: 'modal'});
@@ -250,6 +314,7 @@
       return $modal;
     };
     
+    // Opens the modal
     this.open = function() {
       _this.setElement();
       
@@ -306,6 +371,7 @@
       return false;
     };
     
+    // Closes the modal
     this.close = function() {
       if (options.beforeClose.call($element, _this) === false) {
         return false;
@@ -339,24 +405,12 @@
           $element.remove();
         }
       }, 500);
-      
     };
     
-    setUpiOSfix();
-    
-    // when trigger is clicked, set/create the modal and show it
-    $trigger.click(function() {
-      _this.open();
-      return false;
-    });
-    
-    $(window).resize(function() {
-      handleOverflow();
-      
-      if (!Modernizr.csstransforms) {
-        verticalCenterAlign();
-      }
-    });
+    /*********************************
+     * Let's get this party started! *
+     *********************************/
+    this.init();
   };
   
   window.Modal = Modal;
