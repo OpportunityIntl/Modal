@@ -169,6 +169,12 @@
       $element.css('z-index', options.zIndex);
     }
     
+    function setUpiOSfix() {
+      if (iOS && $('#content').length === 0) {
+        $('body').wrapInner('<div id="content">');
+      }
+    }
+    
     this.type = options.type || determineType();
     
     // gets the DOM object for the modal and stores it in the $element variable
@@ -330,6 +336,8 @@
       }, 500);
       
     };
+    
+    setUpiOSfix();
     
     // when trigger is clicked, set/create the modal and show it
     $trigger.click(function() {
