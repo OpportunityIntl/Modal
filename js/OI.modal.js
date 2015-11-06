@@ -363,7 +363,6 @@
       // in the top righthand corner of the modal (if it already exists). Note
       // that any other element with a class of 'close' in the modal content
       // will still trigger the modal to close.
-      console.log(_this.options.closeable);
       if (_this.options.closeable) {
         // close modal when user clicks anywhere outside of modal
         _this.element.bind('click.modal', function() {
