@@ -24,7 +24,7 @@ body.no-scroll { overflow: hidden; }
 .modal.overflow.show .modal-container { top: 0%; }
 .modal.overflow.show .modal-container:after { content: ''; display: block; position: absolute; height: 20px; width: 100%; }
 .modal.overflow.show .modal-container.fullscreen:after { display: none; }
-.modal .modal-container { display: none; position: relative; top: 25%; transform: translateY(-50%); -moz-transform: translateY(-50%); -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); margin: 0 auto; width: 400px; background: #fff; opacity: 0; transition: top .5s, opacity .3s; -moz-transition: top .5s, opacity .3s; -webkit-transition: top .5s, opacity .3s; }
+.modal .modal-container { display: none; position: relative; top: 25%; transform: translateY(-50%); -moz-transform: translateY(-50%); -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); margin: 0 auto; width: 400px; background: #fff; opacity: 0; transition: top, opacity; -moz-transition: top, opacity; -webkit-transition: top, opacity; }
 @media (max-width: 440px) { .modal .modal-container { width: 100%; } }
 .modal .modal-container .modal-content { position: relative; }
 .modal .modal-container .modal-content .iframe { height: 0; width: 100%; margin: 0; padding-bottom: 75%; position: relative; overflow: auto; -webkit-overflow-scrolling: touch; }

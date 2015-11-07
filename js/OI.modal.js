@@ -120,7 +120,7 @@
     // the modal scrollable
     function handleOverflow() {
       if (_this.element) {
-        if (_this.element.find('.modal-container').outerHeight() >= $(window).height()) {
+        if (_this.element.find('.modal-container').outerHeight() + 40 >= $(window).height()) {
           _this.element.addClass('overflow');
         } else {
           _this.element.removeClass('overflow');
@@ -325,6 +325,11 @@
     this.open = function() {
       setElement();
       
+      _this.element.find('.modal-container').css({
+        'transition-duration': '.5s, .3s',
+        '-webkit-transition-duration': '.5s, .3s'
+      });
+      
       if (_this.options.beforeOpen.call(_this.element, _this) === false) {
         return false;
       }
@@ -350,6 +355,13 @@
           verticalCenterAlign();
         }
       }, 100);
+      
+      setTimeout(function() {
+        _this.element.find('.modal-container').css({
+          'transition-duration': '',
+          '-webkit-transition-duration': ''
+        });
+      }, 150);
       
       // close modal when any element inside the modal with a class
       // of 'close' is clicked
@@ -397,6 +409,11 @@
         return false;
       }
       
+      _this.element.find('.modal-container').css({
+        'transition-duration': '.5s, .3s',
+        '-webkit-transition-duration': '.5s, .3s'
+      });
+      
       enableBackgroundScroll();
       
       // unbind event handlers that close the modal
@@ -417,6 +434,11 @@
         if (!Modernizr.rgba) {
           _this.element.find('.ie8-overlay').remove();
         }
+        
+        _this.element.find('.modal-container').css({
+          'transition-duration': '',
+          '-webkit-transition-duration': ''
+        });
         
         _this.options.afterClose.call(_this.element, _this);
         

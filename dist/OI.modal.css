@@ -100,9 +100,9 @@ body.no-scroll {
   width: 400px;
   background: #fff;
   opacity: 0;
-  transition: top .5s, opacity .3s;
-  -moz-transition: top .5s, opacity .3s;
-  -webkit-transition: top .5s, opacity .3s;
+  transition: top, opacity;
+  -moz-transition: top, opacity;
+  -webkit-transition: top, opacity;
 }
 @media (max-width: 440px) {
   .modal .modal-container {
