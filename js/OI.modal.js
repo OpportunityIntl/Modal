@@ -23,7 +23,11 @@
     return new Modal(null, options).open();
   };
   
+  // Array of modals that are currently open
   var openModals = [];
+  
+  // Current scrollTop of the body/window (used for iOS no-scroll fix)
+  var bodyScrollTop = 0;
   
   // Define the Modal class
   var Modal = function(triggerClass, options) {
@@ -59,9 +63,6 @@
     /**********************
      * Private properties *
      **********************/
-    
-    // Current scrollTop of the body/window (used for iOS no-scroll fix)
-    var bodyScrollTop = 0;
     
     // Boolean to identify iOS devices for no-scroll fix
     var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
