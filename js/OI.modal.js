@@ -64,8 +64,10 @@
      * Private properties *
      **********************/
     
-    // Boolean to identify iOS devices for no-scroll fix
-    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    // Boolean to identify iOS Safari for no-scroll fix. Checks for false
+    // positives from Chrome for iOS and IE11 (apparently Microsoft
+    // inserted 'iPhone' into the IE11 useragent string for some reason)
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !/CriOS/.test(navigator.userAgent) && !window.MSStream;
     
     // Extend array of fixed elements that will be offset as part of scrollbar fix
     var fixedElements = $.merge([
