@@ -371,8 +371,9 @@
       
       // close modal when any element inside the modal with a class
       // of 'close' is clicked
-      _this.element.on('click.modal', '.close', function() {
+      _this.element.on('click.modal', '.close', function(e) {
         _this.close();
+        e.stopPropagation();
       });
       
       // If the modal is configured to be closable, attach event handlers so
@@ -387,9 +388,7 @@
           _this.close();
         });
         _this.element.on('click.modal', '.modal-container', function(e) {
-          if (!$(e.target).hasClass('close')) {
-            e.stopPropagation(); // this prevents a click on the actual modal from triggering close
-          }
+          e.stopPropagation(); // this prevents a click on the actual modal from triggering close
         });
         
         // close modal with escape key
