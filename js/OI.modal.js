@@ -357,7 +357,7 @@
       
       // close modal when any element inside the modal with a class
       // of 'close' is clicked
-      _this.element.find('.close').bind('click.modal', function() {
+      _this.element.on('click.modal', '.close', function() {
         _this.close();
       });
       
@@ -440,6 +440,14 @@
         }
       }, 500);
       
+      return _this;
+    };
+    
+    this.update = function(content, callback) {
+      _this.content = content;
+      _this.element.find('.modal-content').html(content);
+      if (typeof callback === 'function') callback.call(_this, _this.element);
+      handleOverflow();
       return _this;
     };
     
