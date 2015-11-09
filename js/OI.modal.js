@@ -23,6 +23,8 @@
     return new Modal(null, options).open();
   };
   
+  var openModals = [];
+  
   // Define the Modal class
   var Modal = function(triggerClass, options) {
     // Cache reference to class instance
@@ -190,16 +192,14 @@
     
     // Reenables background scrolling.
     function enableBackgroundScroll() {
-      setTimeout(function() {
-        removeScrollbarFix();
-        if (iOS) {
-          $('body').removeClass('ios-no-scroll');
-          $(window).scrollTop(bodyScrollTop);
-          $('#content').css('top', 0);
-        } else {
-          $('body').removeClass('no-scroll');
-        }
-      }, 500);
+      removeScrollbarFix();
+      if (iOS) {
+        $('body').removeClass('ios-no-scroll');
+        $(window).scrollTop(bodyScrollTop);
+        $('#content').css('top', 0);
+      } else {
+        $('body').removeClass('no-scroll');
+      }
     }
     
     // Vertically center aligns the modal for browsers that don't support
@@ -335,11 +335,16 @@
         return false;
       }
       
+      if (openModals.length === 0) {
+        disableBackgroundScroll();
+      }
+      
+      if (openModals.length > 0) openModals[openModals.length - 1].close();
+      openModals.push(_this);
+      
       if (!Modernizr.rgba) {
         _this.element.prepend($('<div>', {class: 'ie8-overlay'}));
       }
-      
-      disableBackgroundScroll();
       
       setZIndex();
       
@@ -412,12 +417,12 @@
         return false;
       }
       
+      openModals.pop();
+      
       _this.element.find('.modal-container').css({
         'transition-duration': '.5s, .3s',
         '-webkit-transition-duration': '.5s, .3s'
       });
-      
-      enableBackgroundScroll();
       
       // unbind event handlers that close the modal
       _this.element.off('click.modal');
@@ -428,6 +433,10 @@
       
       // start close animation on modal overlay shortly afterward
       setTimeout(function() {
+        if (openModals.length === 0) {
+          enableBackgroundScroll();
+        }
+        
         _this.element.removeClass('animate');
         
         handleOverflow();
