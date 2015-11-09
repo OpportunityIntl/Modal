@@ -103,3 +103,20 @@ Option | Type | Description | Default
 **afterOpen** | function| Optional. Callback function to be executed after modal opens (after animation completes). | Empty function
 **beforeClose** | function | Optional. Callback function to be executed before modal closes. Return `false` to prevent modal from closing. | Empty function
 **afterClose** | function| Optional. Callback function to be executed after modal closes (after animation completes). | Empty function
+
+## Public Methods
+
+Method | Description
+-------|------------
+`open()` | Opens the modal.
+`close()` | Closes the modal.
+
+## Public Properties
+
+Property | Type | Description
+---------|------|------------
+`trigger` | jQuery collection | The elements that will trigger the modal to open on click.
+`element` | jQuery collection | The modal element itself.
+`options` | object | The configured options for the modal.
+`content` | string | The modal's content.
+`type` | string | The modal type. Can be `url`, `video`, `content`, or `dynamic`.
