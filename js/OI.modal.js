@@ -85,17 +85,9 @@
       var type;
       
       if (isUrl()) {
-        if (isVideo()) {
-          type = 'video';
-        } else {
-          type = 'url';
-        }
+        type = isVideo() ? 'video' : 'url';
       } else {
-        if (existsInDOM()) {
-          type = 'content';
-        } else {
-          type = 'dynamic';
-        }
+        type = existsInDOM() ? 'content' : 'dynamic';
       }
       
       return type;
