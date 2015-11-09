@@ -20,7 +20,7 @@
   
   // jQuery function to intitialize and open a modal programatically
   $.modal = function(options) {
-    new Modal(null, options).open();
+    return new Modal(null, options).open();
   };
   
   // Define the Modal class
@@ -392,7 +392,7 @@
         _this.options.afterOpen.call(_this.element, _this);
       }, 600);
       
-      return false;
+      return _this;
     };
     
     // Closes the modal
@@ -439,6 +439,8 @@
           _this.element.remove();
         }
       }, 500);
+      
+      return _this;
     };
     
     /*********************************
