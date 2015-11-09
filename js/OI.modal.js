@@ -369,11 +369,13 @@
       // will still trigger the modal to close.
       if (_this.options.closeable) {
         // close modal when user clicks anywhere outside of modal
-        _this.element.bind('click.modal', function() {
+        _this.element.on('click.modal', function() {
           _this.close();
         });
-        _this.element.find('.modal-container').bind('click.modal', function(e) {
-          e.stopPropagation(); // this prevents a click on the actual modal from triggering close
+        _this.element.on('click.modal', '.modal-container', function(e) {
+          if (!$(e.target).hasClass('close')) {
+            e.stopPropagation(); // this prevents a click on the actual modal from triggering close
+          }
         });
         
         // close modal with escape key
@@ -409,9 +411,7 @@
       enableBackgroundScroll();
       
       // unbind event handlers that close the modal
-      _this.element.find('.close').unbind('click.modal');
-      $('#modals').unbind('click.modal');
-      _this.element.unbind('click.modal');
+      _this.element.off('click.modal');
       $(document).unbind('keyup.modal');
       
       // start close animation on modal
