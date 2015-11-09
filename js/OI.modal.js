@@ -145,8 +145,12 @@
       
       // adjust offset of fixed elements defined in options
       $.each(fixedElements, function(index, fixedElement) {
-        fixedElement.originalValue = parseInt(fixedElement.element.css(fixedElement.property));
-        fixedElement.element.css(fixedElement.property, fixedElement.originalValue + scrollbarWidth);
+        if (typeof fixedElement.property === 'function') {
+          fixedElement.property.call(fixedElement.element, scrollbarWidth);
+        } else {
+          fixedElement.originalValue = parseInt(fixedElement.element.css(fixedElement.property));
+          fixedElement.element.css(fixedElement.property, fixedElement.originalValue + scrollbarWidth);
+        }
       });
     }
     
@@ -163,7 +167,11 @@
       
       // reset offset of fixed elements defined in options
       $.each(fixedElements, function(index, fixedElement) {
-        fixedElement.element.css(fixedElement.property, fixedElement.originalValue || '');
+        if (typeof fixedElement.property === 'function') {
+          fixedElement.property.call(fixedElement.element, 0);
+        } else {
+          fixedElement.element.css(fixedElement.property, fixedElement.originalValue || '');  
+        }
       });
     }
     
