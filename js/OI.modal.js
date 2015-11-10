@@ -60,6 +60,8 @@
     // The modal "type". Can be be 'url', 'video', 'content', or 'dynamic'. 
     this.type = this.options.type || determineType();
     
+    this.openModals = openModals;
+    
     /**********************
      * Private properties *
      **********************/
