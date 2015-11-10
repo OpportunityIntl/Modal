@@ -243,7 +243,7 @@
           iframe = $('<div>', {class: 'flex-video'});
           iframe.append($('<iframe>', {src: _this.trigger.data('modal'), frameborder: 0}));
           
-          _this.options.content = iframe;
+          _this.content = iframe;
           
           _this.element = createElement();
           break;
@@ -253,7 +253,7 @@
           iframe = $('<div>', {class: 'iframe'});
           iframe.append($('<iframe>', {src: _this.trigger.data('modal'), frameborder: 0}));
           
-          _this.options.content = iframe;
+          _this.content = iframe;
           
           _this.element = createElement();
           break;
@@ -289,7 +289,7 @@
       if (_this.options.classes) $modal.find('.modal-container').addClass(_this.options.classes);
       
       // add content inside .modal-content div
-      $modal.find('.modal-content').append(_this.options.content);
+      $modal.find('.modal-content').append(_this.content);
       
       // add modal element to the #modals div
       $('body').append($modal);
