@@ -106,17 +106,26 @@ Option | Type | Description | Default
 
 ## Public Methods
 
-Method | Description
--------|------------
-`open()` | Opens the modal.
-`close()` | Closes the modal.
+### open()
+Opens the modal.
+
+### close()
+Closes the modal.
+
+### update(content, callback)
+Updates the modal content (`<div class="modal-content">`) with the specified content.
+
+#### Params
+**content** | *string* or *function(modal)* | The content to replace the existing modal contents. If defined as a function, `this.element` (the modal element) is passed as a param, and the value of `this` is the Modal instance.
+
+**callback** | *function(modal)* | An optional callback function to be executed after the modal contents have been updated. Useful for initializing event handlers or plugins on the new modal content. The value of `this` is the Modal instance, and `this.element` (the modal element) is passed as a param.
 
 ## Public Properties
 
 Property | Type | Description
 ---------|------|------------
-`trigger` | jQuery collection | The elements that will trigger the modal to open on click.
-`element` | jQuery collection | The modal element itself.
+`trigger` | jQuery object | The elements that will trigger the modal to open on click.
+`element` | jQuery object | The modal element itself.
 `options` | object | The configured options for the modal.
 `content` | string | The modal's content.
 `type` | string | The modal type. Can be `url`, `video`, `content`, or `dynamic`.
