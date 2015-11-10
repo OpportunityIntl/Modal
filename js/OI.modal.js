@@ -297,7 +297,7 @@
       
       // When window is resized...
       $(window).resize(function() {
-        // check if modal is taller than window handle it if it is
+        // check if modal is taller than window and handle it if it is
         handleOverflow();
         
         // vertically center align modal if browser doesn't support CSS transformations
@@ -328,6 +328,8 @@
         disableBackgroundScroll();
       }
       
+      // if there's an open modal already, close it and add this modal
+      // to the openModals array
       if (openModals.length > 0) openModals[openModals.length - 1].close();
       openModals.push(_this);
       
@@ -405,8 +407,10 @@
         return false;
       }
       
+      // remove from openModals array
       openModals.pop();
       
+      // enable transition
       _this.element.find('.modal-container').css({
         'transition-duration': '.5s, .3s',
         '-webkit-transition-duration': '.5s, .3s'
