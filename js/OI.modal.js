@@ -454,7 +454,7 @@
     };
     
     this.update = function(content, callback) {
-      _this.content = content;
+      _this.content = typeof content === 'function' ? content.call(_this, _this.element) : content;
       _this.element.find('.modal-content').html(content);
       if (typeof callback === 'function') callback.call(_this, _this.element);
       handleOverflow();
