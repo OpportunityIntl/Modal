@@ -411,12 +411,12 @@ $('.custom-trigger').modal({
           This modal was triggered via Javascript.
         </p>
         <p class="align-center">
-          <a class="btn brand-green-bg close">Close</a>
+          <a class="btn brand-green-bg update">Update content</a>
         </p>
       </div>
     </div>
     
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 
     <!--[if lte IE 9]>
       <script type="text/javascript" src="weavr/OI.placeholder.min.js"></script>
@@ -429,7 +429,7 @@ $('.custom-trigger').modal({
       // replaces < characters with &lt; to allow syntax highlighter to
       // display HTML code instead of browser parsing and rendering it as HTML
       $('code').each(function() {
-        $(this).html($(this).html().replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+        $(this).html($(this).html().replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\$/g, '&#36;'));
       });
       
       // suppress JS errors caused by console.log() on IE8 and 9
@@ -445,7 +445,9 @@ $('.custom-trigger').modal({
       $.fn.modal.defaults.fixedElements = [
         {
           element: $('nav'),
-          property: 'margin-right'
+          property: function(offset) {
+            this.css('transform', 'translateX(-' + offset + 'px)');
+          }
         }
       ]
     
@@ -484,7 +486,16 @@ $('.custom-trigger').modal({
       
       $('#triggered-modal').click(function() {
         $.modal({
-          source: '#javascript-triggered'
+          source: '#javascript-triggered',
+          closeable: false,
+          beforeOpen: function(instance) {
+            $(this).find('.btn.update').click(function() {
+              var newContent = '<h2>This is some new content for this modal!</h2><p>Whatever godard 3 wolf moon paleo. Tattooed selfies kitsch microdosing beard. Forage pitchfork portland jean shorts banjo trust fund, pop-up actually gastropub chartreuse quinoa. Synth franzen normcore microdosing banh mi kitsch. Skateboard squid fingerstache tilde cred brooklyn. Heirloom twee cornhole locavore sartorial 3 wolf moon readymade kinfolk thundercats, microdosing put a bird on it DIY freegan XOXO. Migas bushwick venmo ugh, irony photo booth austin vegan taxidermy pug post-ironic bespoke wayfarers.</p><p><a class="close btn brand-orange-bg">Close me</a></p>';
+              instance.update(newContent, function(modal) {
+                console.log('Modal content updated');
+              });
+            })
+          }
         });
       });
     </script>

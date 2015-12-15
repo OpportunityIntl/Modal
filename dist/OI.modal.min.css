@@ -8,7 +8,7 @@
 [data-modal] { cursor: pointer; }
 
 body.ios-no-scroll { position: fixed; height: 100%; width: 100%; top: 0; left: 0; overflow: hidden; }
-body.ios-no-scroll #content { position: absolute; top: 0; left: 0; height: auto; width: 100%; }
+body.ios-no-scroll .ios-scroll-container { position: absolute; top: 0; left: 0; height: auto; width: 100%; }
 
 body.no-scroll { overflow: hidden; }
 

@@ -13,7 +13,7 @@ body.ios-no-scroll {
   left: 0;
   overflow: hidden;
 }
-body.ios-no-scroll #content {
+body.ios-no-scroll .ios-scroll-container {
   position: absolute;
   top: 0;
   left: 0;

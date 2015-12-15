@@ -11,6 +11,7 @@
     content: null,
     zIndex: 3,
     closeable: true,
+    scrollFixClass: 'ios-scroll-container',
     beforeOpen: function() {},
     afterOpen: function() {},
     beforeClose: function() {},
@@ -146,7 +147,7 @@
       
       // add padding to account for space previously occupied by scrollbar
       if (iOS) {
-        $('#content').css('padding-right', scrollbarWidth);
+        $('.' + _this.options.scrollFixClass).css('padding-right', scrollbarWidth);
       } else {
         $('body').css('padding-right', scrollbarWidth);
       }
@@ -168,7 +169,7 @@
     function removeScrollbarFix() {
       // remove extra padding added to account for scrollbar
       if (iOS) {
-        $('#content').css('padding-right', '');
+        $('.' + _this.options.scrollFixClass).css('padding-right', '');
       } else {
         $('body').css('padding-right', '');
       }
@@ -190,7 +191,7 @@
       if (iOS) {
         bodyScrollTop = $(window).scrollTop();
         $('body').addClass('ios-no-scroll');
-        $('#content').css('top', -bodyScrollTop);
+        $('.' + _this.options.scrollFixClass).css('top', -bodyScrollTop);
       } else {
         $('body').addClass('no-scroll');
       }
@@ -202,7 +203,7 @@
       if (iOS) {
         $('body').removeClass('ios-no-scroll');
         $(window).scrollTop(bodyScrollTop);
-        $('#content').css('top', 0);
+        $('.' + _this.options.scrollFixClass).css('top', 0);
       } else {
         $('body').removeClass('no-scroll');
       }
@@ -228,8 +229,8 @@
     
     // Sets up the markup required to disable body scrolling in iOS Safari
     function setUpiOSfix() {
-      if (iOS && $('#content').length === 0) {
-        $('body').wrapInner('<div id="content">');
+      if (iOS && $('.' + _this.options.scrollFixClass).length === 0) {
+        $('body').wrapInner('<div class="' + _this.options.scrollFixClass + '">');
       }
     }
     
