@@ -247,7 +247,7 @@
           // to make it responsive and force a 4:3 ratio.
           _this.content = $('<div>', {class: _this.type === 'video' ? 'flex-video' : 'iframe'}).append($('<iframe>', {src: _this.trigger.data('modal'), frameborder: 0}));
           
-          _this.element = createElement();
+          _this.element = _this.create();
           break;
         case 'content':
           // if the modal source is a DOM object that already exists, use that
@@ -256,33 +256,12 @@
           break;
         case 'dynamic':
           // otherwise, create a new element
-          _this.element = createElement();
+          _this.element = _this.create();
           
           break;
       }
       
       _this.element.data('modal', _this);
-    }
-    
-    // Creates the modal element and adds it to the document
-    function createElement() {
-      // create modal
-      var $modal = $('<div>', {class: 'modal'});
-      var $modalContainer = $('<div>', {class: 'modal-container'});
-      var $modalContent = $('<div>', {class: 'modal-content'});
-      var $modalCloseButton = $('<button>', {type: 'button', class: 'reset icon-cross close'});
-      $modal.append($modalContainer.append([$modalCloseButton, $modalContent.append(_this.content)]));
-      
-      // add classes, if they exist, to the .modal div
-      if (_this.options.classes) $modalContainer.addClass(_this.options.classes);
-      
-      // add modal element to the document
-      $('body').append($modal);
-      
-      // flag modal element to be destroyed when closed
-      $modal.data('destroyOnClose', true);
-      
-      return $modal;
     }
     
     // A few things that need to happen when the modal is initialized
@@ -452,6 +431,27 @@
       }, 500);
       
       return _this;
+    };
+    
+    // Creates the modal element and adds it to the document
+    this.create = function() {
+      // create modal
+      var $modal = $('<div>', {class: 'modal'});
+      var $modalContainer = $('<div>', {class: 'modal-container'});
+      var $modalContent = $('<div>', {class: 'modal-content'});
+      var $modalCloseButton = $('<button>', {type: 'button', class: 'reset icon-cross close'});
+      $modal.append($modalContainer.append([$modalCloseButton, $modalContent.append(_this.content)]));
+      
+      // add classes, if they exist, to the .modal div
+      if (_this.options.classes) $modalContainer.addClass(_this.options.classes);
+      
+      // add modal element to the document
+      $('body').append($modal);
+      
+      // flag modal element to be destroyed when closed
+      $modal.data('destroyOnClose', true);
+      
+      return $modal;
     };
     
     this.update = function(content, callback) {
