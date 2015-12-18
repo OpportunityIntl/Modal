@@ -554,12 +554,12 @@
       
       return false;
     }
+    
+    function closeHandler() {
+      images = null;
+      currentImage = null;
+    }
   };
-  
-  function closeHandler() {
-    images = null;
-    currentImage = null;
-  }
   
   window.Lightbox = Lightbox;
   window.Modal = Modal;
