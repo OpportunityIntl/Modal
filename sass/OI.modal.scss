@@ -156,10 +156,45 @@ body.no-scroll {
       width: auto;
       background-color: transparent;
       
+      .lightbox-image {
+        position: relative;
+      }
+      
       button.close {
-        right: -40px;
-        top: -40px;
-        color: #fff;
+        background-color: #fff;
+        background-color: rgba(255,255,255,.5);
+        color: #555;
+        
+        &:hover {
+          color: #333;
+        }
+      }
+      
+      button.lightbox-next,
+      button.lightbox-prev {
+        position: absolute;
+        top: 50%;
+        margin-top: -20px;
+        
+        i {
+          opacity: .5;
+          color: #fff;
+          font-size: 40px;
+        }
+        
+        &:hover {
+          i {
+            opacity: 1;
+          }
+        }
+      }
+      
+      button.lightbox-next {
+        right: 0;
+      }
+      
+      button.lightbox-prev {
+        left: 0;
       }
     }
     

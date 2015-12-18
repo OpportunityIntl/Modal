@@ -484,9 +484,28 @@
     function generateContent(trigger) {
       var aboveContent = typeof _this.options.aboveContent === 'function' ? _this.options.aboveContent.call(trigger, images.index(trigger), images) : _this.options.aboveContent;
       var belowContent = typeof _this.options.belowContent === 'function' ? _this.options.belowContent.call(trigger, images.index(trigger), images) : _this.options.belowContent;
-      var image = '<img src="' + trigger.attr('href') + '" class="block" />';
-      var content = aboveContent + image + belowContent;
-      return content;
+      var imageContainer = $('<div>', {class: 'lightbox-image'});
+      var image = $('<img>', {src: trigger.attr('href'), class: 'block'});
+      var nextTrigger = $('<button type="button" class="reset lightbox-next"><i class="icon-arrow-right-small"></i></button>');
+      var prevTrigger = $('<button type="button" class="reset lightbox-prev"><i class="icon-arrow-left-small"></i></button>');
+      
+      // add previous icon, if necessary
+      if (images.index(trigger) > 0) {
+        imageContainer.append(prevTrigger);
+      }
+      
+      // add image
+      imageContainer.append(image);
+      
+      // add previous icon, if necessary
+      if (images.index(trigger) < images.length - 1) {
+        imageContainer.append(nextTrigger);
+      }
+      
+      // put it all together;
+      var content = $('<div>').append($(aboveContent), imageContainer, $(belowContent));
+      
+      return content.html();
     }
     
     function openHandler() {
