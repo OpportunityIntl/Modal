@@ -472,6 +472,8 @@
     var _this = this;
     var images = null;
     var currentImage = null;
+    var prevTrigger = null;
+    var nextTrigger = null;
     
     this.trigger = $(triggerClass);
     this.modal = null;
@@ -507,8 +509,9 @@
       var belowContent = typeof _this.options.belowContent === 'function' ? _this.options.belowContent.call(trigger, images.index(trigger), images) : _this.options.belowContent;
       var imageContainer = $('<div>', {class: 'lightbox-image'});
       var image = $('<img>', {src: trigger.attr('href'), class: 'block'});
-      var nextTrigger = $('<button type="button" class="reset lightbox-next"><i class="icon-arrow-right-small"></i></button>');
-      var prevTrigger = $('<button type="button" class="reset lightbox-prev"><i class="icon-arrow-left-small"></i></button>');
+      
+      nextTrigger = $('<button>', {type: 'button', class: 'reset lightbox-next'}).append($('<i class="icon-arrow-right-small"></i>'));
+      prevTrigger = $('<button>', {type: 'button', class: 'reset lightbox-prev'}).append($('<i class="icon-arrow-left-small"></i>'));
       
       // add previous icon, if necessary
       if (images.index(trigger) > 0) {
@@ -523,10 +526,20 @@
         imageContainer.append(nextTrigger);
       }
       
+      // attach event handlers to navigation icons
+      prevTrigger.on('click.lightbox', function() {
+        console.log('prev button clicked');
+        _this.prev();
+      });
+      nextTrigger.on('click.lightbox', function() {
+        console.log('next button clicked');
+        _this.next();
+      });
+      
       // put it all together;
       var content = $('<div>').append($(aboveContent), imageContainer, $(belowContent));
       
-      return content.html();
+      return content;
     }
     
     function preloadImage(source, callback) {
@@ -550,6 +563,15 @@
           classes: 'lightbox',
           afterClose: closeHandler
         }).open();
+        
+        
+        $(document).bind('keyup.lightbox', function(e) {
+          if (e.keyCode === 39) {
+            _this.next();
+          } else if (e.keyCode === 37) {
+            _this.prev();
+          }
+        });
       });
       
       return false;
@@ -558,6 +580,12 @@
     function closeHandler() {
       images = null;
       currentImage = null;
+      prevTrigger.off('click.lightbox');
+      nextTrigger.off('click.lightbox');
+      prevTrigger = null;
+      nextTrigger = null;
+      
+      $(document).unbind('keyup.lightbox');
     }
   };
   
