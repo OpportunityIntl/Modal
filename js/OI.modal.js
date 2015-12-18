@@ -537,7 +537,7 @@
       });
       
       // put it all together;
-      var content = $('<div>').append($(aboveContent), imageContainer, $(belowContent));
+      var content = $('<div>', {class: 'lightbox-container'}).append($(aboveContent), imageContainer, $(belowContent));
       
       return content;
     }
