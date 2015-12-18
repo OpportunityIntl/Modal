@@ -134,8 +134,12 @@ body.no-scroll {
 }
 .modal .modal-container.lightbox {
   width: auto;
-  padding: 40px;
   background-color: transparent;
+}
+.modal .modal-container.lightbox button.close {
+  right: -40px;
+  top: -40px;
+  color: #fff;
 }
 .modal .modal-container.fullscreen {
   position: absolute;

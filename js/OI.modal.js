@@ -475,8 +475,8 @@
     this.trigger = $(triggerClass);
     this.modal = null;
     this.options = $.extend({
-      aboveContent: null,
-      belowContent: null
+      aboveContent: '',
+      belowContent: ''
     }, options);
     
     this.trigger.click(openHandler);

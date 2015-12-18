@@ -154,8 +154,13 @@ body.no-scroll {
     
     &.lightbox {
       width: auto;
-      padding: 40px;
       background-color: transparent;
+      
+      button.close {
+        right: -40px;
+        top: -40px;
+        color: #fff;
+      }
     }
     
     &.fullscreen {
