@@ -5,6 +5,10 @@
     });
   };
   
+  $.lightbox = function(selector, options) {
+    return new Lightbox(selector, options);
+  };
+  
   // Plugin defaults. Can be overriden or extended in your project to set different
   // defaults for all modals.
   $.fn.modal.defaults = {
