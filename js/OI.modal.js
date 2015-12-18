@@ -251,7 +251,7 @@
           // to make it responsive and force a 4:3 ratio.
           _this.content = $('<div>', {class: _this.type === 'video' ? 'flex-video' : 'iframe'}).append($('<iframe>', {src: _this.trigger.data('modal'), frameborder: 0}));
           
-          _this.create();
+          if (_this.element.length === 0) _this.create();
           break;
         case 'content':
           // if the modal source is a DOM object that already exists, use that
@@ -260,7 +260,7 @@
           break;
         case 'dynamic':
           // otherwise, create a new element
-          _this.create();
+          if (_this.element.length === 0) _this.create();
           
           break;
       }
@@ -493,7 +493,7 @@
       if (currentIndex < images.length - 1) {
         currentImage = images.eq(currentIndex + 1);
         preloadImage(currentImage.attr('href'), function() {
-          _this.modal.update(generateContent(currentImage));
+          _this.modal.update(generateContent(currentImage), fitToScreen);
         });
       }
     };
@@ -503,7 +503,7 @@
       if (currentIndex > 0) {
         currentImage = images.eq(currentIndex - 1);
         preloadImage(currentImage.attr('href'), function() {
-          _this.modal.update(generateContent(currentImage));
+          _this.modal.update(generateContent(currentImage), fitToScreen);
         });
       }
     };
@@ -558,6 +558,23 @@
       });
     }
     
+    function fitToScreen() {
+      console.log('Fitting to screen');
+      _this.modal.element.addClass('size');
+      var modal = _this.modal.element.find('.modal-container');
+      modal.css('max-width', '');
+      var modalHeight = modal.outerHeight();
+      var image = modal.find('.lightbox-image img');
+      var imageHeight = image.outerHeight();
+      var imageRatio =  image.outerWidth() / imageHeight;
+      var desiredMaxHeight = $(window).height() - 80;
+      _this.modal.element.removeClass('size');
+      
+      if (modalHeight > desiredMaxHeight) {
+        modal.css('max-width', ((desiredMaxHeight - (modalHeight - imageHeight)) * imageRatio) + 'px');
+      }
+    }
+    
     function openHandler() {
       var rel = $(this).attr('rel');
       currentImage = $(this);
@@ -568,8 +585,10 @@
           content: generateContent(currentImage, images),
           classes: 'lightbox',
           afterClose: closeHandler
-        }).open();
+        }).create();
         
+        fitToScreen();
+        _this.modal.open();
         
         $(document).bind('keyup.lightbox', function(e) {
           if (e.keyCode === 39) {

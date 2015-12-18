@@ -240,4 +240,13 @@ body.no-scroll {
       color: $text-color;
     }
   }
+  
+  &.size {
+    display: block;
+    
+    .modal-container {
+      display: block;
+      visibility: hidden;
+    }
+  }
 }

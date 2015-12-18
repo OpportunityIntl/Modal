@@ -206,5 +206,12 @@ body.no-scroll {
 .modal button.close:hover {
   color: #333;
 }
+.modal.size {
+  display: block;
+}
+.modal.size .modal-container {
+  display: block;
+  visibility: hidden;
+}
 
 /*# sourceMappingURL=OI.modal.css.map */
