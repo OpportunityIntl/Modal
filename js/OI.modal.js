@@ -251,7 +251,7 @@
           // to make it responsive and force a 4:3 ratio.
           _this.content = $('<div>', {class: _this.type === 'video' ? 'flex-video' : 'iframe'}).append($('<iframe>', {src: _this.trigger.data('modal'), frameborder: 0}));
           
-          _this.element = _this.create();
+          _this.create();
           break;
         case 'content':
           // if the modal source is a DOM object that already exists, use that
@@ -260,7 +260,7 @@
           break;
         case 'dynamic':
           // otherwise, create a new element
-          _this.element = _this.create();
+          _this.create();
           
           break;
       }
@@ -455,7 +455,9 @@
       // flag modal element to be destroyed when closed
       $modal.data('destroyOnClose', true);
       
-      return $modal;
+      _this.element = $modal;
+      
+      return _this;
     };
     
     this.update = function(content, callback) {
