@@ -134,6 +134,7 @@ body.no-scroll {
 }
 .modal .modal-container.lightbox {
   width: auto;
+  max-width: 945px;
   background-color: transparent;
 }
 .modal .modal-container.lightbox .lightbox-image {

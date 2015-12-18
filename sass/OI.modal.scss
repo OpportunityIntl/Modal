@@ -154,6 +154,7 @@ body.no-scroll {
     
     &.lightbox {
       width: auto;
+      max-width: 945px;
       background-color: transparent;
       
       .lightbox-image {
