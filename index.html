@@ -506,7 +506,7 @@ $('.custom-trigger').modal({
         });
       });
       
-      new Lightbox('.lightbox', {
+      var lightbox = new Lightbox('.lightbox', {
         belowContent: function(index, images) {
           console.log(this);
           console.log((index + 1) + ' of ' + images.length);

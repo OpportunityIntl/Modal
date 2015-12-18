@@ -471,6 +471,7 @@
   var Lightbox = function(triggerClass, options) {
     var _this = this;
     var images = null;
+    var currentImage = null;
     
     this.trigger = $(triggerClass);
     this.modal = null;
@@ -478,6 +479,26 @@
       aboveContent: '',
       belowContent: ''
     }, options);
+    
+    this.next = function() {
+      var currentIndex = images.index(currentImage);
+      if (currentIndex < images.length - 1) {
+        currentImage = images.eq(currentIndex + 1);
+        preloadImage(currentImage.attr('href'), function() {
+          _this.modal.update(generateContent(currentImage));
+        });
+      }
+    };
+    
+    this.prev = function() {
+      var currentIndex = images.index(currentImage);
+      if (currentIndex > 0) {
+        currentImage = images.eq(currentIndex - 1);
+        preloadImage(currentImage.attr('href'), function() {
+          _this.modal.update(generateContent(currentImage));
+        });
+      }
+    };
     
     this.trigger.click(openHandler);
     
@@ -508,21 +529,37 @@
       return content.html();
     }
     
+    function preloadImage(source, callback) {
+      console.log('Preloading image');
+      var image = new Image();
+      image.src = source;
+      $(image).on('load', function() {
+        console.log('Image loaded');
+        if (typeof callback === 'function') callback.call();
+      });
+    }
+    
     function openHandler() {
       var rel = $(this).attr('rel');
+      currentImage = $(this);
       images = $(triggerClass + (rel ? '[rel="' + rel + '"]' : ''));
       
-      _this.modal = new Modal(null, {
-        content: generateContent($(this), images),
-        classes: 'lightbox',
-        afterClose: function() {
-          images = null;
-        }
-      }).open();
+      preloadImage(currentImage.attr('href'), function() {
+        _this.modal = new Modal(null, {
+          content: generateContent(currentImage, images),
+          classes: 'lightbox',
+          afterClose: closeHandler
+        }).open();
+      });
       
       return false;
     }
   };
+  
+  function closeHandler() {
+    images = null;
+    currentImage = null;
+  }
   
   window.Lightbox = Lightbox;
   window.Modal = Modal;
