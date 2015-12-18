@@ -132,6 +132,11 @@ body.no-scroll {
 .modal .modal-container[class*="contained-"] {
   width: auto;
 }
+.modal .modal-container.lightbox {
+  width: auto;
+  padding: 40px;
+  background-color: transparent;
+}
 .modal .modal-container.fullscreen {
   position: absolute;
   top: 0;

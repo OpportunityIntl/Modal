@@ -468,5 +468,43 @@
     initialize();
   };
   
+  var Lightbox = function(triggerClass, options) {
+    var _this = this;
+    var images = null;
+    
+    this.trigger = $(triggerClass);
+    this.modal = null;
+    this.options = $.extend({
+      aboveContent: null,
+      belowContent: null
+    }, options);
+    
+    this.trigger.click(openHandler);
+    
+    function generateContent(trigger) {
+      var aboveContent = typeof _this.options.aboveContent === 'function' ? _this.options.aboveContent.call(trigger, images.index(trigger), images) : _this.options.aboveContent;
+      var belowContent = typeof _this.options.belowContent === 'function' ? _this.options.belowContent.call(trigger, images.index(trigger), images) : _this.options.belowContent;
+      var image = '<img src="' + trigger.attr('href') + '" class="block" />';
+      var content = aboveContent + image + belowContent;
+      return content;
+    }
+    
+    function openHandler() {
+      var rel = $(this).attr('rel');
+      images = $(triggerClass + (rel ? '[rel="' + rel + '"]' : ''));
+      
+      _this.modal = new Modal(null, {
+        content: generateContent($(this), images),
+        classes: 'lightbox',
+        afterClose: function() {
+          images = null;
+        }
+      }).open();
+      
+      return false;
+    }
+  };
+  
+  window.Lightbox = Lightbox;
   window.Modal = Modal;
 }(jQuery));

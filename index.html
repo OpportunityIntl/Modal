@@ -206,6 +206,13 @@ $('.custom-trigger').modal({
         <p class="align-center">
           <button id="triggered-modal" class="btn brand-green-bg" type="button">Click me</button>
         </p>
+        
+        <h2 class="align-center">Lightbox Galleries</h2>
+        <p>
+          <a class="lightbox" title="Cool Otter" rel="animals" href="http://cdn.hexjam.com/editorial_service/bases/images/000/006/369/xlarge/m15a.jpg?1406824139">Photo 1</a>
+          <a class="lightbox" title="Dope Raccoon" rel="animals" href="http://i.huffpost.com/gen/1145024/images/o-RACCOON-facebook.jpg">Photo 2</a>
+          <a class="lightbox" title="Pizza" rel="pizza" href="http://www.mysticpizza.com/admin/resources/pizza-pepperoni-w857h456.jpg">Photo 3</a>
+        </p>
       </div>
     </section>
     <footer class="padding-1x-2x brand-darkgray-bg">
@@ -497,6 +504,14 @@ $('.custom-trigger').modal({
             })
           }
         });
+      });
+      
+      new Lightbox('.lightbox', {
+        belowContent: function(index, images) {
+          console.log(this);
+          console.log((index + 1) + ' of ' + images.length);
+          return '<div class="brand-white-bg padding-1x-2x">' + $(this).attr('title') + ': Photo ' + (index + 1) + ' of ' + images.length + '</div>';
+        }
       });
     </script>
   </body>

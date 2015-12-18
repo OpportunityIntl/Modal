@@ -152,6 +152,12 @@ body.no-scroll {
       width: auto;
     }
     
+    &.lightbox {
+      width: auto;
+      padding: 40px;
+      background-color: transparent;
+    }
+    
     &.fullscreen {
       position: absolute;
       top: 0;
