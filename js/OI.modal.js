@@ -509,6 +509,9 @@
     };
     
     this.trigger.click(openHandler);
+    $(window).on('resize.lightbox', function() {
+      if (_this.modal) fitToScreen();
+    });
     
     function generateContent(trigger) {
       var aboveContent = typeof _this.options.aboveContent === 'function' ? _this.options.aboveContent.call(trigger, images.index(trigger), images) : _this.options.aboveContent;
