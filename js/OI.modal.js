@@ -35,7 +35,7 @@
   var bodyScrollTop = 0;
   
   // Define the Modal class
-  var Modal = function(triggerClass, options) {
+  var Modal = function(selector, options) {
     // Cache reference to class instance
     var _this = this;
     
@@ -44,7 +44,7 @@
      *********************/
     
     // The element(s) that will trigger the modal on click
-    this.trigger = $(triggerClass);
+    this.trigger = $(selector);
      
     // The modal element itself. Will be set/created later.
     this.element = null;
@@ -251,21 +251,20 @@
           // to make it responsive and force a 4:3 ratio.
           _this.content = $('<div>', {class: _this.type === 'video' ? 'flex-video' : 'iframe'}).append($('<iframe>', {src: _this.trigger.data('modal'), frameborder: 0}));
           
-          if (_this.element.length === 0) _this.create();
+          if (!_this.element) _this.create();
           break;
         case 'content':
           // if the modal source is a DOM object that already exists, use that
           _this.element = $(_this.options.source);
+          _this.element.data('modal', _this);
           
           break;
         case 'dynamic':
           // otherwise, create a new element
-          if (_this.element.length === 0) _this.create();
+          if (!_this.element) _this.create();
           
           break;
       }
-      
-      _this.element.data('modal', _this);
     }
     
     // A few things that need to happen when the modal is initialized
@@ -431,6 +430,7 @@
         // if element was created dynamically, remove it on close
         if (_this.element.data('destroyOnClose')) {
           _this.element.remove();
+          _this.element = null;
         }
       }, 500);
       
@@ -453,7 +453,10 @@
       $('body').append($modal);
       
       // flag modal element to be destroyed when closed
-      $modal.data('destroyOnClose', true);
+      $modal.data({
+        'destroyOnClose': true,
+        'modal': _this
+      });
       
       _this.element = $modal;
       
@@ -474,14 +477,14 @@
     initialize();
   };
   
-  var Lightbox = function(triggerClass, options) {
+  var Lightbox = function(selector, options) {
     var _this = this;
-    var images = null;
-    var currentImage = null;
+    var items = null;
+    var currentItem = null;
     var prevTrigger = null;
     var nextTrigger = null;
     
-    this.trigger = $(triggerClass);
+    this.trigger = $(selector);
     this.modal = null;
     this.options = $.extend({
       aboveContent: '',
@@ -489,21 +492,21 @@
     }, options);
     
     this.next = function() {
-      var currentIndex = images.index(currentImage);
-      if (currentIndex < images.length - 1) {
-        currentImage = images.eq(currentIndex + 1);
-        preloadImage(currentImage.attr('href'), function() {
-          _this.modal.update(generateContent(currentImage), fitToScreen);
+      var currentIndex = items.index(currentItem);
+      if (currentIndex < items.length - 1) {
+        currentItem = items.eq(currentIndex + 1);
+        preloadImage(currentItem.attr('href'), function() {
+          _this.modal.update(generateContent(currentItem), fitToScreen);
         });
       }
     };
     
     this.prev = function() {
-      var currentIndex = images.index(currentImage);
+      var currentIndex = items.index(currentItem);
       if (currentIndex > 0) {
-        currentImage = images.eq(currentIndex - 1);
-        preloadImage(currentImage.attr('href'), function() {
-          _this.modal.update(generateContent(currentImage), fitToScreen);
+        currentItem = items.eq(currentIndex - 1);
+        preloadImage(currentItem.attr('href'), function() {
+          _this.modal.update(generateContent(currentItem), fitToScreen);
         });
       }
     };
@@ -514,8 +517,8 @@
     });
     
     function generateContent(trigger) {
-      var aboveContent = typeof _this.options.aboveContent === 'function' ? _this.options.aboveContent.call(trigger, images.index(trigger), images) : _this.options.aboveContent;
-      var belowContent = typeof _this.options.belowContent === 'function' ? _this.options.belowContent.call(trigger, images.index(trigger), images) : _this.options.belowContent;
+      var aboveContent = typeof _this.options.aboveContent === 'function' ? _this.options.aboveContent.call(trigger, items.index(trigger), items) : _this.options.aboveContent;
+      var belowContent = typeof _this.options.belowContent === 'function' ? _this.options.belowContent.call(trigger, items.index(trigger), items) : _this.options.belowContent;
       var imageContainer = $('<div>', {class: 'lightbox-image'});
       var image = $('<img>', {src: trigger.attr('href'), class: 'block'});
       
@@ -523,7 +526,7 @@
       prevTrigger = $('<button>', {type: 'button', class: 'reset lightbox-prev icon-arrow-left-small'});
       
       // add previous icon, if necessary
-      if (images.index(trigger) > 0) {
+      if (items.index(trigger) > 0) {
         imageContainer.append(prevTrigger);
       }
       
@@ -531,7 +534,7 @@
       imageContainer.append(image);
       
       // add previous icon, if necessary
-      if (images.index(trigger) < images.length - 1) {
+      if (items.index(trigger) < items.length - 1) {
         imageContainer.append(nextTrigger);
       }
       
@@ -569,10 +572,10 @@
           imageHeight = image.outerHeight(),
           imageNaturalWidth = image.prop('naturalWidth'),
           imageRatio =  image.outerWidth() / imageHeight,
-          desiredMaxHeight = $(window).height() - 80;
+          maxHeight = $(window).height() - 40;
       
-      if (modalHeight > desiredMaxHeight) {
-        var fullWidth = (desiredMaxHeight - (modalHeight - imageHeight)) * imageRatio;
+      if (modalHeight > maxHeight) {
+        var fullWidth = (maxHeight - (modalHeight - imageHeight)) * imageRatio;
         modal.css('max-width', Math.min(fullWidth, imageNaturalWidth) + 'px');
       } else {
         modal.css('max-width', imageNaturalWidth + 'px');
@@ -583,12 +586,12 @@
     
     function openHandler() {
       var rel = $(this).attr('rel');
-      currentImage = $(this);
-      images = $(triggerClass + (rel ? '[rel="' + rel + '"]' : ''));
+      currentItem = $(this);
+      items = $(selector + (rel ? '[rel="' + rel + '"]' : ''));
       
-      preloadImage(currentImage.attr('href'), function() {
+      preloadImage(currentItem.attr('href'), function() {
         _this.modal = new Modal(null, {
-          content: generateContent(currentImage, images),
+          content: generateContent(currentItem, items),
           classes: 'lightbox',
           afterClose: closeHandler
         }).create();
@@ -609,8 +612,8 @@
     }
     
     function closeHandler() {
-      images = null;
-      currentImage = null;
+      items = null;
+      currentItem = null;
       prevTrigger.off('click.lightbox');
       nextTrigger.off('click.lightbox');
       prevTrigger = null;
