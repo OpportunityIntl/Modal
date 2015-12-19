@@ -175,17 +175,13 @@ body.no-scroll {
         position: absolute;
         top: 50%;
         margin-top: -20px;
-        
-        i {
-          opacity: .5;
-          color: #fff;
-          font-size: 40px;
-        }
+        opacity: .5;
+        color: #fff;
+        font-size: 40px;
+        text-shadow: 0 0 10px rgba(0,0,0,.5);
         
         &:hover {
-          i {
             opacity: 1;
-          }
         }
       }
       

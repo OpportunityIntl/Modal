@@ -152,15 +152,13 @@ body.no-scroll {
   position: absolute;
   top: 50%;
   margin-top: -20px;
-}
-.modal .modal-container.lightbox button.lightbox-next i,
-.modal .modal-container.lightbox button.lightbox-prev i {
   opacity: .5;
   color: #fff;
   font-size: 40px;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-.modal .modal-container.lightbox button.lightbox-next:hover i,
-.modal .modal-container.lightbox button.lightbox-prev:hover i {
+.modal .modal-container.lightbox button.lightbox-next:hover,
+.modal .modal-container.lightbox button.lightbox-prev:hover {
   opacity: 1;
 }
 .modal .modal-container.lightbox button.lightbox-next {

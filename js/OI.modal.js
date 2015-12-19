@@ -519,8 +519,8 @@
       var imageContainer = $('<div>', {class: 'lightbox-image'});
       var image = $('<img>', {src: trigger.attr('href'), class: 'block'});
       
-      nextTrigger = $('<button>', {type: 'button', class: 'reset lightbox-next'}).append($('<i class="icon-arrow-right-small"></i>'));
-      prevTrigger = $('<button>', {type: 'button', class: 'reset lightbox-prev'}).append($('<i class="icon-arrow-left-small"></i>'));
+      nextTrigger = $('<button>', {type: 'button', class: 'reset lightbox-next icon-arrow-right-small'});
+      prevTrigger = $('<button>', {type: 'button', class: 'reset lightbox-prev icon-arrow-left-small'});
       
       // add previous icon, if necessary
       if (images.index(trigger) > 0) {
@@ -537,11 +537,9 @@
       
       // attach event handlers to navigation icons
       prevTrigger.on('click.lightbox', function() {
-        console.log('prev button clicked');
         _this.prev();
       });
       nextTrigger.on('click.lightbox', function() {
-        console.log('next button clicked');
         _this.next();
       });
       
@@ -552,11 +550,9 @@
     }
     
     function preloadImage(source, callback) {
-      console.log('Preloading image');
       var image = new Image();
       image.src = source;
       $(image).on('load', function() {
-        console.log('Image loaded');
         if (typeof callback === 'function') callback.call();
       });
     }
