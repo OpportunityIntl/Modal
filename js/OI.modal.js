@@ -562,20 +562,27 @@
     }
     
     function fitToScreen() {
-      console.log('Fitting to screen');
       _this.modal.element.addClass('size');
-      var modal = _this.modal.element.find('.modal-container');
+      
+      var modal = _this.modal.element.find('.modal-container'),
+          image = modal.find('.lightbox-image img');
+      
       modal.css('max-width', '');
-      var modalHeight = modal.outerHeight();
-      var image = modal.find('.lightbox-image img');
-      var imageHeight = image.outerHeight();
-      var imageRatio =  image.outerWidth() / imageHeight;
-      var desiredMaxHeight = $(window).height() - 80;
-      _this.modal.element.removeClass('size');
+      
+      var modalHeight = modal.outerHeight(),
+          imageHeight = image.outerHeight(),
+          imageNaturalWidth = image.prop('naturalWidth'),
+          imageRatio =  image.outerWidth() / imageHeight,
+          desiredMaxHeight = $(window).height() - 80;
       
       if (modalHeight > desiredMaxHeight) {
-        modal.css('max-width', ((desiredMaxHeight - (modalHeight - imageHeight)) * imageRatio) + 'px');
+        var fullWidth = (desiredMaxHeight - (modalHeight - imageHeight)) * imageRatio;
+        modal.css('max-width', Math.min(fullWidth, imageNaturalWidth) + 'px');
+      } else {
+        modal.css('max-width', imageNaturalWidth + 'px');
       }
+      
+      _this.modal.element.removeClass('size');
     }
     
     function openHandler() {
