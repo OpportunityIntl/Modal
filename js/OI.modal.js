@@ -618,6 +618,7 @@
       nextTrigger.off('click.lightbox');
       prevTrigger = null;
       nextTrigger = null;
+      _this.modal = null;
       
       $(document).unbind('keyup.lightbox');
     }
