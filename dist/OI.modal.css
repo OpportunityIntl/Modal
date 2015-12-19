@@ -156,9 +156,11 @@ body.no-scroll {
   color: #fff;
   font-size: 40px;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: opacity .3s, text-shadow .3s;
 }
 .modal .modal-container.lightbox button.lightbox-next:hover,
 .modal .modal-container.lightbox button.lightbox-prev:hover {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   opacity: 1;
 }
 .modal .modal-container.lightbox button.lightbox-next {
