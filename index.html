@@ -206,6 +206,21 @@ $('.custom-trigger').modal({
         <p class="align-center">
           <button id="triggered-modal" class="btn brand-green-bg" type="button">Click me</button>
         </p>
+        
+        <hr>
+        
+        <h2 class="align-center">Lightbox Galleries</h2>
+        <p>
+          Create lightbox-style galleries with OI Lightbox (built on top of OI Modals).
+          Put the image URL in the <code>href</code> attribute, and use the <code>rel</code>
+          attribute to group images into galleries.
+        </p>
+        <p class="align-center">
+          <a class="lightbox" title="Cool Otter" rel="animals" href="http://cdn.hexjam.com/editorial_service/bases/images/000/006/369/xlarge/m15a.jpg?1406824139">Photo 1</a> |
+          <a class="lightbox" title="Dope Raccoon" rel="animals" href="http://i.huffpost.com/gen/1145024/images/o-RACCOON-facebook.jpg">Photo 2</a> |
+          <a class="lightbox" title="Pizza" rel="animals" href="http://www.mysticpizza.com/admin/resources/pizza-pepperoni-w857h456.jpg">Photo 3</a> |
+          <a class="lightbox" title="Praying Otter" rel="animals" href="http://cdn.churchm.ag/wp-content/uploads/2012/02/Praying-Otter-620x836.jpg">Photo 4</a>
+        </p>
       </div>
     </section>
     <footer class="padding-1x-2x brand-darkgray-bg">
@@ -424,6 +439,7 @@ $('.custom-trigger').modal({
 
     <script type="text/javascript" src="weavr/OI.weavr.min.js"></script>
     <script type="text/javascript" src="dist/OI.modal.min.js"></script>
+    <script type="text/javascript" src="dist/OI.lightbox.min.js"></script>
     
     <script type="text/javascript">
       // replaces < characters with &lt; to allow syntax highlighter to
@@ -497,6 +513,12 @@ $('.custom-trigger').modal({
             })
           }
         });
+      });
+      
+      $.lightbox('.lightbox', {
+        belowContent: function(index, images) {
+          return '<div class="brand-white-bg padding-1x-2x">' + $(this).attr('title') + ': Photo ' + (index + 1) + ' of ' + images.length + '</div>';
+        }
       });
     </script>
   </body>

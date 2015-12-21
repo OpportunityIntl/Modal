@@ -33,7 +33,8 @@ module.exports = function(grunt) {
           banner: '<%= banner %>'
         },
         files: {
-          'dist/OI.modal.min.js': ['js/OI.modal.js']
+          'dist/OI.modal.min.js': ['js/OI.modal.js'],
+          'dist/OI.lightbox.min.js': ['js/OI.lightbox.js']
         }
       }
     },
