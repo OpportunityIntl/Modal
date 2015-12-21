@@ -1,6 +1,10 @@
 /****************/
 /**** Modals ****/
 /****************/
+img.block {
+  height: auto;
+}
+
 [data-modal] {
   cursor: pointer;
 }

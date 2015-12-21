@@ -4,6 +4,11 @@
 /**** Modals ****/
 /****************/
 
+// Fix for buggy image height in IE 9 and 10
+img.block {
+  height: auto;
+}
+
 [data-modal] {
   cursor: pointer;
 }
