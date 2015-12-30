@@ -21,8 +21,8 @@
       var currentIndex = items.index(currentItem);
       if (currentIndex < items.length - 1) {
         currentItem = items.eq(currentIndex + 1);
-        preloadImage(currentItem.attr('href'), function() {
-          _this.modal.update(generateContent(currentItem), fitToScreen);
+        preloadImage(currentItem.attr('href'), function(image) {
+          _this.modal.update(generateContent(image, currentItem), fitToScreen);
         });
       }
     };
@@ -31,8 +31,8 @@
       var currentIndex = items.index(currentItem);
       if (currentIndex > 0) {
         currentItem = items.eq(currentIndex - 1);
-        preloadImage(currentItem.attr('href'), function() {
-          _this.modal.update(generateContent(currentItem), fitToScreen);
+        preloadImage(currentItem.attr('href'), function(image) {
+          _this.modal.update(generateContent(image, currentItem), fitToScreen);
         });
       }
     };
@@ -42,11 +42,14 @@
       if (_this.modal) fitToScreen();
     });
     
-    function generateContent(trigger) {
+    function generateContent(img, trigger) {
       var aboveContent = typeof _this.options.aboveContent === 'function' ? _this.options.aboveContent.call(trigger, items.index(trigger), items) : _this.options.aboveContent;
       var belowContent = typeof _this.options.belowContent === 'function' ? _this.options.belowContent.call(trigger, items.index(trigger), items) : _this.options.belowContent;
       var imageContainer = $('<div>', {class: 'lightbox-image'});
-      var image = $('<img>', {src: trigger.attr('href'), class: 'block'});
+      var image = $(img);
+      
+      image.attr('width', image.prop('naturalWidth'));
+      image.attr('height', image.prop('naturalHeight'));
       
       nextTrigger = $('<button>', {type: 'button', class: 'reset lightbox-next icon-arrow-right-small'});
       prevTrigger = $('<button>', {type: 'button', class: 'reset lightbox-prev icon-arrow-left-small'});
@@ -57,7 +60,7 @@
       }
       
       // add image
-      imageContainer.append(image);
+      imageContainer.append(image.addClass('block'));
       
       // add previous icon, if necessary
       if (items.index(trigger) < items.length - 1) {
@@ -80,10 +83,10 @@
     
     function preloadImage(source, callback) {
       var image = new Image();
-      image.src = source;
       $(image).on('load', function() {
-        if (typeof callback === 'function') callback.call();
+        if (typeof callback === 'function') callback.call(null, image);
       });
+      image.src = source;
     }
     
     function fitToScreen() {
@@ -97,7 +100,7 @@
       var modalHeight = modal.outerHeight(),
           imageHeight = image.outerHeight(),
           imageNaturalWidth = image.prop('naturalWidth'),
-          imageRatio =  image.outerWidth() / imageHeight,
+          imageRatio =  image.prop('naturalWidth') / image.prop('naturalHeight'),
           maxHeight = $(window).height() - 40;
       
       if (modalHeight > maxHeight) {
@@ -115,9 +118,9 @@
       currentItem = $(this);
       items = $(selector + (rel ? '[rel="' + rel + '"]' : ''));
       
-      preloadImage(currentItem.attr('href'), function() {
+      preloadImage(currentItem.attr('href'), function(image) {
         _this.modal = new Modal(null, {
-          content: generateContent(currentItem, items),
+          content: generateContent(image, currentItem),
           classes: 'lightbox',
           afterClose: closeHandler
         }).create();
