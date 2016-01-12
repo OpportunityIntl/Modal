@@ -21,8 +21,17 @@
       var currentIndex = items.index(currentItem);
       if (currentIndex < items.length - 1) {
         currentItem = items.eq(currentIndex + 1);
+        
+        var loadingTimeout = setTimeout(function() {
+          _this.modal.element.find('.modal-container').addClass('loading');
+        }, 200);
+        
         preloadImage(currentItem.attr('href'), function(image) {
-          _this.modal.update(generateContent(image, currentItem), fitToScreen);
+          _this.modal.update(generateContent(image, currentItem), function(modal) {
+            clearTimeout(loadingTimeout);
+            fitToScreen();
+            modal.find('.modal-container').removeClass('loading');
+          });
         });
       }
     };
@@ -31,8 +40,17 @@
       var currentIndex = items.index(currentItem);
       if (currentIndex > 0) {
         currentItem = items.eq(currentIndex - 1);
+        
+        var loadingTimeout = setTimeout(function() {
+          _this.modal.element.find('.modal-container').addClass('loading');
+        }, 200);
+        
         preloadImage(currentItem.attr('href'), function(image) {
-          _this.modal.update(generateContent(image, currentItem), fitToScreen);
+          _this.modal.update(generateContent(image, currentItem), function(modal) {
+            clearTimeout(loadingTimeout);
+            fitToScreen();
+            modal.find('.modal-container').removeClass('loading');
+          });
         });
       }
     };
@@ -47,6 +65,7 @@
       var belowContent = typeof _this.options.belowContent === 'function' ? _this.options.belowContent.call(trigger, items.index(trigger), items) : _this.options.belowContent;
       var imageContainer = $('<div>', {class: 'lightbox-image'});
       var image = $(img);
+      var loadingIndicator = $('<div class="loading-container"><div class="loading-indicator"></div></div>');
       
       image.attr('width', image.prop('naturalWidth'));
       image.attr('height', image.prop('naturalHeight'));
@@ -67,6 +86,8 @@
         imageContainer.append(nextTrigger);
       }
       
+      // add loading indicator
+      imageContainer.append(loadingIndicator);
       // attach event handlers to navigation icons
       prevTrigger.on('click.lightbox', function() {
         _this.prev();
@@ -118,15 +139,19 @@
       currentItem = $(this);
       items = $(selector + (rel ? '[rel="' + rel + '"]' : ''));
       
+      _this.modal = new Modal(null, {
+        content: '<div class="loading-container"><div class="loading-indicator"></div></div>',
+        classes: 'lightbox loading hide-close',
+        afterClose: closeHandler
+      }).open();
+      
       preloadImage(currentItem.attr('href'), function(image) {
-        _this.modal = new Modal(null, {
-          content: generateContent(image, currentItem),
-          classes: 'lightbox',
-          afterClose: closeHandler
-        }).create();
-        
-        fitToScreen();
-        _this.modal.open();
+        setTimeout(function() {
+          _this.modal.update(generateContent(image, currentItem), function(modal) {
+            fitToScreen();
+            modal.find('.modal-container').removeClass('loading hide-close');
+          });
+        }, 600);
         
         $(document).bind('keyup.lightbox', function(e) {
           if (e.keyCode === 39) {

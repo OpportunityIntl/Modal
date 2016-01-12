@@ -113,6 +113,9 @@ body.no-scroll {
     width: 100%;
   }
 }
+.modal .modal-container.hide-close button.close {
+  display: none;
+}
 .modal .modal-container .modal-content {
   position: relative;
 }
@@ -172,6 +175,31 @@ body.no-scroll {
 }
 .modal .modal-container.lightbox button.lightbox-prev {
   left: 0;
+}
+.modal .modal-container.lightbox.loading .loading-container {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -30px;
+  text-align: center;
+  margin-left: -30px;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+}
+.modal .modal-container.lightbox.loading .loading-indicator {
+  display: block;
+  top: 50%;
+  position: relative;
+  margin-left: auto;
+  margin-top: -15px;
+  margin-right: auto;
+}
+.modal .modal-container.lightbox .loading-container {
+  display: none;
 }
 .modal .modal-container.fullscreen {
   position: absolute;

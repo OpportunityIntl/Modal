@@ -130,6 +130,12 @@ body.no-scroll {
       width: 100%;
     }
     
+    &.hide-close {
+      button.close {
+        display: none;
+      }
+    }
+    
     .modal-content {
       position: relative;
       
@@ -198,6 +204,36 @@ body.no-scroll {
       
       button.lightbox-prev {
         left: 0;
+      }
+      
+      &.loading {
+        .loading-container {
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin-top: -30px;
+          text-align: center;
+          margin-left: -30px;
+          background-color: #fff;
+          background-color: rgba(255,255,255,.8);
+          width: 60px;
+          height: 60px;
+          border-radius: 5px;
+        }
+        
+        .loading-indicator {
+          display: block;
+          top: 50%;
+          position: relative;
+          margin-left: auto;
+          margin-top: -15px;
+          margin-right: auto;
+        }
+      }
+      
+      .loading-container {
+        display: none;
       }
     }
     

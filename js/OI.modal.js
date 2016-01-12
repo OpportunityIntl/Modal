@@ -368,8 +368,7 @@
           }
         });
       } else {
-        // hide close button if it exists in the markup
-        _this.element.find('button.close').hide();
+        _this.element.find('.modal-container').addClass('hide-close');
       }
       
       // execute afterOpen callback after animation has finished
@@ -444,6 +443,7 @@
       
       // add classes, if they exist, to the .modal div
       if (_this.options.classes) $modalContainer.addClass(_this.options.classes);
+      if (_this.options.closeable === false) $modalContainer.addClass('hide-close');
       
       // add modal element to the document
       $('body').append($modal);
