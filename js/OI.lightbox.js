@@ -23,14 +23,14 @@
         currentItem = items.eq(currentIndex + 1);
         
         var loadingTimeout = setTimeout(function() {
-          _this.modal.element.find('.modal-container').addClass('loading');
+          _this.modal.element.addClass('loading');
         }, 200);
         
         preloadImage(currentItem.attr('href'), function(image) {
           _this.modal.update(generateContent(image, currentItem), function(modal) {
             clearTimeout(loadingTimeout);
             fitToScreen();
-            modal.find('.modal-container').removeClass('loading');
+            modal.removeClass('loading');
           });
         });
       }
@@ -42,14 +42,14 @@
         currentItem = items.eq(currentIndex - 1);
         
         var loadingTimeout = setTimeout(function() {
-          _this.modal.element.find('.modal-container').addClass('loading');
+          _this.modal.element.addClass('loading');
         }, 200);
         
         preloadImage(currentItem.attr('href'), function(image) {
           _this.modal.update(generateContent(image, currentItem), function(modal) {
             clearTimeout(loadingTimeout);
             fitToScreen();
-            modal.find('.modal-container').removeClass('loading');
+            modal.removeClass('loading');
           });
         });
       }
@@ -86,8 +86,6 @@
         imageContainer.append(nextTrigger);
       }
       
-      // add loading indicator
-      imageContainer.append(loadingIndicator);
       // attach event handlers to navigation icons
       prevTrigger.on('click.lightbox', function() {
         _this.prev();
@@ -97,7 +95,7 @@
       });
       
       // put it all together;
-      var content = $('<div>', {class: 'lightbox-container'}).append($(aboveContent), imageContainer, $(belowContent));
+      var content = $('<div>', {class: 'lightbox-container'}).append($(aboveContent), imageContainer, $(belowContent), loadingIndicator);
       
       return content;
     }
@@ -141,15 +139,19 @@
       
       _this.modal = new Modal(null, {
         content: '<div class="loading-container"><div class="loading-indicator"></div></div>',
-        classes: 'lightbox loading hide-close',
-        afterClose: closeHandler
+        classes: 'lightbox hide-close',
+        afterClose: closeHandler,
+        beforeOpen: function() {
+          this.addClass('loading');
+        }
       }).open();
       
       preloadImage(currentItem.attr('href'), function(image) {
         setTimeout(function() {
           _this.modal.update(generateContent(image, currentItem), function(modal) {
             fitToScreen();
-            modal.find('.modal-container').removeClass('loading hide-close');
+            modal.removeClass('loading');
+            modal.find('.modal-container').removeClass('hide-close');
           });
         }, 600);
         
