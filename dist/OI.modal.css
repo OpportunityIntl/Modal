@@ -1,9 +1,28 @@
-/* Colors */
 /****************/
 /**** Modals ****/
 /****************/
+img.block {
+  height: auto;
+}
+
 [data-modal] {
   cursor: pointer;
+}
+
+body.ios-no-scroll {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+body.ios-no-scroll .ios-scroll-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: auto;
+  width: 100%;
 }
 
 body.no-scroll {
@@ -18,7 +37,7 @@ body.no-scroll {
   right: 0;
   height: 100%;
   padding: 20px;
-  z-index: -1;
+  z-index: 3;
   transition: background-color .3s;
   -webkit-transition: background-color .3s;
   -moz-transition: background-color .3s;
@@ -45,7 +64,6 @@ body.no-scroll {
 }
 .modal.animate {
   display: block;
-  z-index: 2;
 }
 .modal.animate .modal-container {
   display: block;
@@ -74,6 +92,31 @@ body.no-scroll {
 .modal.overflow.show .modal-container.fullscreen:after {
   display: none;
 }
+.modal.loading .loading-container {
+  display: block;
+}
+.modal .loading-container {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -30px;
+  text-align: center;
+  margin-left: -30px;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+}
+.modal .loading-container .loading-indicator {
+  display: block;
+  top: 50%;
+  position: relative;
+  margin-left: auto;
+  margin-top: -15px;
+  margin-right: auto;
+}
 .modal .modal-container {
   display: none;
   position: relative;
@@ -86,14 +129,17 @@ body.no-scroll {
   width: 400px;
   background: #fff;
   opacity: 0;
-  transition: top .5s, opacity .3s;
-  -moz-transition: top .5s, opacity .3s;
-  -webkit-transition: top .5s, opacity .3s;
+  transition: top, opacity;
+  -moz-transition: top, opacity;
+  -webkit-transition: top, opacity;
 }
 @media (max-width: 440px) {
   .modal .modal-container {
     width: 100%;
   }
+}
+.modal .modal-container.hide-close button.close {
+  display: none;
 }
 .modal .modal-container .modal-content {
   position: relative;
@@ -117,6 +163,43 @@ body.no-scroll {
 }
 .modal .modal-container[class*="contained-"] {
   width: auto;
+}
+.modal .modal-container.lightbox {
+  width: auto;
+  background-color: transparent;
+}
+.modal .modal-container.lightbox .lightbox-image {
+  position: relative;
+}
+.modal .modal-container.lightbox button.close {
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #555;
+}
+.modal .modal-container.lightbox button.close:hover {
+  color: #333;
+}
+.modal .modal-container.lightbox button.lightbox-next,
+.modal .modal-container.lightbox button.lightbox-prev {
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  opacity: .5;
+  color: #fff;
+  font-size: 40px;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: opacity .3s, text-shadow .3s;
+}
+.modal .modal-container.lightbox button.lightbox-next:hover,
+.modal .modal-container.lightbox button.lightbox-prev:hover {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+}
+.modal .modal-container.lightbox button.lightbox-next {
+  right: 0;
+}
+.modal .modal-container.lightbox button.lightbox-prev {
+  left: 0;
 }
 .modal .modal-container.fullscreen {
   position: absolute;
@@ -149,9 +232,17 @@ body.no-scroll {
 .modal button.close.fixed {
   position: fixed;
   -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .modal button.close:hover {
   color: #333;
+}
+.modal.size {
+  display: block;
+}
+.modal.size .modal-container {
+  display: block;
+  visibility: hidden;
 }
 
 /*# sourceMappingURL=OI.modal.css.map */

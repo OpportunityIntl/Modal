@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>OI Modals Test</title>
     <link rel="stylesheet" href="weavr/OI.weavr.min.css">
     <link rel="stylesheet" href="dist/OI.modal.css">
@@ -22,6 +22,31 @@
         padding: 0;
         background-color: transparent;
       }
+      
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 40px;
+        height: 50px;
+        background-color: #efeeea;
+        z-index: 1;
+      }
+      
+      nav h2 {
+        line-height: 30px;
+      }
+      
+      nav button {
+        position: absolute;
+        right: 40px;
+        top: 5px;
+      }
+      
+      .nav-placeholder {
+        height: 50px;
+      }
     </style>
     
     <!--[if lt IE 9]>
@@ -32,6 +57,11 @@
     <script type="text/javascript">try {Typekit.load();} catch (e) {}</script>
   </head>
   <body>
+    <nav class="fixed">
+      <h2>OI Modals</h2>
+      <button type="button" name="button" class="btn small brand-teal ghost">Fake Button</button>
+    </nav>
+    <div class="nav-placeholder"></div>
     <section class="padding-2x">
       <div class="contained-6 centered">
         <h1 class="large brand-purple align-center">OI Modals</h1>
@@ -61,20 +91,20 @@
         
         <pre><code class="language-markup">
 <a class="btn brand-purple-bg" data-modal="#modal1">
-  Basic modal
+Basic modal
 </a>
 
 <div class="modal" id="modal1">
-  <div class="modal-container">
-    <button type="button" class="reset icon-cross close"></button>
-    <div class="modal-content padding-2x">
-      <!-- Modal content goes here -->
-    </div>
+<div class="modal-container">
+  <button type="button" class="reset icon-cross close"></button>
+  <div class="modal-content padding-2x">
+    <!-- Modal content goes here -->
   </div>
+</div>
 </div>
 
 <script>
-  $('[data-modal]').modal();
+$('[data-modal]').modal();
 </script>
 </code></pre>
 
@@ -93,13 +123,13 @@
 <a class="custom-trigger btn brand-pink-bg" data-pizza="cool beans">Dynamic content</a>
 
 <script>
-  $('.custom-trigger').modal({
-    content: function() {
-      var word = "generated";
-      return '<h3>Hello world</h3><p>This content was ' + word + ' dynamically.</p><button type="button" class="btn brand-orange-bg">' + $(this).data('pizza') + '</button>'
-    },
-    classes: 'padding-2x'
-  });
+$('.custom-trigger').modal({
+  content: function() {
+    var word = "generated";
+    return '<h3>Hello world</h3><p>This content was ' + word + ' dynamically.</p><button type="button" class="btn brand-orange-bg">' + $(this).data('pizza') + '</button>'
+  },
+  classes: 'padding-2x'
+});
 </script>
 </code></pre>
         
@@ -176,6 +206,21 @@
         <p class="align-center">
           <button id="triggered-modal" class="btn brand-green-bg" type="button">Click me</button>
         </p>
+        
+        <hr>
+        
+        <h2 class="align-center">Lightbox Galleries</h2>
+        <p>
+          Create lightbox-style galleries with OI Lightbox (built on top of OI Modals).
+          Put the image URL in the <code>href</code> attribute, and use the <code>rel</code>
+          attribute to group images into galleries.
+        </p>
+        <p class="align-center">
+          <a class="lightbox" title="Cool Otter" rel="animals" href="http://cdn.hexjam.com/editorial_service/bases/images/000/006/369/xlarge/m15a.jpg?1406824139">Photo 1</a> |
+          <a class="lightbox" title="Dope Raccoon" rel="animals" href="http://i.huffpost.com/gen/1145024/images/o-RACCOON-facebook.jpg">Photo 2</a> |
+          <a class="lightbox" title="Pizza" rel="animals" href="http://www.mysticpizza.com/admin/resources/pizza-pepperoni-w857h456.jpg">Photo 3</a> |
+          <a class="lightbox" title="Praying Otter" rel="animals" href="http://cdn.churchm.ag/wp-content/uploads/2012/02/Praying-Otter-620x836.jpg">Photo 4</a>
+        </p>
       </div>
     </section>
     <footer class="padding-1x-2x brand-darkgray-bg">
@@ -185,195 +230,208 @@
         </p>
       </div>
     </footer>
-    
-    <div class="modal" id="modal1">
-      <div class="modal-container">
-        <button type="button" class="reset icon-cross close"></button>
-        <div class="modal-content padding-2x">
-          <h2 class="align-center brand-pink">Donate to Opportunity</h2>
-          <p class="small">
-            Make a difference by supporting the work of Opportunity International.
-          </p>
-          <div class="choose-amount-module margin-bottom-1x">
-            <div class="row small-gutter">
-              <div class="col col-6 t-col-6 m-col-6">
-                <input type="radio" id="donation-amt-1" name="donation-amt" value="25">
-                <label for="donation-amt-1" class="btn">$25</label>
-              </div>
-              <div class="col col-6 t-col-6 m-col-6">
-                <input type="radio" id="donation-amt-2" name="donation-amt" value="50" checked>
-                <label for="donation-amt-2" class="btn">$50</label>
-              </div>
+  </div>
+  
+  <div class="modal" id="modal1">
+    <div class="modal-container">
+      <button type="button" class="reset icon-cross close"></button>
+      <div class="modal-content padding-2x">
+        <h2 class="align-center brand-pink">Donate to Opportunity</h2>
+        <p class="small">
+          Make a difference by supporting the work of Opportunity International.
+        </p>
+        <div class="choose-amount-module margin-bottom-1x">
+          <div class="row small-gutter">
+            <div class="col col-6 t-col-6 m-col-6">
+              <input type="radio" id="donation-amt-1" name="donation-amt" value="25">
+              <label for="donation-amt-1" class="btn">$25</label>
             </div>
-            <div class="row small-gutter">
-              <div class="col col-6 t-col-6 m-col-6">
-                <input type="radio" id="donation-amt-3" name="donation-amt" value="100">
-                <label for="donation-amt-3" class="btn">$100</label>
-              </div>
-              <div class="col col-6 t-col-6 m-col-6">
-                <input type="radio" id="donation-amt-4" name="donation-amt" value="150">
-                <label for="donation-amt-4" class="btn">$150</label>
-              </div>
+            <div class="col col-6 t-col-6 m-col-6">
+              <input type="radio" id="donation-amt-2" name="donation-amt" value="50" checked>
+              <label for="donation-amt-2" class="btn">$50</label>
             </div>
-            <div class="row">
-              <div class="col col-12 t-col-12 m-col-12">
-                <input type="text" name="donation-amt-custom" placeholder="Enter donation amount">
-              </div>
+          </div>
+          <div class="row small-gutter">
+            <div class="col col-6 t-col-6 m-col-6">
+              <input type="radio" id="donation-amt-3" name="donation-amt" value="100">
+              <label for="donation-amt-3" class="btn">$100</label>
+            </div>
+            <div class="col col-6 t-col-6 m-col-6">
+              <input type="radio" id="donation-amt-4" name="donation-amt" value="150">
+              <label for="donation-amt-4" class="btn">$150</label>
             </div>
           </div>
           <div class="row">
             <div class="col col-12 t-col-12 m-col-12">
-              <input type="submit" name="name" value="Donate Now" class="btn brand-pink-bg block">
+              <input type="text" name="donation-amt-custom" placeholder="Enter donation amount">
             </div>
           </div>
-          <p class="small brand-font-secondary brand-gray align-center">
-            You'll complete your donation on a separate page.
+        </div>
+        <div class="row">
+          <div class="col col-12 t-col-12 m-col-12">
+            <input type="text" name="name" value="" placeholder="Another input for testing">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-12 t-col-12 m-col-12">
+            <input type="submit" name="name" value="Donate Now" class="btn brand-pink-bg block">
+          </div>
+        </div>
+        <p class="small brand-font-secondary brand-gray align-center">
+          You'll complete your donation on a separate page.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-small">
+    <div class="modal-container">
+      <button type="button" class="reset icon-cross close"></button>
+      <div class="modal-content">
+        <div>
+          <img src="http://placehold.it/400x200" class="block">
+        </div>
+        <div class="padding-2x">
+          <h2 class="align-center">This is a normal modal</h2>
+          <p>
+            Intelligentsia quinoa you probably haven't heard of them four dollar toast. You probably haven't heard of them aesthetic polaroid lumbersexual, fanny pack Truffaut next level lo-fi paleo post-ironic viral ennui pug.
+          </p>
+          <p class="align-center">
+            <a class="btn brand-teal-bg">Check out this button</a>
           </p>
         </div>
       </div>
     </div>
-    <div class="modal" id="modal-small">
-      <div class="modal-container">
-        <button type="button" class="reset icon-cross close"></button>
-        <div class="modal-content">
-          <div>
-            <img src="http://placehold.it/400x200" class="block">
-          </div>
-          <div class="padding-2x">
-            <h2 class="align-center">This is a normal modal</h2>
-            <p>
-              Intelligentsia quinoa you probably haven't heard of them four dollar toast. You probably haven't heard of them aesthetic polaroid lumbersexual, fanny pack Truffaut next level lo-fi paleo post-ironic viral ennui pug.
-            </p>
-            <p class="align-center">
-              <a class="btn brand-teal-bg">Check out this button</a>
-            </p>
-          </div>
+  </div>
+  <div class="modal" id="modal-medium">
+    <div class="modal-container contained-6">
+      <button type="button" class="reset icon-cross close"></button>
+      <div class="modal-content">
+        <div>
+          <img src="http://placehold.it/630x315" class="block">
+        </div>
+        <div class="padding-2x">
+          <h2 class="align-center">This is a medium modal</h2>
+          <p>
+            Intelligentsia quinoa you probably haven't heard of them four dollar toast. You probably haven't heard of them aesthetic polaroid lumbersexual, fanny pack Truffaut next level lo-fi paleo post-ironic viral ennui pug.
+          </p>
+          <p class="align-center">
+            <a class="btn brand-green-bg">Check out this button</a>
+          </p>
         </div>
       </div>
     </div>
-    <div class="modal" id="modal-medium">
-      <div class="modal-container contained-6">
-        <button type="button" class="reset icon-cross close"></button>
-        <div class="modal-content">
-          <div>
-            <img src="http://placehold.it/630x315" class="block">
-          </div>
-          <div class="padding-2x">
-            <h2 class="align-center">This is a medium modal</h2>
-            <p>
-              Intelligentsia quinoa you probably haven't heard of them four dollar toast. You probably haven't heard of them aesthetic polaroid lumbersexual, fanny pack Truffaut next level lo-fi paleo post-ironic viral ennui pug.
-            </p>
-            <p class="align-center">
-              <a class="btn brand-green-bg">Check out this button</a>
-            </p>
-          </div>
+  </div>
+  <div class="modal" id="modal-large">
+    <div class="modal-container contained-9">
+      <button type="button" class="reset icon-cross close"></button>
+      <div class="modal-content">
+        <div>
+          <img src="http://placehold.it/945x420" class="block">
+        </div>
+        <div class="padding-2x">
+          <h2 class="align-center">This is a large modal</h2>
+          <p>
+            Intelligentsia quinoa you probably haven't heard of them four dollar toast. You probably haven't heard of them aesthetic polaroid lumbersexual, fanny pack Truffaut next level lo-fi paleo post-ironic viral ennui pug.
+          </p>
+          <p class="align-center">
+            <a class="btn brand-orange-bg">Check out this button</a>
+          </p>
         </div>
       </div>
     </div>
-    <div class="modal" id="modal-large">
-      <div class="modal-container contained-9">
-        <button type="button" class="reset icon-cross close"></button>
-        <div class="modal-content">
-          <div>
-            <img src="http://placehold.it/945x420" class="block">
-          </div>
-          <div class="padding-2x">
-            <h2 class="align-center">This is a large modal</h2>
-            <p>
-              Intelligentsia quinoa you probably haven't heard of them four dollar toast. You probably haven't heard of them aesthetic polaroid lumbersexual, fanny pack Truffaut next level lo-fi paleo post-ironic viral ennui pug.
-            </p>
-            <p class="align-center">
-              <a class="btn brand-orange-bg">Check out this button</a>
-            </p>
-          </div>
+  </div>
+  <div class="modal" id="modal-x-large">
+    <div class="modal-container contained-12">
+      <button type="button" class="reset icon-cross close"></button>
+      <div class="modal-content">
+        <div>
+          <img src="http://placehold.it/1260x525" class="block">
         </div>
-      </div>
-    </div>
-    <div class="modal" id="modal-x-large">
-      <div class="modal-container contained-12">
-        <button type="button" class="reset icon-cross close"></button>
-        <div class="modal-content">
-          <div>
-            <img src="http://placehold.it/1260x525" class="block">
-          </div>
-          <div class="padding-2x">
-            <h2 class="large align-center brand-teal">This is an extra large modal</h2>
-            <div class="row large-gutter">
-              <div class="col col-6 t-col-12 m-col-12">
-                <p>
-                  Intelligentsia quinoa you probably haven't heard of them four dollar toast. You probably haven't heard of them aesthetic polaroid lumbersexual, fanny pack Truffaut next level lo-fi paleo post-ironic viral ennui pug.
-                </p>
-              </div>
-              <div class="col col-6 t-col-12 m-col-12">
-                <p>
-                  Brooklyn sriracha stumptown pour-over authentic. Sriracha food truck Tumblr four dollar toast migas Schlitz crucifix, gentrify chia trust fund twee. Actually Echo Park cliche, beard cronut salvia twee swag.
-                </p>
-              </div>
+        <div class="padding-2x">
+          <h2 class="large align-center brand-teal">This is an extra large modal</h2>
+          <div class="row large-gutter">
+            <div class="col col-6 t-col-12 m-col-12">
+              <p>
+                Intelligentsia quinoa you probably haven't heard of them four dollar toast. You probably haven't heard of them aesthetic polaroid lumbersexual, fanny pack Truffaut next level lo-fi paleo post-ironic viral ennui pug.
+              </p>
             </div>
-            <p class="align-center">
-              <a class="btn brand-purple-bg">Check out this button</a>
-            </p>
+            <div class="col col-6 t-col-12 m-col-12">
+              <p>
+                Brooklyn sriracha stumptown pour-over authentic. Sriracha food truck Tumblr four dollar toast migas Schlitz crucifix, gentrify chia trust fund twee. Actually Echo Park cliche, beard cronut salvia twee swag.
+              </p>
+            </div>
           </div>
+          <p class="align-center">
+            <a class="btn brand-purple-bg">Check out this button</a>
+          </p>
         </div>
       </div>
     </div>
-    <div class="modal" id="fullscreen">
-      <button type="button" class="reset icon-cross close fixed"></button>
-      <div class="modal-container fullscreen">
-        <div class="modal-content padding-2x">
-          <div class="contained-6 centered">
-            <h2>Heading heading heading!</h2>
-            <p>Raw denim PBR letterpress, 8-bit aesthetic narwhal Schlitz normcore iPhone Blue Bottle vinyl retro. Fanny pack jean shorts cardigan, organic VHS Etsy quinoa gluten-free pour-over swag craft beer Pinterest. Mlkshk tousled squid banjo, tilde sartorial selfies messenger bag cred Marfa skateboard fanny pack Kickstarter four dollar toast. Lo-fi skateboard stumptown Pinterest craft beer iPhone. Master cleanse street art pour-over, literally sustainable kogi Marfa try-hard cray cliche Intelligentsia organic. Narwhal Neutra High Life gentrify food truck, lomo semiotics. Stumptown asymmetrical distillery American Apparel narwhal authentic listicle mustache farm-to-table Portland trust fund Wes Anderson.</p>
-            <p>Mlkshk roof party gentrify kale chips meh pug. Keytar mlkshk gastropub, DIY lumbersexual readymade mixtape roof party sustainable fixie. Irony crucifix locavore Portland Intelligentsia. American Apparel Vice selvage, gentrify salvia Schlitz ethical pickled try-hard squid tattooed trust fund bespoke kitsch Godard. Portland cornhole blog trust fund photo booth. Artisan lomo direct trade pop-up, four loko taxidermy iPhone. Fashion axe aesthetic disrupt fanny pack bespoke, heirloom 3 wolf moon you probably haven't heard of them Intelligentsia listicle banjo.</p>
-            <p>Brooklyn sriracha stumptown pour-over authentic. Sriracha food truck Tumblr four dollar toast migas Schlitz crucifix, gentrify chia trust fund twee. Actually Echo Park cliche, beard cronut salvia twee swag. Pop-up aesthetic master cleanse meditation distillery, flannel Banksy. Quinoa Echo Park scenester Austin, pug selfies seitan gentrify PBR&B Brooklyn vegan Wes Anderson freegan single-origin coffee umami. Disrupt street art Godard, lumbersexual occupy pour-over vegan cardigan mixtape Carles Pitchfork migas aesthetic four dollar toast. Craft beer art party disrupt taxidermy tattooed.</p>
-            <p>You probably haven't heard of them normcore PBR Tumblr, pug sriracha 8-bit Odd Future Carles ethical lomo keffiyeh Blue Bottle PBR&B. Bitters chambray Vice street art, Pinterest chillwave PBR&B irony hella drinking vinegar Banksy fanny pack. Gentrify DIY kale chips, raw denim meditation distillery selvage scenester Kickstarter hoodie seitan heirloom flannel pickled. 3 wolf moon you probably haven't heard of them cray, Marfa literally narwhal DIY shabby chic. Ennui XOXO distillery occupy paleo, readymade bespoke keytar street art bitters. Farm-to-table try-hard meh craft beer XOXO polaroid Banksy. Pop-up mumblecore VHS, hashtag pour-over health goth food truck pickled Bushwick meh cliche beard lo-fi fashion axe semiotics.</p>
-            <p>Mumblecore master cleanse put a bird on it, pop-up lumbersexual Kickstarter fanny pack heirloom Vice meditation chambray fashion axe meh church-key. Photo booth kogi literally cronut fixie. Vinyl deep v Tumblr drinking vinegar Neutra, keytar scenester raw denim vegan mustache try-hard sartorial. Mixtape tattooed Neutra, Shoreditch meh leggings normcore cray fixie skateboard sartorial. Single-origin coffee narwhal lo-fi ugh. Stumptown messenger bag heirloom, cornhole PBR&B mumblecore occupy umami four loko. Fingerstache cliche pop-up XOXO.</p>
-            <p>Sriracha Helvetica Carles aesthetic cray. Crucifix pickled artisan cold-pressed. Sartorial cornhole selfies plaid Portland, synth biodiesel 90's normcore listicle you probably haven't heard of them. Deep v American Apparel four loko seitan meditation. 8-bit put a bird on it viral Godard blog. Bespoke pork belly kitsch Banksy put a bird on it, health goth Thundercats viral next level four dollar toast DIY. Butcher cardigan blog fixie.</p>
-            <p>
-              <a class="btn brand-pink-bg" data-modal="#modal1">Modal in a modal</a>
-            </p>
+  </div>
+  <div class="modal" id="fullscreen">
+    <button type="button" class="reset icon-cross close fixed"></button>
+    <div class="modal-container fullscreen">
+      <div class="modal-content padding-2x">
+        <div class="contained-6 centered">
+          <h2>Heading heading heading!</h2>
+          <p>Raw denim PBR letterpress, 8-bit aesthetic narwhal Schlitz normcore iPhone Blue Bottle vinyl retro. Fanny pack jean shorts cardigan, organic VHS Etsy quinoa gluten-free pour-over swag craft beer Pinterest. Mlkshk tousled squid banjo, tilde sartorial selfies messenger bag cred Marfa skateboard fanny pack Kickstarter four dollar toast. Lo-fi skateboard stumptown Pinterest craft beer iPhone. Master cleanse street art pour-over, literally sustainable kogi Marfa try-hard cray cliche Intelligentsia organic. Narwhal Neutra High Life gentrify food truck, lomo semiotics. Stumptown asymmetrical distillery American Apparel narwhal authentic listicle mustache farm-to-table Portland trust fund Wes Anderson.</p>
+          <div class="row">
+            <div class="col col-6 t-col-12 m-col-12">
+              <input type="text" name="name" value="" placeholder="Input 1">
+            </div>
+            <div class="col col-6 t-col-12 m-col-12">
+              <input type="text" name="name" value="" placeholder="Input 2">
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal" id="before-open-demo">
-      <div class="modal-container">
-        <button type="button" class="reset icon-cross close"></button>
-        <div class="modal-content padding-2x">
-          <h2 class="align-center">Modal Callback Demo</h2>
-          <p class="large">
-            You can't close this modal until you complete this math question:
-          </p>
+          <p>Mlkshk roof party gentrify kale chips meh pug. Keytar mlkshk gastropub, DIY lumbersexual readymade mixtape roof party sustainable fixie. Irony crucifix locavore Portland Intelligentsia. American Apparel Vice selvage, gentrify salvia Schlitz ethical pickled try-hard squid tattooed trust fund bespoke kitsch Godard. Portland cornhole blog trust fund photo booth. Artisan lomo direct trade pop-up, four loko taxidermy iPhone. Fashion axe aesthetic disrupt fanny pack bespoke, heirloom 3 wolf moon you probably haven't heard of them Intelligentsia listicle banjo.</p>
+          <p>Brooklyn sriracha stumptown pour-over authentic. Sriracha food truck Tumblr four dollar toast migas Schlitz crucifix, gentrify chia trust fund twee. Actually Echo Park cliche, beard cronut salvia twee swag. Pop-up aesthetic master cleanse meditation distillery, flannel Banksy. Quinoa Echo Park scenester Austin, pug selfies seitan gentrify PBR&B Brooklyn vegan Wes Anderson freegan single-origin coffee umami. Disrupt street art Godard, lumbersexual occupy pour-over vegan cardigan mixtape Carles Pitchfork migas aesthetic four dollar toast. Craft beer art party disrupt taxidermy tattooed.</p>
+          <p>You probably haven't heard of them normcore PBR Tumblr, pug sriracha 8-bit Odd Future Carles ethical lomo keffiyeh Blue Bottle PBR&B. Bitters chambray Vice street art, Pinterest chillwave PBR&B irony hella drinking vinegar Banksy fanny pack. Gentrify DIY kale chips, raw denim meditation distillery selvage scenester Kickstarter hoodie seitan heirloom flannel pickled. 3 wolf moon you probably haven't heard of them cray, Marfa literally narwhal DIY shabby chic. Ennui XOXO distillery occupy paleo, readymade bespoke keytar street art bitters. Farm-to-table try-hard meh craft beer XOXO polaroid Banksy. Pop-up mumblecore VHS, hashtag pour-over health goth food truck pickled Bushwick meh cliche beard lo-fi fashion axe semiotics.</p>
+          <p>Mumblecore master cleanse put a bird on it, pop-up lumbersexual Kickstarter fanny pack heirloom Vice meditation chambray fashion axe meh church-key. Photo booth kogi literally cronut fixie. Vinyl deep v Tumblr drinking vinegar Neutra, keytar scenester raw denim vegan mustache try-hard sartorial. Mixtape tattooed Neutra, Shoreditch meh leggings normcore cray fixie skateboard sartorial. Single-origin coffee narwhal lo-fi ugh. Stumptown messenger bag heirloom, cornhole PBR&B mumblecore occupy umami four loko. Fingerstache cliche pop-up XOXO.</p>
+          <p>Sriracha Helvetica Carles aesthetic cray. Crucifix pickled artisan cold-pressed. Sartorial cornhole selfies plaid Portland, synth biodiesel 90's normcore listicle you probably haven't heard of them. Deep v American Apparel four loko seitan meditation. 8-bit put a bird on it viral Godard blog. Bespoke pork belly kitsch Banksy put a bird on it, health goth Thundercats viral next level four dollar toast DIY. Butcher cardigan blog fixie.</p>
           <p>
-            <strong>Q: What is 12 &times; 3?</strong>
-          </p>
-          <input type="number" name="sample-field" id="sample-field" placeholder="Enter answer here">
-          <p class="align-center">
-            <a class="btn brand-purple-bg close block">Close</a>
-          </p>
-          <hr>
-          <p class="small">
-            <strong>P.S.</strong> If you look at the browser console, you'll see the timing and result of the callbacks.
+            <a class="btn brand-pink-bg" data-modal="#modal1">Modal in a modal</a>
           </p>
         </div>
       </div>
     </div>
-    <div class="modal" id="javascript-triggered">
-      <div class="modal-container">
-        <button type="button" class="reset icon-cross close"></button>
-        <div class="modal-content padding-2x">
-          <h2 class="align-center">Javascript Trigger</h2>
-          <p>
-            This modal was triggered via Javascript.
-          </p>
-          <p class="align-center">
-            <a class="btn brand-green-bg close">Close</a>
-          </p>
-        </div>
+  </div>
+  <div class="modal" id="before-open-demo">
+    <div class="modal-container">
+      <button type="button" class="reset icon-cross close"></button>
+      <div class="modal-content padding-2x">
+        <h2 class="align-center">Modal Callback Demo</h2>
+        <p class="large">
+          You can't close this modal until you complete this math question:
+        </p>
+        <p>
+          <strong>Q: What is 12 &times; 3?</strong>
+        </p>
+        <input type="number" name="sample-field" id="sample-field" placeholder="Enter answer here">
+        <p class="align-center">
+          <a class="btn brand-purple-bg close block">Close</a>
+        </p>
+        <hr>
+        <p class="small">
+          <strong>P.S.</strong> If you look at the browser console, you'll see the timing and result of the callbacks.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="javascript-triggered">
+    <div class="modal-container">
+      <button type="button" class="reset icon-cross close"></button>
+      <div class="modal-content padding-2x">
+        <h2 class="align-center">Javascript Trigger</h2>
+        <p>
+          This modal was triggered via Javascript.
+        </p>
+        <p class="align-center">
+          <a class="btn brand-green-bg update">Update content</a>
+        </p>
       </div>
     </div>
     
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 
     <!--[if lte IE 9]>
       <script type="text/javascript" src="weavr/OI.placeholder.min.js"></script>
@@ -381,12 +439,13 @@
 
     <script type="text/javascript" src="weavr/OI.weavr.min.js"></script>
     <script type="text/javascript" src="dist/OI.modal.min.js"></script>
+    <script type="text/javascript" src="dist/OI.lightbox.min.js"></script>
     
     <script type="text/javascript">
       // replaces < characters with &lt; to allow syntax highlighter to
       // display HTML code instead of browser parsing and rendering it as HTML
       $('code').each(function() {
-        $(this).html($(this).html().replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+        $(this).html($(this).html().replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\$/g, '&#36;'));
       });
       
       // suppress JS errors caused by console.log() on IE8 and 9
@@ -399,6 +458,15 @@
     <script type="text/javascript" src="demo/prism.js"></script>
 
     <script>
+      $.fn.modal.defaults.fixedElements = [
+        {
+          element: $('nav'),
+          property: function(offset) {
+            this.css('transform', 'translateX(-' + offset + 'px)');
+          }
+        }
+      ]
+    
       // automatically set up triggers for elements with data-modal attribute
       $('[data-modal]').modal();
     
@@ -434,8 +502,23 @@
       
       $('#triggered-modal').click(function() {
         $.modal({
-          source: '#javascript-triggered'
+          source: '#javascript-triggered',
+          closeable: false,
+          beforeOpen: function(instance) {
+            $(this).find('.btn.update').click(function() {
+              var newContent = '<h2>This is some new content for this modal!</h2><p>Whatever godard 3 wolf moon paleo. Tattooed selfies kitsch microdosing beard. Forage pitchfork portland jean shorts banjo trust fund, pop-up actually gastropub chartreuse quinoa. Synth franzen normcore microdosing banh mi kitsch. Skateboard squid fingerstache tilde cred brooklyn. Heirloom twee cornhole locavore sartorial 3 wolf moon readymade kinfolk thundercats, microdosing put a bird on it DIY freegan XOXO. Migas bushwick venmo ugh, irony photo booth austin vegan taxidermy pug post-ironic bespoke wayfarers.</p><p><a class="close btn brand-orange-bg">Close me</a></p>';
+              instance.update(newContent, function(modal) {
+                console.log('Modal content updated');
+              });
+            })
+          }
         });
+      });
+      
+      $.lightbox('.lightbox', {
+        belowContent: function(index, images) {
+          return '<div class="brand-white-bg padding-1x-2x">' + $(this).attr('title') + ': Photo ' + (index + 1) + ' of ' + images.length + '</div>';
+        }
       });
     </script>
   </body>
